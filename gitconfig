@@ -1,0 +1,8 @@
+[user]
+	name = Judd Vinet
+	email = judd@betsmartmedia.com
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto

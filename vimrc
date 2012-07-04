@@ -1,7 +1,10 @@
-set tabstop=2
-set sw=2
+set tabstop=2 shiftwidth=2 softtabstop=2
 
-set mouse=
+" Per-file options
+autocmd BufNewFile,BufRead *.py setlocal sw=4 ts=4 sts=4 expandtab
+
+"set mouse=
+set mouse=a
 
 syntax on
 color dusk
@@ -92,32 +95,4 @@ noremap <C-B> :!php -l %<CR>
 :vnoremap " "zdi"<C-R>z"<ESC>
 
 " }}} Wrap visual selections with chars
-
-" {{{ Dictionary completion
-
-" The completion dictionary is provided by Rasmus:
-" http://lerdorf.com/funclist.txt
-set dictionary-=/home/jvinet/.vim/phpfunclist.txt dictionary+=/home/jvinet/.vim/phpfunclist.txt
-" Use the dictionary completion
-set complete-=k complete+=k
-
-" }}} Dictionary completion
-
-" {{{ Autocompletion using the TAB key
-
-" This function determines, wether we are on the start of the line text (then tab indents) or
-" if we want to try autocompletion
-function InsertTabWrapper()
-    let col = col('.') - 1
-    if !col || getline('.')[col - 1] !~ '\k'
-        return "\<tab>"
-    else
-        return "\<c-p>"
-    endif
-endfunction
-
-" Remap the tab key to select action with InsertTabWrapper
-"inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-
-" }}} Autocompletion using the TAB key
 

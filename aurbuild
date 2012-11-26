@@ -14,8 +14,9 @@ pkgname=$1
 [ -d $pkgname  ] && die "Directory '$pkgname' already exists"
 [ -f $pkgname  ] && die "File '$pkgname' already exists"
 
+pfx=`echo $pkgname | cut -c1-2`
 echo "Downloading $pkgname.tar.gz"
-wget -q http://aur.archlinux.org/packages/$pkgname/$pkgname.tar.gz || die "Failed to fetch $1.pkg.tar.gz"
+wget -q http://aur.archlinux.org/packages/$pfx/$pkgname/$pkgname.tar.gz || die "Failed to fetch $pkgname.tar.gz"
 
 tar zxf $pkgname.tar.gz || die "Extraction failed"
 rm -f $pkgname.tar.gz

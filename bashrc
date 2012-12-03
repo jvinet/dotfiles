@@ -7,14 +7,13 @@
 
 if [ "`uname`" = "Linux" ]; then
 	alias ls='ls --color'
+	alias open='xdg-open'
 else
 	alias ls='ls -G'
 fi
 
 alias grep='grep --color'
-
 alias t='todo'
-alias open='xdg-open'
 
 # Colorize Mac/BSD ls output
 export CLICOLOR=1

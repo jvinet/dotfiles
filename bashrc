@@ -6,6 +6,7 @@
 [[ $- != *i* ]] && return
 
 alias grep='grep --color'
+alias vi='vim'
 alias t='todo'
 
 if [ "`uname`" = "Linux" ]; then
@@ -25,6 +26,7 @@ else
 fi
 
 export PATH=$PATH:$HOME/bin
+export EDITOR=vim
 
 # tmux
 [ -n "$TMUX" ] && export TERM="screen-256color"

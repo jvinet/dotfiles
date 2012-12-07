@@ -6,6 +6,8 @@ autocmd BufNewFile,BufRead *.py setlocal sw=4 ts=4 sts=4 expandtab
 "set mouse=
 set mouse=a
 
+set encoding=utf8
+
 syntax on
 color dusk
 

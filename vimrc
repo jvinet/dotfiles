@@ -30,12 +30,14 @@ set nowrap
 " Don't show line numbers by default
 set nonumber
 
+" MonoDevelop / Mono
+au BufNewFile,BufRead *.pp  set ft=cs
+
 " Folding
-au BufNewFile,BufRead *              set foldmethod=manual
-au BufNewFile,BufRead *.c,*.h,*.php  set foldmethod=indent
-au BufNewFile,BufRead *.c,*.h,*.php  syn region myFold start="{" end="}" transparent fold
-au BufNewFile,BufRead *              set foldlevel=99
-au BufNewFile,BufRead *.thtml        set ft=php
+au BufNewFile,BufRead * set foldmethod=manual
+au BufNewFile,BufRead *.c,*.h,*.php,*.js,*.go  set foldmethod=indent
+au BufNewFile,BufRead *.c,*.h,*.php,*.js,*.go  syn region myFold start="{" end="}" transparent fold
+au BufNewFile,BufRead * set foldlevel=99
 "set foldmethod=indent
 
 " Don't bother folding small blocks
@@ -73,7 +75,10 @@ noremap <C-right> :bnext<CR>
 " {{{ Command mappings
 
 " Map ; to run PHP parser check
-noremap <C-B> :!php -l %<CR>
+au BufNewFile,BufRead *.php  noremap <C-B> :!php -l %<CR>
+
+" Run love interpreter
+au BufNewFile,BufRead *.lua  noremap <C-B> :!love-hg .<CR>
 
 " }}}
 

@@ -8,6 +8,7 @@
 alias grep='grep --color'
 alias vi='vim'
 alias t='todo'
+alias ll='ls -l'
 
 alias http='python -m http.server'
 alias json='python -m json.tool'
@@ -48,7 +49,8 @@ export PATH=$PATH:$GOPATH/bin
 # Android
 export PATH=$PATH:$HOME/android/tools:$HOME/android/platform-tools
 
-# tmux
+# tmux / color terms
+export TERM=xterm-256color
 [ -n "$TMUX" ] && export TERM="screen-256color"
 
 PS1='[\u@\h \W]\$ '

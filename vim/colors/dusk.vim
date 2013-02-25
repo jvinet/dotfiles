@@ -46,6 +46,7 @@ hi DiffChange term=bold ctermbg=DarkMagenta guibg=DarkMagenta
 hi DiffDelete term=bold ctermfg=Blue ctermbg=DarkCyan gui=bold guifg=Blue guibg=DarkCyan
 hi CursorColumn term=reverse ctermbg=Black guibg=grey40
 hi CursorLine term=underline cterm=underline guibg=grey40
+hi Comment ctermfg=Blue
 
 " Groups for syntax highlighting
 hi Constant term=underline ctermfg=Magenta guifg=#ffa0a0 guibg=grey5

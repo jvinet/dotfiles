@@ -129,8 +129,8 @@ set laststatus=2
 
 set statusline=
 set statusline+=%F       " Filename
-set statusline+=%m " modified flag
-set statusline+=%r " read-only flag
+set statusline+=%3*%m " modified flag
+set statusline+=%4*%r " read-only flag
 set statusline+=%= " everything after this is right-aligned
 set statusline+=%1*\%{&ff}\ %2*\|        " File format
 set statusline+=%1*\ %{strlen(&fenc)?&fenc:'none'}\ %2*\| " file encoding
@@ -145,10 +145,14 @@ function! InsertStatuslineColor(mode)
 		hi statusline guifg=#5f87d7 ctermfg=068 ctermbg=255
 		hi User1 ctermbg=068 ctermfg=255
 		hi User2 ctermbg=068 ctermfg=248
+		hi User3 ctermbg=068 ctermfg=124
+		hi User4 ctermbg=068 ctermfg=124
 	elseif a:mode == 'r'
 		hi statusline guifg=#870000 ctermfg=088 ctermbg=255
 		hi User1 ctermbg=088 ctermfg=254
 		hi User2 ctermbg=088 ctermfg=252
+		hi User3 ctermbg=088 ctermfg=039
+		hi User4 ctermbg=088 ctermfg=039
 	else
 		hi statusline guifg=#d75f00 ctermfg=166
 	endif
@@ -158,6 +162,8 @@ function! ResetStatuslineColor()
 	hi statusline ctermbg=252 ctermfg=237
 	hi User1 ctermfg=245 ctermbg=237
 	hi User2 ctermfg=240 ctermbg=237
+	hi User3 ctermfg=124 ctermbg=237
+	hi User4 ctermfg=124 ctermbg=237
 endfunction
 
 call ResetStatuslineColor()

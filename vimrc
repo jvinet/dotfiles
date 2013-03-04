@@ -37,12 +37,14 @@ set nonumber
 au BufNewFile,BufRead *.pp  set ft=cs
 
 " Folding
-au BufNewFile,BufRead *              set foldmethod=manual
-au BufNewFile,BufRead *.c,*.h,*.php  set foldmethod=indent
-au BufNewFile,BufRead *.c,*.h,*.php  syn region myFold start="{" end="}" transparent fold
-au BufNewFile,BufRead *              set foldlevel=99
-au BufNewFile,BufRead *.thtml        set ft=php
-"set foldmethod=indent
+"au BufNewFile,BufRead *              set foldmethod=manual
+"au BufNewFile,BufRead *.c,*.h,*.php  set foldmethod=indent
+"au BufNewFile,BufRead *.c,*.h,*.php  syn region myFold start="{" end="}" transparent fold
+"au BufNewFile,BufRead *              set foldlevel=99
+
+set foldmethod=indent
+" Don't fold anything by default - I'll close the folds myself
+set foldlevel=99
 
 " Don't bother folding small blocks
 set foldminlines=5
@@ -122,7 +124,45 @@ let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
 " }}}
 
-" {{{ Powerline Plugin
-let g:Powerline_symbols = 'compatible'
-set laststatus=2  " Always show statusbar, even when only one window is open
+" {{{ Statusline
+set laststatus=2
+
+set statusline=
+set statusline+=%F       " Filename
+set statusline+=%m " modified flag
+set statusline+=%r " read-only flag
+set statusline+=%= " everything after this is right-aligned
+set statusline+=%1*\%{&ff}\ %2*\|        " File format
+set statusline+=%1*\ %{strlen(&fenc)?&fenc:'none'}\ %2*\| " file encoding
+set statusline+=%1*\ %{tolower(&ft)}\ %2*\|        " Filetype, lowercase without surrounding square brackets
+set statusline+=%1*\ %l,%c\ %2*\| " line, col position
+set statusline+=%1*\ %p%% " Total lines, % of file
+
+" TODO: add guibg/fg color triplets
+
+function! InsertStatuslineColor(mode)
+	if a:mode == 'i'
+		hi statusline guifg=#5f87d7 ctermfg=068 ctermbg=255
+		hi User1 ctermbg=068 ctermfg=255
+		hi User2 ctermbg=068 ctermfg=248
+	elseif a:mode == 'r'
+		hi statusline guifg=#870000 ctermfg=088 ctermbg=255
+		hi User1 ctermbg=088 ctermfg=254
+		hi User2 ctermbg=088 ctermfg=252
+	else
+		hi statusline guifg=#d75f00 ctermfg=166
+	endif
+endfunction
+
+function! ResetStatuslineColor()
+	hi statusline ctermbg=252 ctermfg=237
+	hi User1 ctermfg=245 ctermbg=237
+	hi User2 ctermfg=240 ctermbg=237
+endfunction
+
+call ResetStatuslineColor()
+
+au InsertEnter * call InsertStatuslineColor(v:insertmode)
+au InsertChange * call InsertStatuslineColor(v:insertmode)
+au InsertLeave * call ResetStatuslineColor()
 " }}}

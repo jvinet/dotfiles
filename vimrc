@@ -96,15 +96,15 @@ noremap <C-b> :!php -l %<CR>
 "inoremap ( ()<LEFT>
 "inoremap " ""<LEFT>
 "inoremap ' ''<LEFT>
-" }}} Automatic close char mapping
+" }}}
 
 " {{{ Wrap visual selections with chars
-:vnoremap ( "zdi(<C-R>z)<ESC>
-:vnoremap { "zdi{<C-R>z}<ESC>
-:vnoremap [ "zdi[<C-R>z]<ESC>
-:vnoremap ' "zdi'<C-R>z'<ESC>
-:vnoremap " "zdi"<C-R>z"<ESC>
-" }}} Wrap visual selections with chars
+vnoremap ( "zdi(<C-R>z)<ESC>
+vnoremap { "zdi{<C-R>z}<ESC>
+vnoremap [ "zdi[<C-R>z]<ESC>
+vnoremap ' "zdi'<C-R>z'<ESC>
+vnoremap " "zdi"<C-R>z"<ESC>
+" }}}
 
 " Activate pathogen
 execute pathogen#infect()
@@ -124,46 +124,49 @@ let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
 " }}}
 
+" {{{ Cursorline
+hi CursorLine ctermbg=017 cterm=none
+augroup CursorLine
+	au!
+	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+	au WinLeave * setlocal nocursorline
+augroup END
+" }}}
+
 " {{{ Statusline
 set laststatus=2
 
-set statusline=
-set statusline+=%F       " Filename
+set statusline=%<
+set statusline+=%-999F    " Filename, set to fill the left side
 set statusline+=%3*%m " modified flag
 set statusline+=%4*%r " read-only flag
-set statusline+=%= " everything after this is right-aligned
-set statusline+=%1*\%{&ff}\ %2*\|        " File format
+set statusline+=%=    " everything after this is right-aligned
+set statusline+=%1*\%{&ff}\ %2*\| " File format
 set statusline+=%1*\ %{strlen(&fenc)?&fenc:'none'}\ %2*\| " file encoding
-set statusline+=%1*\ %{tolower(&ft)}\ %2*\|        " Filetype, lowercase without surrounding square brackets
+set statusline+=%1*\ %{tolower(&ft)}\ %2*\| " Filetype, lowercase without surrounding square brackets
 set statusline+=%1*\ %l,%c\ %2*\| " line, col position
 set statusline+=%1*\ %p%% " Total lines, % of file
 
 " TODO: add guibg/fg color triplets
+"       http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
 
 function! InsertStatuslineColor(mode)
 	if a:mode == 'i'
 		hi statusline guifg=#5f87d7 ctermfg=068 ctermbg=255
-		hi User1 ctermbg=068 ctermfg=255
-		hi User2 ctermbg=068 ctermfg=248
-		hi User3 ctermbg=068 ctermfg=124
-		hi User4 ctermbg=068 ctermfg=124
+		hi statuslineNC ctermbg=030
 	elseif a:mode == 'r'
 		hi statusline guifg=#870000 ctermfg=088 ctermbg=255
-		hi User1 ctermbg=088 ctermfg=254
-		hi User2 ctermbg=088 ctermfg=252
-		hi User3 ctermbg=088 ctermfg=039
-		hi User4 ctermbg=088 ctermfg=039
-	else
-		hi statusline guifg=#d75f00 ctermfg=166
+		hi statuslineNC ctermbg=030
 	endif
 endfunction
 
 function! ResetStatuslineColor()
-	hi statusline ctermbg=252 ctermfg=237
+	hi statusline ctermbg=252 ctermfg=022
+	hi statuslineNC ctermbg=248 ctermfg=237
 	hi User1 ctermfg=245 ctermbg=237
 	hi User2 ctermfg=240 ctermbg=237
-	hi User3 ctermfg=124 ctermbg=237
-	hi User4 ctermfg=124 ctermbg=237
+	hi User3 ctermfg=051 ctermbg=237
+	hi User4 ctermfg=202 ctermbg=237
 endfunction
 
 call ResetStatuslineColor()

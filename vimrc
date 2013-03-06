@@ -198,6 +198,14 @@ augroup CursorLine
 augroup END
 " }}}
 
+" {{{ Tabs
+hi TabLineFill ctermfg=255 ctermbg=255 cterm=underline
+hi TabLine ctermfg=000 ctermbg=255
+hi TabLineSel ctermfg=000 ctermbg=247 cterm=underline
+hi Title ctermfg=018 cterm=bold
+" }}}
+	
+
 " {{{ Statusline
 set laststatus=2
 

@@ -20,6 +20,29 @@ endif
 " Don't save backups
 set nobackup
 
+" Fast saving
+nmap <leader>w :w<cr>
+
+" Switch CWD to the directory of the open buffer
+" This (and more) inspired from http://amix.dk/vim/vimrc.html
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" When using tab completion for filenames, only complete as far
+" as the match goes
+set wildmode=longest:full
+set wildmenu
+
+" Return to last edit position when opening files
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+" Remember info about open buffers on close
+set viminfo^=%
+
+" Show matching brackets when cursor is over them
+set showmatch
+
 " Auto indent after a {
 set autoindent
 set smartindent
@@ -63,6 +86,33 @@ set hlsearch
 " <Leader> is the \ key
 nmap <Leader>q :nohlsearch<CR>
 
+" When in visual mode, pressing * or # searches for the current selection
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+function! VisualSelection(direction) range
+    let l:saved_reg = @"
+    execute "normal! vgvy"
+
+    let l:pattern = escape(@", '\\/.*$^~[]')
+    let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+    if a:direction == 'b'
+        execute "normal ?" . l:pattern . "^M"
+    elseif a:direction == 'gv'
+        call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+    elseif a:direction == 'replace'
+        call CmdLine("%s" . '/'. l:pattern . '/')
+    elseif a:direction == 'f'
+        execute "normal /" . l:pattern . "^M"
+    endif
+
+    let @/ = l:pattern
+    let @" = l:saved_reg
+endfunction
+
+" Toggle paste mode
+map <leader>p :setlocal paste!<CR>
+
 " Jump 5 lines when running out of the screen
 set scrolljump=5
 
@@ -76,13 +126,28 @@ set formatoptions=qroct
 " Repair wired terminal/vim settings
 set backspace=start,eol
 
-" Config for buftabs plugin
+" Easy movement between buffers
 let g:buftabs_only_basename=1
-noremap <C-left> :bprev<CR>
-noremap <C-right> :bnext<CR>
 noremap <C-p> :bprev<CR>
 noremap <C-n> :bnext<CR>
 
+" Treat long lines as break lines
+map j gj
+map k gk
+
+" Easy movement between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Easy tab control
+map <leader>tn :tabnew<CR>
+map <leader>to :tabonly<CR>
+map <leader>tc :tabclose<CR>
+map <leader>tm :tabmove<CR>
+map <leader>]  :tabnext<CR>
+map <leader>[  :tabprev<CR>
 
 " {{{ Command mappings
 " Map ; to run PHP parser check
@@ -128,20 +193,24 @@ let g:ctrlp_switch_buffer = 0
 hi CursorLine ctermbg=017 cterm=none
 augroup CursorLine
 	au!
-	au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-	au WinLeave * setlocal nocursorline
+	au InsertEnter * setlocal cursorline
+	au InsertLeave * setlocal nocursorline
 augroup END
 " }}}
 
 " {{{ Statusline
 set laststatus=2
 
-set statusline=%<
-set statusline+=%-999F    " Filename, set to fill the left side
-set statusline+=%3*%m " modified flag
-set statusline+=%4*%r " read-only flag
+set statusline=
+set statusline+=%-99F    " Filename, set to aggressive fill
+
 set statusline+=%=    " everything after this is right-aligned
-set statusline+=%1*\%{&ff}\ %2*\| " File format
+set statusline+=%3*%{&modified?'[+]\ ':''} " modified flag
+set statusline+=%4*%{&readonly?'[RO]\ ':''} " read-only flag 
+set statusline+=%5*%{&paste?'[P]\ ':''} " paste mode
+
+set statusline+=%< " Truncate here if we run out of space
+set statusline+=%2*\|\ %1*\%{&ff}\ %2*\| " File format
 set statusline+=%1*\ %{strlen(&fenc)?&fenc:'none'}\ %2*\| " file encoding
 set statusline+=%1*\ %{tolower(&ft)}\ %2*\| " Filetype, lowercase without surrounding square brackets
 set statusline+=%1*\ %l,%c\ %2*\| " line, col position
@@ -165,8 +234,9 @@ function! ResetStatuslineColor()
 	hi statuslineNC ctermbg=248 ctermfg=237
 	hi User1 ctermfg=245 ctermbg=237
 	hi User2 ctermfg=240 ctermbg=237
-	hi User3 ctermfg=051 ctermbg=237
-	hi User4 ctermfg=202 ctermbg=237
+	hi User3 ctermfg=184 ctermbg=237
+	hi User4 ctermfg=173 ctermbg=237
+	hi User5 ctermfg=195 ctermbg=237
 endfunction
 
 call ResetStatuslineColor()

@@ -135,6 +135,10 @@ noremap <C-n> :bnext<CR>
 map j gj
 map k gk
 
+" PageUp/PageDown without requiring a Fn+Up/Dn combo
+map m [5~
+map , [6~
+
 " Easy movement between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -230,10 +234,10 @@ set statusline+=%1*\ %p%% " Total lines, % of file
 function! InsertStatuslineColor(mode)
 	if a:mode == 'i'
 		hi statusline guifg=#5f87d7 ctermfg=068 ctermbg=255
-		hi statuslineNC ctermbg=030
+		hi statuslineNC ctermbg=248 ctermfg=237
 	elseif a:mode == 'r'
 		hi statusline guifg=#870000 ctermfg=088 ctermbg=255
-		hi statuslineNC ctermbg=030
+		hi statuslineNC ctermbg=248 ctermfg=237
 	endif
 endfunction
 

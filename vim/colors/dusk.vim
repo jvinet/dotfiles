@@ -21,8 +21,8 @@ hi Normal ctermbg=none ctermfg=White guifg=White guibg=grey20
 hi ErrorMsg term=standout ctermbg=DarkRed ctermfg=White guibg=Red guifg=White
 hi IncSearch term=reverse cterm=reverse gui=reverse
 hi ModeMsg term=bold cterm=bold gui=bold
-hi StatusLine term=reverse,bold cterm=reverse,bold gui=reverse,bold
-hi StatusLineNC term=reverse cterm=reverse gui=reverse
+"hi StatusLine term=reverse,bold cterm=reverse,bold gui=reverse,bold
+"hi StatusLineNC term=reverse cterm=reverse gui=reverse
 hi VertSplit term=reverse cterm=reverse gui=reverse
 hi Visual term=reverse ctermbg=DarkBlue guibg=grey60
 hi VisualNOS term=underline,bold cterm=underline,bold gui=underline,bold
@@ -55,5 +55,13 @@ if &t_Co > 8
   hi Statement term=bold cterm=bold ctermfg=Yellow guifg=#ffff60 gui=bold
 endif
 hi Ignore ctermfg=DarkGrey guifg=grey20
+
+" For HTML (and markdown)
+hi htmlTitle ctermfg=LightRed
+hi htmlH1 ctermfg=LightCyan
+hi htmlH2 ctermfg=LightCyan
+hi htmlH3 ctermfg=LightCyan
+hi htmlH4 ctermfg=LightCyan
+hi htmlH5 ctermfg=LightCyan
 
 " vim: sw=2

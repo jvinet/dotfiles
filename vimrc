@@ -2,7 +2,8 @@ set tabstop=2 shiftwidth=2 softtabstop=2
 set nocompatible
 
 " Per-file options
-autocmd BufNewFile,BufRead *.py setlocal sw=4 ts=4 sts=4 expandtab
+autocmd BufNewFile,BufRead *.py setlocal sw=4 ts=4 sts=4 et
+autocmd BufNewFile,BufRead *.md setlocal et tw=74
 
 "set mouse=
 set mouse=a
@@ -112,6 +113,11 @@ endfunction
 
 " Toggle paste mode
 map <leader>p :setlocal paste!<CR>
+
+" Show vimgrep matches in the quickfix window
+command! -nargs=+ Grep execute 'silent grep! <args>' | copen 33
+" Close the quickfix window
+map <leader>g :cclose<CR>
 
 " Jump 5 lines when running out of the screen
 set scrolljump=5

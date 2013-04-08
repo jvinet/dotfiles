@@ -5,6 +5,11 @@ set nocompatible
 autocmd BufNewFile,BufRead *.py setlocal sw=4 ts=4 sts=4 et
 autocmd BufNewFile,BufRead *.md setlocal et tw=74
 
+" {{{ Command mappings
+" Map ; to run PHP parser check
+noremap <C-b> :!php -l %<CR>
+" }}}
+
 "set mouse=
 set mouse=a
 
@@ -23,6 +28,9 @@ set nobackup
 
 " Fast saving
 nmap <leader>w :w<cr>
+
+" Redraw
+noremap <leader>l :redraw!<CR>
 
 " Switch CWD to the directory of the open buffer
 " This (and more) inspired from http://amix.dk/vim/vimrc.html
@@ -115,7 +123,7 @@ endfunction
 map <leader>p :setlocal paste!<CR>
 
 " Show vimgrep matches in the quickfix window
-command! -nargs=+ Grep execute 'silent grep! <args>' | copen 33
+command! -nargs=+ Grep execute 'silent grep! -r <args>' | copen 33
 " Close the quickfix window
 map <leader>g :cclose<CR>
 
@@ -142,8 +150,8 @@ map j gj
 map k gk
 
 " PageUp/PageDown without requiring a Fn+Up/Dn combo
-map m [5~
-map , [6~
+map [ [5~
+map ] [6~
 
 " Easy movement between windows
 map <C-j> <C-W>j
@@ -158,11 +166,6 @@ map <leader>tc :tabclose<CR>
 map <leader>tm :tabmove<CR>
 map <leader>]  :tabnext<CR>
 map <leader>[  :tabprev<CR>
-
-" {{{ Command mappings
-" Map ; to run PHP parser check
-noremap <C-b> :!php -l %<CR>
-" }}}
 
 
 " {{{ Automatic close char mapping

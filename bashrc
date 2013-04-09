@@ -13,6 +13,27 @@ alias ll='ls -l'
 alias http='python -m http.server'
 alias json='python -m json.tool'
 
+# "Remind In" - schedule a popup reminder in X minutes
+rin() {
+	if [ "$2" = "" ]; then
+		echo "usage: rin <minutes> <text>"
+		return
+	fi
+	if [ "`pgrep atd`" = "" ]; then
+		echo "error: atd is not running"
+		return
+	fi	
+	if [ "`which zenity`" = "" ]; then
+		echo "error: zenity is not installed"
+		return
+	fi
+
+	mins=$1
+	shift
+	echo "zenity --display=:0 --warning --text=\"$*\"" | at now + $mins min
+	atq
+}
+
 if [ "`uname`" = "Linux" ]; then
 	alias ls='ls --color'
 	alias open='xdg-open'

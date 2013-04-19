@@ -30,7 +30,7 @@ rin() {
 
 	mins=$1
 	shift
-	echo "zenity --display=:0 --warning --text=\"$*\"" | at now + $mins min
+	echo "zenity --display=:0 --info --text=\"$*\"" | at now + $mins min
 	atq
 }
 

@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+	echo "usage: $0 <mode>"
+	echo "Mode can be: conservative, ondemand, performance"
+	exit 1
+fi
+
+case "$1" in
+	conservative)
+		sudo cpupower frequency-set -g $1
+		notify-send "CPU governor set to $1"
+		;;
+	ondemand)
+		sudo cpupower frequency-set -g $1
+		notify-send "CPU governor set to $1"
+		;;
+	performance)
+		sudo cpupower frequency-set -g $1
+		notify-send "CPU governor set to $1"
+		;;
+	*)
+		echo "Invalid governor: $1"
+		exit 1
+esac
+
+exit 0

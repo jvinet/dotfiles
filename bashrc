@@ -34,6 +34,18 @@ rin() {
 	atq
 }
 
+# I markdown things a lot, and they should look nice
+md() {
+	if [ "$2" = "" ]; then
+		echo "usage: md <in.md> <out.html>"
+		return
+	fi
+
+	echo '<meta charset="utf-8">' >$2
+  echo '<link rel="stylesheet" href="http://jasonm23.github.io/markdown-css-themes/markdown8.css">' >>$2
+	markdown <$1 >>$2
+}
+
 if [ "`uname`" = "Linux" ]; then
 	alias ls='ls --color'
 	alias open='xdg-open'

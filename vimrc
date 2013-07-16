@@ -5,7 +5,6 @@ set nocompatible
 autocmd BufNewFile,BufRead *.py  setlocal sw=4 ts=4 sts=4 et
 autocmd BufNewFile,BufRead *.md  setlocal et tw=74
 autocmd BufNewFile,BufRead *.rst setlocal sw=4 ts=4 sts=4 tw=74 et
-autocmd BufNewFile,BufRead *.rst hi Title ctermfg=grey
 
 " {{{ Command mappings
 " Map ; to run PHP parser check
@@ -217,7 +216,7 @@ augroup END
 hi TabLineFill ctermfg=255 ctermbg=255 cterm=underline
 hi TabLine ctermfg=000 ctermbg=255
 hi TabLineSel ctermfg=000 ctermbg=247 cterm=underline
-hi Title ctermfg=018 cterm=bold
+hi TabTitle ctermfg=018 cterm=bold
 " }}}
 	
 

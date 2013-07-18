@@ -9,6 +9,12 @@ Moving
   -  PageUp/PageDn: [ ]
   - Move between windows: <C-h> <C-j> <C-k> <C-l>
 
+Marks
+-----
+  - Mark designation can be a-z or A-Z (capitalized ones work across files)
+  - To set a mark:  m + designation
+  - To move to a mark: ' + designation
+
 Tabs:
 -----
   - new: \tn

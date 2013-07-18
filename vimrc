@@ -27,6 +27,10 @@ endif
 " Don't save backups
 set nobackup
 
+" Enable smart keyword matching ('%' key) and smart(er) file types
+filetype plugin on
+runtime macros/matchit.vim
+
 " Fast saving
 nmap <leader>w :w<cr>
 
@@ -146,6 +150,9 @@ let g:buftabs_only_basename=1
 noremap <C-p> :bprev<CR>
 noremap <C-n> :bnext<CR>
 
+" Redraw the screen
+map <leader>r :redraw!<CR>
+
 " Treat long lines as break lines
 map j gj
 map k gk
@@ -190,6 +197,10 @@ execute pathogen#infect()
 
 " {{{ NERDTree
 nmap <Leader>e :NERDTreeToggle<CR>
+" }}}
+
+" {{{ TagBar
+nmap <Leader>b :TagbarToggle<CR>
 " }}}
 
 " {{{ Ctrl-P Plugin

@@ -7,8 +7,7 @@ autocmd BufNewFile,BufRead *.md  setlocal et tw=74
 autocmd BufNewFile,BufRead *.rst setlocal sw=4 ts=4 sts=4 tw=74 et
 
 " {{{ Command mappings
-" Map ; to run PHP parser check
-noremap <C-b> :!php -l %<CR>
+autocmd BufNewFile,BufRead *.php map <leader>l :!php -l %<CR>
 " }}}
 
 "set mouse=
@@ -70,9 +69,6 @@ set nowrap
 " Don't show line numbers by default
 set nonumber
 
-" ServiceStack
-au BufNewFile,BufRead *.pp  set ft=cs
-
 " Folding
 "au BufNewFile,BufRead *              set foldmethod=manual
 "au BufNewFile,BufRead *.c,*.h,*.php  set foldmethod=indent
@@ -97,8 +93,8 @@ set incsearch
 set ignorecase
 set smartcase
 set hlsearch
-" <Leader> is the \ key
-nmap <Leader>q :nohlsearch<CR>
+" <leader> is the \ key
+nmap <leader>q :nohlsearch<CR>
 
 " When in visual mode, pressing * or # searches for the current selection
 vnoremap <silent> * :call VisualSelection('f')<CR>
@@ -158,8 +154,8 @@ map j gj
 map k gk
 
 " PageUp/PageDown without requiring a Fn+Up/Dn combo
-map [ [5~
-map ] [6~
+"noremap [ [5~
+"noremap ] [6~
 
 " Easy movement between windows
 map <C-j> <C-W>j
@@ -175,6 +171,8 @@ map <leader>tm :tabmove<CR>
 map <leader>]  :tabnext<CR>
 map <leader>[  :tabprev<CR>
 
+" Don't remove indentation when adding '#' comments
+inoremap # X#
 
 " {{{ Automatic close char mapping
 "inoremap { {<CR>}<C-O>O
@@ -196,16 +194,16 @@ vnoremap " "zdi"<C-R>z"<ESC>
 execute pathogen#infect()
 
 " {{{ NERDTree
-nmap <Leader>e :NERDTreeToggle<CR>
+nmap <leader>e :NERDTreeToggle<CR>
 " }}}
 
 " {{{ TagBar
-nmap <Leader>b :TagbarToggle<CR>
+nmap <leader>b :TagbarToggle<CR>
 " }}}
 
 " {{{ Ctrl-P Plugin
 "set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_map = '<Leader>t'
+let g:ctrlp_map = '<leader>t'
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'

@@ -15,8 +15,8 @@ Marks
   - To set a mark:  m + designation
   - To move to a mark: ' + designation
 
-Tabs:
------
+Tabs
+----
   - new: \tn
   - only: \to
   - close: \tc
@@ -24,12 +24,18 @@ Tabs:
   - next: \]
   - prev: \[
 
+Auto-Completion
+---------------
+  - ^N to complete the current word
+  - ^P to complete, but search backwards
+
 Opening/Finding files
 ---------------------
   - Ctrl-P open: \t
   - NERDTree toggle: \e
   - Grep inside vim: :Grep <search> <files>
     - Close results: \g
+  - Change CWD to current file's dir: \cd
 
 Tags
 ----
@@ -52,3 +58,4 @@ Use with other plugins:
 Misc
 ----
   - Toggle Paste mode: \p
+  - Turn off search highlighting: \q

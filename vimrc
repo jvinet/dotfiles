@@ -233,7 +233,7 @@ hi TabTitle ctermfg=018 cterm=bold
 set laststatus=2
 
 set statusline=
-set statusline+=%-99F    " Filename, set to aggressive fill
+set statusline+=%-99f    " Filename, set to aggressive fill
 
 set statusline+=%=    " everything after this is right-aligned
 set statusline+=%3*%{&modified?'[+]\ ':''} " modified flag

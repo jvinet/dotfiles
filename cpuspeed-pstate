@@ -1,0 +1,37 @@
+#!/bin/bash
+#
+# Convenience wrapper for power management when the
+# intel_pstate driver is in effect.
+
+if [ "`whoami`" != "root" ]; then
+	# re-run through sudo
+	exec sudo $0 $1
+fi
+
+sys=/sys/devices/system/cpu/intel_pstate
+
+if [ -z "$1" ]; then
+	echo "usage: $0 <mode>"
+	echo "Mode can be: slow, fast"
+	exit 1
+fi
+
+case "$1" in
+	slow)
+		echo 1  >$sys/no_turbo
+		echo 5  >$sys/min_perf_pct
+		echo 25 >$sys/max_perf_pct
+		notify-send "CPU speed set to $1"
+		;;
+	fast)
+		echo 0   >$sys/no_turbo
+		echo 25  >$sys/min_perf_pct
+		echo 100 >$sys/max_perf_pct
+		notify-send "CPU speed set to $1"
+		;;
+	*)
+		echo "Invalid argument: $1"
+		exit 1
+esac
+
+exit 0

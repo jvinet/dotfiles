@@ -34,7 +34,7 @@ runtime macros/matchit.vim
 nmap <leader>w :w<cr>
 
 " Redraw
-noremap <leader>l :redraw!<CR>
+noremap <leader>r :redraw!<CR>
 
 " Switch CWD to the directory of the open buffer
 " This (and more) inspired from http://amix.dk/vim/vimrc.html

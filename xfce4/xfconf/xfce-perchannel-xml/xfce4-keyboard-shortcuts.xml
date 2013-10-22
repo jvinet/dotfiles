@@ -37,8 +37,8 @@
       <property name="&lt;Super&gt;l" type="string" value="/home/jvinet/bin/lock"/>
       <property name="&lt;Super&gt;d" type="string" value="/home/jvinet/bin/dashboard"/>
       <property name="&lt;Super&gt;3" type="string" value="galculator"/>
-      <property name="&lt;Super&gt;minus" type="string" value="/home/jvinet/bin/cpuspeed ondemand"/>
-      <property name="&lt;Super&gt;equal" type="string" value="/home/jvinet/bin/cpuspeed performance"/>
+      <property name="&lt;Super&gt;minus" type="string" value="/usr/bin/cpuspeed slow"/>
+      <property name="&lt;Super&gt;equal" type="string" value="/usr/bin/cpuspeed fast"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">

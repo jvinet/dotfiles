@@ -3,7 +3,12 @@
 <channel name="pointers" version="1.0">
   <property name="bcm5974" type="empty">
     <property name="RightHanded" type="bool" value="true"/>
-    <property name="Threshold" type="int" value="4"/>
-    <property name="Acceleration" type="double" value="1.500000"/>
+    <property name="Threshold" type="int" value="3"/>
+    <property name="Acceleration" type="double" value="7.000000"/>
+  </property>
+  <property name="Logitech_USB_Receiver" type="empty">
+    <property name="RightHanded" type="bool" value="true"/>
+    <property name="Threshold" type="int" value="1"/>
+    <property name="Acceleration" type="double" value="0.100000"/>
   </property>
 </channel>

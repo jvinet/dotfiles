@@ -24,9 +24,9 @@
     <property name="focus_new" type="bool" value="true"/>
     <property name="frame_opacity" type="int" value="100"/>
     <property name="full_width_title" type="bool" value="true"/>
-    <property name="inactive_opacity" type="int" value="87"/>
+    <property name="inactive_opacity" type="int" value="100"/>
     <property name="maximized_offset" type="int" value="0"/>
-    <property name="move_opacity" type="int" value="87"/>
+    <property name="move_opacity" type="int" value="82"/>
     <property name="placement_ratio" type="int" value="20"/>
     <property name="placement_mode" type="string" value="center"/>
     <property name="popup_opacity" type="int" value="100"/>
@@ -66,7 +66,7 @@
     <property name="unredirect_overlays" type="bool" value="true"/>
     <property name="urgent_blink" type="bool" value="false"/>
     <property name="use_compositing" type="bool" value="true"/>
-    <property name="workspace_count" type="int" value="5"/>
+    <property name="workspace_count" type="int" value="6"/>
     <property name="wrap_cycle" type="bool" value="true"/>
     <property name="wrap_layout" type="bool" value="true"/>
     <property name="wrap_resistance" type="int" value="10"/>

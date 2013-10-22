@@ -8,6 +8,11 @@
         <property name="last-image" type="string" value="/home/jvinet/Pictures/arch_linux_wallpaper_by_mokkujin-d3j1se0.png"/>
         <property name="last-single-image" type="string" value="/home/jvinet/Pictures/arch_linux_wallpaper_by_mokkujin-d3j1se0.png"/>
       </property>
+      <property name="monitor1" type="empty">
+        <property name="image-path" type="string" value="/home/jvinet/Pictures/arch_linux_wallpaper_by_mokkujin-d3j1se0.png"/>
+        <property name="last-image" type="string" value="/usr/share/backgrounds/xfce/xfce-blue.jpg"/>
+        <property name="last-single-image" type="string" value="/home/jvinet/Pictures/arch_linux_wallpaper_by_mokkujin-d3j1se0.png"/>
+      </property>
     </property>
   </property>
   <property name="desktop-icons" type="empty">

@@ -1,0 +1,26 @@
+#!/bin/bash
+
+usage() {
+	echo "usage: $0 <on|off>"
+	exit 1
+}
+
+on() {
+	killall syndaemon &>/dev/null
+	sleep 1
+	synclient TouchpadOff=0
+	syndaemon -i 1.5 -d -t -K
+	notify-send "Touchpad enabled"
+}
+
+off() {
+	killall syndaemon
+	synclient TouchpadOff=1
+	notify-send "Touchpad disabled"
+}
+
+case "$1" in
+	on)  on ;;
+	off) off ;;
+	*)   usage
+esac

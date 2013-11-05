@@ -32,6 +32,10 @@ runtime macros/matchit.vim
 
 " Redraw
 noremap <leader>r :redraw!<CR>
+" Toggle visible tab characters
+noremap <leader>l :set list!<CR>
+" Toggle line numbers
+noremap <leader>n :set number!<CR>
 
 " Switch CWD to the directory of the open buffer
 " This (and more) inspired from http://amix.dk/vim/vimrc.html
@@ -90,7 +94,6 @@ set incsearch
 set ignorecase
 set smartcase
 set hlsearch
-" <leader> is the \ key
 nmap <leader>q :nohlsearch<CR>
 
 " When in visual mode, pressing * or # searches for the current selection

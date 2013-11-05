@@ -30,9 +30,6 @@ set nobackup
 filetype plugin on
 runtime macros/matchit.vim
 
-" Fast saving
-nmap <leader>w :w<cr>
-
 " Redraw
 noremap <leader>r :redraw!<CR>
 
@@ -142,6 +139,9 @@ set formatoptions=qroct
 
 " Repair wired terminal/vim settings
 set backspace=start,eol
+
+" Lower the time that Vim waits to look for matching keymaps (ms)
+set timeoutlen=400
 
 " Easy movement between buffers
 let g:buftabs_only_basename=1

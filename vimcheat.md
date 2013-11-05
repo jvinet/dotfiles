@@ -33,8 +33,9 @@ Opening/Finding files
 ---------------------
   - Ctrl-P open: \t
   - NERDTree toggle: \e
-  - Grep inside vim: :Grep <search> <files>
-    - Close results: \g
+  - grep inside vim: :Grep <search> <files>
+    - Close results: \w
+  - grep -r for the word under the cursor: \g
   - Change CWD to current file's dir: \cd
 
 Tags
@@ -48,7 +49,7 @@ Tags
 Quick jumps:
 
   - When on a tag, go to defn: <C-]>
-  - Go back: <C-t>
+  - Go back (tag stack): <C-t>
 
 Use with other plugins:
 
@@ -59,3 +60,5 @@ Misc
 ----
   - Toggle Paste mode: \p
   - Turn off search highlighting: \q
+  - Go back to previous location (jump list): <C-o>
+  - Go forward to next location: <C-i>

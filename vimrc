@@ -125,8 +125,10 @@ map <leader>p :setlocal paste!<CR>
 
 " Show vimgrep matches in the quickfix window
 command! -nargs=+ Grep execute 'silent grep! -r <args>' | copen 33
+" Search for the word under the cursor and display results in the quickfix
+map <leader>g :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 " Close the quickfix window
-map <leader>g :cclose<CR>
+map <leader>w :cclose<CR>
 
 " Jump 5 lines when running out of the screen
 set scrolljump=5

@@ -39,6 +39,7 @@
       <property name="&lt;Super&gt;3" type="string" value="galculator"/>
       <property name="&lt;Super&gt;minus" type="string" value="/usr/bin/cpuspeed slow"/>
       <property name="&lt;Super&gt;equal" type="string" value="/usr/bin/cpuspeed fast"/>
+      <property name="&lt;Super&gt;slash" type="string" value="/home/jvinet/bin/touchpad toggle"/>
     </property>
   </property>
   <property name="xfwm4" type="empty">

@@ -29,6 +29,14 @@ Auto-Completion
   - ^N to complete the current word
   - ^P to complete, but search backwards
 
+Formatting
+----------
+  - Re-tab (or space) indentation: :ret (or :ret!)
+  - Re-indent visual block: =
+  - Remove one indent level from visual block: <
+  - Add one indent level to visual block: >
+  - Wrap text (based on tw) for paragraph: gqap
+
 Opening/Finding files
 ---------------------
   - Ctrl-P open: \t

@@ -23,6 +23,6 @@
     </property>
   </property>
   <property name="splash" type="empty">
-    <property name="Engine" type="empty"/>
+    <property name="Engine" type="string" value=""/>
   </property>
 </channel>

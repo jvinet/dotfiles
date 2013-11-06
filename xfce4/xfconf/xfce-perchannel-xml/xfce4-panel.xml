@@ -58,12 +58,14 @@
       <property name="names-visible" type="array">
         <value type="string" value="thunar"/>
         <value type="string" value="vlc"/>
+        <value type="string" value="systray icon"/>
         <value type="string" value="task manager"/>
         <value type="string" value="wicd-client.py"/>
         <value type="string" value="skype"/>
         <value type="string" value="pidgin"/>
         <value type="string" value="redshiftgui"/>
         <value type="string" value="blueman-applet"/>
+        <value type="string" value="synergy"/>
         <value type="string" value="dropbox"/>
         <value type="string" value="xfce4-power-manager"/>
         <value type="string" value="sonata"/>

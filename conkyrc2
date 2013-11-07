@@ -1,0 +1,72 @@
+background yes
+own_window yes
+own_window_argb_visual yes
+own_window_argb_value 220
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_transparent yes
+own_window_type desktop
+font Sans:size=11
+xftfont Sans:size=11
+use_xft yes
+xftalpha 0.5
+update_interval 1.0
+total_run_times 0
+double_buffer yes
+draw_shades yes
+draw_outline yes
+draw_borders no
+draw_graph_borders yes
+minimum_size 224 5
+maximum_width 224
+border_width 0
+default_color white
+default_shade_color black
+default_outline_color black
+alignment top_right
+gap_x 265
+gap_y 230
+no_buffers yes
+cpu_avg_samples 2
+override_utf8_locale yes
+uppercase no
+use_spacer right
+
+#Headercolor
+color0 1793d1
+
+#Logocolor
+color1 1793d1
+
+#Text Systeminfo/IP
+color2 darkgrey
+
+#Variable Text
+color3 lightblue
+
+#Graphen
+color4 darkgrey
+
+#Running
+color5 darkgrey
+
+TEXT
+${font Sans:size=12}${color0}FILESYSTEM ${hr 1}${color}${font}
+
+/   ${color3}${alignr}${fs_used /}/${fs_size /}${alignr}${color4}${fs_bar 7,80 /}${color}
+
+${font Sans:size=12}${color0}NETWORK ${hr 1}${color}${font}
+
+#Public IP:${color2}${alignr}${execi 3600 wget [url]http://checkip.dyndns.org[/url]/ -O - -o /dev/null | cut -d: -f 2 | cut -d\< -f 1}${color}
+Wireless IP:${color2}${alignr}${addr wlan0}${color}
+ESSID:${color2}$alignr${wireless_essid wlan0}${color}
+Quality:${color2}$alignr${wireless_link_qual wlan0}${color}
+
+Down  ${color3}${downspeed wlan0} ${color}${alignr}Up  ${color3}${upspeed wlan0}${color}
+${color4}${downspeedgraph wlan0 15,107} ${alignr}${upspeedgraph wlan0 15,107}${color}
+Total ${color3}${totaldown wlan0} ${color}${alignr}Total ${color3}${totalup wlan0}${color}
+
+${font Sans:size=12}${color0}BATTERY ${hr 1}${color}${font}
+
+Percent Remaining:${color3}${alignr}${battery_percent BAT0}%${color}
+Time:${color3}${alignr}${battery_time BAT0}${color}
+AC Status:${color3}${alignr}${acpiacadapter}

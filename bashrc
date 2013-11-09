@@ -13,6 +13,10 @@ alias ll='ls -l'
 alias http='python -m http.server'
 alias json='python -m json.tool'
 
+# Quick AES encryption/decryption
+alias enc='openssl aes-256-cbc -salt'
+alias dec='openssl aes-256-cbc -d -salt'
+
 # "Remind In" - schedule a popup reminder in X minutes
 rin() {
 	if [ "$2" = "" ]; then
@@ -71,7 +75,7 @@ else
 	export LSCOLORS=ExGxFxdxCxDxDxBxBxacac
 fi
 
-export PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/1.9.1/bin:$HOME/.gem/ruby/2.0.0./bin
+export PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/1.9.1/bin:$HOME/.gem/ruby/2.0.0/bin
 export EDITOR=vim
 export PAGER=less
 
@@ -80,12 +84,23 @@ export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
 
 # Lua
-export LUA_HOME="$HOME/.luarocks/share/lua/5.1"
-export LUA_PATH="./?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/lib/lua/5.1/?.lua;/usr/lib/lua/5.1/?/init.lua"
-export LUA_PATH="$LUA_PATH;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua"
-export LUA_CHOME="$HOME/.luarocks/lib/lua/5.1"
-export LUA_CPATH="./?.so;/usr/lib/lua/5.1/?.so;/usr/lib/lua/5.1/loadall.so"
-export LUA_CPATH="./?.so;$LUA_CHOME/?.so;$LUA_CHOME/loadall.so"
+function setlua51() {	
+	export LUA_HOME="$HOMEV/.luarocks/share/lua/5.1"
+	export LUA_PATH="./?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/lib/lua/5.1/?.lua;/usr/lib/lua/5.1/?/init.lua"
+	export LUA_PATH="$LUA_PATH;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua"
+	export LUA_CHOME="$HOME/.luarocks/lib/lua/5.1"
+	export LUA_CPATH="./?.so;/usr/lib/lua/5.1/?.so;/usr/lib/lua/5.1/loadall.so"
+	export LUA_CPATH="./?.so;$LUA_CHOME/?.so;$LUA_CHOME/loadall.so"
+}
+function setlua52() {
+	export LUA_HOME="$HOMEV/.luarocks/share/lua/5.2"
+	export LUA_PATH="./?.lua;/usr/share/lua/5.2/?.lua;/usr/share/lua/5.2/?/init.lua;/usr/lib/lua/5.2/?.lua;/usr/lib/lua/5.2/?/init.lua"
+	export LUA_PATH="$LUA_PATH;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua"
+	export LUA_CHOME="$HOME/.luarocks/lib/lua/5.2"
+	export LUA_CPATH="./?.so;/usr/lib/lua/5.2/?.so;/usr/lib/lua/5.2/loadall.so"
+	export LUA_CPATH="./?.so;$LUA_CHOME/?.so;$LUA_CHOME/loadall.so"
+}
+setlua51
 
 # Android
 export PATH=$PATH:$HOME/android/tools:$HOME/android/platform-tools

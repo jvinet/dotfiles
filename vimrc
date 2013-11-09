@@ -130,6 +130,10 @@ map <leader>g :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 " Close the quickfix window
 map <leader>w :cclose<CR>
 
+" Quick AES encryption/decryption
+command! Enc execute '%!openssl aes-256-cbc -salt'
+command! Dec execute '%!openssl aes-256-cbc -d -salt'
+
 " Jump 5 lines when running out of the screen
 set scrolljump=5
 

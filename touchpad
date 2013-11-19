@@ -8,7 +8,7 @@ usage() {
 on() {
 	killall syndaemon &>/dev/null
 	synclient TouchpadOff=0
-	syndaemon -i 1.5 -d -t -K
+	(sleep 2; syndaemon -i 1.5 -d -t -K) &
 	notify-send "Touchpad enabled"
 }
 

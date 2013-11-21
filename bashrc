@@ -5,10 +5,18 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+# Vi all the things
+set -o vi
+# But make sure ^L, ^A, and ^E still work when in insert mode (muscle memory)
+bind -m vi-insert "\C-l":clear-screen
+bind -m vi-insert "\C-a":beginning-of-line
+bind -m vi-insert "\C-e":end-of-line
+
 alias grep='grep --color'
 alias vi='vim'
 alias t='todo'
 alias ll='ls -l'
+alias r='ranger'
 
 alias http='python -m http.server'
 alias json='python -m json.tool'

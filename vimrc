@@ -7,7 +7,8 @@ autocmd BufNewFile,BufRead *.md  setlocal et tw=74
 autocmd BufNewFile,BufRead *.rst setlocal sw=4 ts=4 sts=4 tw=74 et
 
 " {{{ Command mappings
-autocmd BufNewFile,BufRead *.php map <leader>l :!php -l %<CR>
+autocmd BufNewFile,BufRead *.php map <leader>; :!php -l %<CR>
+autocmd BufNewFile,BufRead *.js map <leader>; :!jshint %<CR>
 " }}}
 
 "set mouse=

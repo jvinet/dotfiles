@@ -97,7 +97,7 @@ export PATH=$PATH:$GOPATH/bin
 
 # Lua
 function setlua51() {	
-	export LUA_HOME="$HOMEV/.luarocks/share/lua/5.1"
+	export LUA_HOME="$HOME/.luarocks/share/lua/5.1"
 	export LUA_PATH="./?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/lib/lua/5.1/?.lua;/usr/lib/lua/5.1/?/init.lua"
 	export LUA_PATH="$LUA_PATH;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua"
 	export LUA_CHOME="$HOME/.luarocks/lib/lua/5.1"
@@ -105,7 +105,7 @@ function setlua51() {
 	export LUA_CPATH="./?.so;$LUA_CHOME/?.so;$LUA_CHOME/loadall.so"
 }
 function setlua52() {
-	export LUA_HOME="$HOMEV/.luarocks/share/lua/5.2"
+	export LUA_HOME="$HOME/.luarocks/share/lua/5.2"
 	export LUA_PATH="./?.lua;/usr/share/lua/5.2/?.lua;/usr/share/lua/5.2/?/init.lua;/usr/lib/lua/5.2/?.lua;/usr/lib/lua/5.2/?/init.lua"
 	export LUA_PATH="$LUA_PATH;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua"
 	export LUA_CHOME="$HOME/.luarocks/lib/lua/5.2"

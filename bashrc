@@ -42,7 +42,11 @@ rin() {
 
 	mins=$1
 	shift
-	echo "zenity --display=:0 --info --text=\"$*\"" | at now + $mins min
+	if [ -x "/usr/bin/capslock_light" ]; then
+		echo "/usr/bin/capslock_light on ; zenity --display=:0 --info --text=\"Reminder: $*\" ; /usr/bin/capslock_light off" | at now + $mins min
+	else
+		echo "zenity --display=:0 --info --text=\"Reminder: $*\"" | at now + $mins min
+	fi
 	atq
 }
 

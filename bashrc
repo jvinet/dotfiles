@@ -58,7 +58,7 @@ md() {
 	fi
 
 	echo '<meta charset="utf-8">' >$2
-  echo '<link rel="stylesheet" href="http://jasonm23.github.io/markdown-css-themes/markdown8.css">' >>$2
+	echo '<link rel="stylesheet" href="http://jasonm23.github.io/markdown-css-themes/markdown8.css">' >>$2
 	markdown <$1 >>$2
 }
 

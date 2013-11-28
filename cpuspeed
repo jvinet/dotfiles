@@ -7,7 +7,10 @@
 
 if [ -z "$1" ]; then
 	echo "usage: $0 <mode>"
-	echo "Mode can be: conservative, ondemand, powersave, performance"
+	echo "Mode can be: conservative, ondemand, powersave, performance, slow, fast"
+	echo
+	echo "Note: 'slow' is an alias for 'powersave'"
+	echo "      'fast' is an alias for 'performance'"
 	exit 1
 fi
 
@@ -16,9 +19,13 @@ case "$1" in
 		sudo cpupower frequency-set -g $1
 		notify-send "CPU governor set to $1"
 		;;
-	performance|powersave)
-		sudo cpupower frequency-set -g $1
-		notify-send "CPU governor set to $1"
+	performance|fast)
+		sudo cpupower frequency-set -g performance
+		notify-send "CPU governor set to performance"
+		;;
+	powersave|slow)
+		sudo cpupower frequency-set -g powersave
+		notify-send "CPU governor set to powersave"
 		;;
 	*)
 		echo "Invalid governor: $1"

@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# A drop-in replacement for the `notify-send` utility. Logs notifications to a
+# flatfile that can be displayed on demand, and then then calls the real
+# notify-send.
+
+# Location of the real notify-send command.
+REAL_CMD=/usr/bin/notify-send
+
+# Location where notification messages should be logged.
+LOG_FILE=/home/jvinet/log/notifications.log
+
+if [ "$#" -lt 1 ]; then
+	echo "usage: $0 <message>"
+	exit 1
+fi
+
+now=`date "+%Y-%m-%d %H:%M-%S"`
+echo -e "$now\t$*" >>$LOG_FILE
+
+$REAL_CMD "$*"

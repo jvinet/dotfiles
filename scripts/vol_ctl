@@ -1,0 +1,48 @@
+#!/bin/bash
+#
+# Basic volume control.
+#
+
+dir=$1
+
+if [ -z "$dir" ]; then
+	echo "usage: $0 <up|down|mute>"
+	exit 1
+fi
+
+vol_up() {
+	#amixer -c 0 set Master 5%+
+	pactl set-sink-volume 0 +5%
+	show_level
+}
+
+vol_down() {
+	#amixer -c 0 set Master 5%-
+	pactl set-sink-volume 0 -- -5%
+	show_level
+}
+
+vol_mute() {
+	mute=`pactl list sinks | grep Mute:.yes`
+	if [ "`pactl list sinks | grep Mute:.yes`" ]; then
+		pactl set-sink-mute 0 0
+		notify-send "Volume Muted"
+	else
+		pactl set-sink-mute 0 1
+		notify-send "Volume Un-muted"
+		show_level
+	fi
+}
+
+show_level() {
+	#pcnt=`amixer -c 0 get Master | grep -o -E '[0-9]+%'`
+	pcnt=`pactl list sinks | grep Volume: | grep -o -E '[0-9]+%' | head -n 1`
+	notify-send "Volume Level: $pcnt"
+}
+
+case "$dir" in
+	up)   vol_up ;;
+	down) vol_down ;;
+	mute) vol_mute ;;
+esac
+

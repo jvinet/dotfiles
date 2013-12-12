@@ -1,0 +1,35 @@
+#!/bin/bash
+#
+# Adjust keyboard backlight.
+#
+
+dev=/sys/class/backlight/intel_backlight
+
+dir=$1
+
+if [ -z "$dir" ]; then
+	echo "usage: $0 <dir>"
+	exit 1
+fi
+
+max=`cat $dev/max_brightness`
+incr=`echo "$max / 12" | bc`
+
+cur=`cat $dev/brightness`
+
+if [ "$dir" -lt 0 ]; then
+	cur=$(($cur - $incr))
+else
+	cur=$(($cur + $incr))
+fi
+
+curpcnt=`echo "$cur * 100 / $max" | bc`
+
+sudo /usr/bin/mon_backlight $cur
+
+#notify-send \
+#	-i /usr/share/notify-osd/icons/hicolor/scalable/status/notification-keyboard-brightness.svg \
+#	-h int:value:$cur \
+#	-c keyboard \
+#	-u low \
+#	-t 800 " "

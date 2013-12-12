@@ -1,0 +1,12 @@
+#!/bin/bash
+
+for intf in eth0 wlan0; do
+	ip=`ip addr show $intf | grep 'inet ' | grep -o -E '[0-9\.]+' | head -n 1`
+	if [ "$ip" ]; then
+		echo "$intf: $ip"
+		# only output one, as that's what our conkyrc expects
+		exit
+	fi
+done
+
+echo "no connection"

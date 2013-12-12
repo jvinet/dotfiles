@@ -146,7 +146,8 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3status
+        #status_command i3status
+        status_command $HOME/.i3/conky-i3bar
 }
 
 popup_during_fullscreen smart
@@ -164,12 +165,15 @@ exec /usr/bin/pidgin
 exec /usr/bin/redshiftgui
 exec dbus-launch dunst
 
+# Set a wallpaper
+exec feh --bg-scale $HOME/Pictures/wallpaper/5GWzjAB.jpg
+
+# Quick toggle between two most recent workspaces
 bindsym $mod+Tab workspace back_and_forth
 
 # Custom app bindings
 bindsym $mod+t exec i3-sensible-terminal
 bindsym $mod+BackSpace exec $HOME/bin/lock
-bindsym $mod+d exec $HOME/bin/dashboard
 bindsym $mod+p exec galculator
 bindsym $mod+b exec i3-msg border toggle
 bindsym $mod+slash exec $HOME/bin/touchpad toggle

@@ -1,0 +1,51 @@
+background       no
+out_to_console   yes
+out_to_x         no
+update_interval  2
+total_run_times  0
+short_units      yes
+pad_percents     3
+
+override_utf8_locale yes
+
+TEXT
+[
+#Current volume. May need modified depending on your setup
+  {"full_text": " ♪ ${exec $HOME/bin/vol_ctl get} ", "color":"\#268BD2"},
+
+#Shows uploadspeed
+#  {"full_text": " ▲ [${upspeed}] ", "color":"\#ff0000"},
+
+#Shows downloadspeed
+#  {"full_text": " ▼ [${downspeed}] ", "color":"\#00fff2"},
+
+#RAM usage
+  {"full_text": " ⚂ ${mem} ", "color":"\#00fff2"},
+
+#Disk usage
+  {"full_text": " ☉ ${fs_free /} ", "color":"\#b58900"},
+
+#CPU usage
+  {"full_text": " ■ ${cpu cpu0}% ", "color":"\#00A9B5"},
+
+#Bar showing available entropy. Install haveged if you want this to rocket up. Without, /proc/sys/kernel/random/entropy_avail reported on my sysem ~175. With, it reported ~3585
+#  {"full_text": " ~ [$entropy_bar] ", "color":"\#AFB500"},
+
+#Shows temperature of CPU.
+  {"full_text": " ≈ ${freq_g 1}GHz [${execi 10 sensors | grep 'Core 0' | awk '{print $3}' | grep -o -E '[0-9]+' | head -n 1}°C] ","color":"\#cc5555"},
+  {"full_text": " ≈ ${freq_g 2}GHz [${execi 10 sensors | grep 'Core 1' | awk '{print $3}' | grep -o -E '[0-9]+' | head -n 1}°C] ","color":"\#d268bd2"},
+
+#Fan speed
+  {"full_text": " ☢ ${execi 10 sensors | grep 'RPM' | awk '{print $3}'} RPM "},
+
+#Internal IP
+  {"full_text": " ${execi 10 $HOME/.i3/ipaddr} ", "color": "\#5555dd"},
+
+#Battery
+  {"full_text": " ${battery_percent BAT0}% ${battery_time BAT0}", "color": "\#cccc00"},
+
+#Shows time
+  {"full_text": " ${time %a %d %b} ${time %H:%M} ","color": "\#2fdc57"}
+
+],
+

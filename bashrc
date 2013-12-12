@@ -88,8 +88,12 @@ else
 fi
 
 export PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/1.9.1/bin:$HOME/.gem/ruby/2.0.0/bin
+
+# Preferred applications
 export EDITOR=vim
 export PAGER=less
+export BROWSER=firefox
+export TERMINAL=terminator
 
 # Go
 export GOPATH=~/go

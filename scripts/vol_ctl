@@ -6,20 +6,20 @@
 dir=$1
 
 if [ -z "$dir" ]; then
-	echo "usage: $0 <up|down|mute>"
+	echo "usage: $0 <up|down|mute|get>"
 	exit 1
 fi
 
 vol_up() {
 	#amixer -c 0 set Master 5%+
 	pactl set-sink-volume 0 +5%
-	show_level
+	#show_level
 }
 
 vol_down() {
 	#amixer -c 0 set Master 5%-
 	pactl set-sink-volume 0 -- -5%
-	show_level
+	#show_level
 }
 
 vol_mute() {
@@ -34,9 +34,13 @@ vol_mute() {
 	fi
 }
 
+vol_get() {
+	#amixer -c 0 get Master | grep -o -E '[0-9]+%'
+	pactl list sinks | grep Volume: | grep -o -E '[0-9]+%' | head -n 1
+}
+
 show_level() {
-	#pcnt=`amixer -c 0 get Master | grep -o -E '[0-9]+%'`
-	pcnt=`pactl list sinks | grep Volume: | grep -o -E '[0-9]+%' | head -n 1`
+	pcnt=`vol_get`
 	notify-send "Volume Level: $pcnt"
 }
 
@@ -44,5 +48,6 @@ case "$dir" in
 	up)   vol_up ;;
 	down) vol_down ;;
 	mute) vol_mute ;;
+	get) vol_get ;;
 esac
 

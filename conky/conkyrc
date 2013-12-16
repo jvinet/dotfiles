@@ -10,8 +10,11 @@ override_utf8_locale yes
 
 TEXT
 [
-#Current volume. May need modified depending on your setup
-  {"full_text": " ♪ ${exec $HOME/bin/vol_ctl get} ", "color":"\#268BD2"},
+#Current brightness
+  {"full_text": " ✶ ${execi 10 $HOME/.i3/brightness} ", "color":"\#aaaa00"},
+
+#Current volume.
+  {"full_text": " ♪ ${execi 10 $HOME/bin/vol_ctl get} ", "color":"\#268BD2"},
 
 #Shows uploadspeed
 #  {"full_text": " ▲ [${upspeed}] ", "color":"\#ff0000"},
@@ -36,13 +39,13 @@ TEXT
   {"full_text": " ≈ ${freq_g 2}GHz [${execi 10 sensors | grep 'Core 1' | awk '{print $3}' | grep -o -E '[0-9]+' | head -n 1}°C] ","color":"\#d268bd2"},
 
 #Fan speed
-  {"full_text": " ☢ ${execi 10 sensors | grep 'RPM' | awk '{print $3}'} RPM "},
+  {"full_text": " ❋ ${execi 10 sensors | grep 'RPM' | awk '{print $3}'} RPM "},
 
 #Internal IP
-  {"full_text": " ${execi 10 $HOME/.i3/ipaddr} ", "color": "\#5555dd"},
+  {"full_text": " ${execi 10 $HOME/.i3/ipaddr} ", "color": "\#268BD2"},
 
 #Battery
-  {"full_text": " ${battery_percent BAT0}% ${battery_time BAT0}", "color": "\#cccc00"},
+  {"full_text": " ⚡ ${battery_percent BAT0}% ${battery_time BAT0}", "color": "\#cccc00"},
 
 #Shows time
   {"full_text": " ${time %a %d %b} ${time %H:%M} ","color": "\#2fdc57"}

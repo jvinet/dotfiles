@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# Express screen brightness as a percentage
+#
+
+dev=/sys/class/backlight/intel_backlight
+
+bri=`cat $dev/brightness`
+max=`cat $dev/max_brightness`
+
+echo "$bri * 100 / $max" | bc
+

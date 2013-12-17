@@ -11,7 +11,7 @@ override_utf8_locale yes
 TEXT
 [
 #Current brightness
-  {"full_text": " ✶ ${execi 10 $HOME/.i3/brightness} ", "color":"\#aaaa00"},
+  {"full_text": " ✶ ${execi 10 $HOME/.i3/brightness}% ", "color":"\#aaaa00"},
 
 #Current volume.
   {"full_text": " ♪ ${execi 10 $HOME/bin/vol_ctl get} ", "color":"\#268BD2"},

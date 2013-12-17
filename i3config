@@ -84,6 +84,8 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
+# focus a child container
+bindsym $mod+c focus child
 
 # focus the child container
 #bindsym $mod+d focus child

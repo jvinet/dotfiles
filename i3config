@@ -175,7 +175,7 @@ exec /usr/bin/redshiftgui
 exec dbus-launch dunst
 
 # Set a wallpaper
-exec feh --bg-scale $HOME/Pictures/wallpaper/5GWzjAB.jpg
+exec sh $HOME/.fehbg
 
 # Quick toggle between two most recent workspaces
 bindsym $mod+Tab workspace back_and_forth

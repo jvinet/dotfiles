@@ -16,10 +16,15 @@ xset r rate 300
 # load keyboard modifications
 xmodmap ~/.Xmodmap
 
+# compositing
+compton --inactive-dim 0.02 -b
+
 # start pulseaudio if it isn't running already
 if [ ! "`pgrep pulseaudio`" ]; then
 	pulseaudio --start
 fi
 
+#exec gnome-session
+#exec startkde
 #exec startxfce4
 exec i3

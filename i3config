@@ -125,20 +125,20 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
+        # Pressing left will shrink the window's width.
+        # Pressing right will grow the window's width.
+        # Pressing up will shrink the window's height.
+        # Pressing down will grow the window's height.
+        bindsym h resize shrink width 10 px or 5 ppt
+        bindsym j resize grow height 10 px or 5 ppt
+        bindsym k resize shrink height 10 px or 5 ppt
+        bindsym l resize grow width 10 px or 5 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 10 px or 5 ppt
+        bindsym Down resize grow height 10 px or 5 ppt
+        bindsym Up resize shrink height 10 px or 5 ppt
+        bindsym Right resize grow width 10 px or 5 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -165,6 +165,7 @@ focus_follows_mouse on
 for_window [title="Wicd Network Manager"] floating enable
 for_window [title="Redshift GUI"] floating enable
 for_window [title="Buddy List"] floating enable
+for_window [title="galculator"] floating enable
 for_window [class="Gnuplot"] floating enable
 
 # Programs to run at startup
@@ -190,6 +191,8 @@ bindsym $mod+b exec i3-msg border toggle
 bindsym $mod+slash exec $HOME/bin/touchpad toggle
 bindsym $mod+bracketleft exec $HOME/bin/cpuspeed slow
 bindsym $mod+bracketright exec $HOME/bin/cpuspeed fast
+bindsym $mod+comma exec compton-trans -c -5
+bindsym $mod+period exec compton-trans -c +5
 bindsym XF86MonBrightnessUp exec $HOME/bin/mon_bl +1
 bindsym XF86MonBrightnessDown exec $HOME/bin/mon_bl -1
 bindsym XF86KbdBrightnessUp exec $HOME/bin/kbd_bl +1

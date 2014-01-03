@@ -61,6 +61,15 @@ md() {
 	echo '<link rel="stylesheet" href="http://jasonm23.github.io/markdown-css-themes/markdown8.css">' >>$2
 	markdown <$1 >>$2
 }
+mdv() {
+	dst=${1%%.*}.md.html
+	md $1 ${dst}
+	if [ -f $dst ]; then
+		$BROWSER $dst
+		sleep 2
+		rm $dst
+	fi
+}
 
 if [ "`uname`" = "Linux" ]; then
 	alias ls='ls --color'

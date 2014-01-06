@@ -222,6 +222,11 @@ let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
 " }}}
 
+" {{{ VimWiki
+let g:vimwiki_list = [{'path': '~/work/personal/vimwiki/', 'path_html': '~/work/personal/vimwiki/html'},
+                   \  {'path': '~/work/betsmart/vimwiki/', 'path_html': '~/work/betsmart/vimwiki/html'}]
+" }}}
+
 " {{{ Cursorline
 hi CursorLine ctermbg=017 cterm=none
 augroup CursorLine

@@ -63,7 +63,7 @@ md() {
 }
 mdv() {
 	dst=${1%%.*}.md.html
-	md $1 ${dst}
+	md $1 $dst
 	if [ -f $dst ]; then
 		$BROWSER $dst
 		sleep 2

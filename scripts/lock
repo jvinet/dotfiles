@@ -3,5 +3,5 @@
 # Lock the desktop and turn off the display.
 #
 
-xset dpms force standby
+(sleep 2; xset dpms force standby) &
 slock

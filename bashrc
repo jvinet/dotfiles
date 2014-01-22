@@ -17,6 +17,8 @@ alias vi='vim'
 alias t='todo'
 alias ll='ls -l'
 alias r='ranger'
+alias xc='xclip -selection clipboard'
+alias xp='xclip -selection clipboard -o'
 
 alias http='python -m http.server'
 alias json='python -m json.tool'

@@ -1,4 +1,7 @@
 :AlignMapsClean	Align.txt	/*:AlignMapsClean*
+:QFNAdd	qfn.txt	/*:QFNAdd*
+:QFNAddQ	qfn.txt	/*:QFNAddQ*
+:QFNSave	qfn.txt	/*:QFNSave*
 Align-copyright	Align.txt	/*Align-copyright*
 align	Align.txt	/*align*
 align-align	Align.txt	/*align-align*
@@ -92,3 +95,15 @@ alignusage	Align.txt	/*alignusage*
 g:AlignSkip	Align.txt	/*g:AlignSkip*
 g:alignmaps_euronumber	Align.txt	/*g:alignmaps_euronumber*
 g:alignmaps_usanumber	Align.txt	/*g:alignmaps_usanumber*
+qfn-commands	qfn.txt	/*qfn-commands*
+qfn-faq	qfn.txt	/*qfn-faq*
+qfn-functions	qfn.txt	/*qfn-functions*
+qfn-install	qfn.txt	/*qfn-install*
+qfn-intro	qfn.txt	/*qfn-intro*
+qfn-license	qfn.txt	/*qfn-license*
+qfn-online	qfn.txt	/*qfn-online*
+qfn-options	qfn.txt	/*qfn-options*
+qfn-requirements	qfn.txt	/*qfn-requirements*
+qfn-todo	qfn.txt	/*qfn-todo*
+qfn-using	qfn.txt	/*qfn-using*
+qfn.txt	qfn.txt	/*qfn.txt*

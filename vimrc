@@ -129,8 +129,11 @@ map <leader>p :setlocal paste!<CR>
 command! -nargs=+ Grep execute 'silent grep! -r <args>' | copen 33
 " Search for the word under the cursor and display results in the quickfix
 map <leader>g :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+
 " Close the quickfix window
 map <leader>w :cclose<CR>
+" Open the quickfix window
+map <leader>c :copen<CR>
 
 " Quick AES encryption/decryption
 command! Enc execute '%!openssl aes-256-cbc -salt'
@@ -210,6 +213,11 @@ nmap <leader>e :NERDTreeToggle<CR>
 
 " {{{ TagBar
 nmap <leader>b :TagbarToggle<CR>
+" }}}
+
+" {{{ QFN
+map mn <Plug>QuickFixNote
+map ms <Plug>QuickFixSave
 " }}}
 
 " {{{ Ctrl-P Plugin

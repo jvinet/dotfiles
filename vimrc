@@ -10,6 +10,7 @@ autocmd BufNewFile,BufRead *.rst  setlocal sw=4 ts=4 sts=4 tw=74 et
 " {{{ Command mappings
 autocmd BufNewFile,BufRead *.php map <leader>; :!php -l %<CR>
 autocmd BufNewFile,BufRead *.js map <leader>; :!jshint %<CR>
+autocmd BufNewFile,BufRead *.py map <leader>; :!pylint -r n -f colorized %<CR>
 " }}}
 
 "set mouse=
@@ -216,8 +217,8 @@ nmap <leader>b :TagbarToggle<CR>
 " }}}
 
 " {{{ QFN
-map mn <Plug>QuickFixNote
-map ms <Plug>QuickFixSave
+map mn :QFNAddQ<CR>
+map ms :QFNSave annotations.txt<CR>
 " }}}
 
 " {{{ Ctrl-P Plugin

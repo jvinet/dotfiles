@@ -46,6 +46,13 @@ Opening/Finding files
   - grep -r for the word under the cursor: \g
   - Change CWD to current file's dir: \cd
 
+Annotations
+-----------
+  - Make a note (in quickfix window) about the current line: mn
+  - Save quickfix window to 'annotations.txt': ms
+  - Open quickfix window: \c
+  - Close quickfix window: \w
+
 Tags
 ----
   - list:  :ts
@@ -62,7 +69,7 @@ Quick jumps:
 Use with other plugins:
 
   - :CtrlPTag
-  - :TagbarToggle
+  - :TagbarToggle (\b)
 
 Misc
 ----

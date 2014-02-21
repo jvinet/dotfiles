@@ -252,7 +252,8 @@ highlight TrailingWhitespace ctermbg=052
 match TrailingWhitespace /\s\+$/
 
 " Visually indicate when I'm over 80-cols on line length, and add the ability
-" to turn it on/off.
+" to turn it on/off. Show text with a dark-red background, but show regular
+" syntax highlighting.
 highlight OverLength ctermbg=052
 let w:m1=0
 map <leader>o :call ToggleOverLength()<CR>
@@ -270,19 +271,19 @@ call ToggleOverLength()
 set laststatus=2
 
 set statusline=
-set statusline+=%-99f    " Filename, set to aggressive fill
+set statusline+=%-99f                       " filename, set to aggressive fill
 
-set statusline+=%=    " everything after this is right-aligned
-set statusline+=%3*%{&modified?'[+]\ ':''} " modified flag
+set statusline+=%=                          " everything after this is right-aligned
+set statusline+=%3*%{&modified?'[+]\ ':''}  " modified flag
 set statusline+=%4*%{&readonly?'[RO]\ ':''} " read-only flag
-set statusline+=%5*%{&paste?'[P]\ ':''} " paste mode
+set statusline+=%5*%{&paste?'[P]\ ':''}     " paste mode
 
-set statusline+=%< " Truncate here if we run out of space
-set statusline+=%2*\|\ %1*\%{&ff}\ %2*\| " File format
+set statusline+=%<                          " truncate here if we run out of space
+set statusline+=%2*\|\ %1*\%{&ff}\ %2*\|    " file format
 set statusline+=%1*\ %{strlen(&fenc)?&fenc:'none'}\ %2*\| " file encoding
-set statusline+=%1*\ %{tolower(&ft)}\ %2*\| " Filetype, lowercase without surrounding square brackets
-set statusline+=%1*\ %l,%c\ %2*\| " line, col position
-set statusline+=%1*\ %p%% " Total lines, % of file
+set statusline+=%1*\ %{tolower(&ft)}\ %2*\| " filetype, lowercase without surrounding square brackets
+set statusline+=%1*\ %l,%c\ %2*\|           " line, col position
+set statusline+=%1*\ %p%%                   " total lines, % of file
 
 " TODO: add guibg/fg color triplets
 "       http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim

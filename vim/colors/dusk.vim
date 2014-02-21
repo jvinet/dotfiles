@@ -30,7 +30,7 @@ hi DiffText term=reverse cterm=bold ctermbg=Red gui=bold guibg=Red
 hi Cursor guibg=Green guifg=Black
 hi lCursor guibg=Cyan guifg=Black
 hi Directory term=bold ctermfg=LightCyan guifg=Cyan
-hi LineNr term=underline ctermfg=Grey guifg=Grey
+hi LineNr term=underline ctermfg=Grey ctermbg=235 guifg=Grey
 hi MoreMsg term=bold ctermfg=LightGreen gui=bold guifg=SeaGreen
 hi NonText term=bold ctermfg=LightBlue gui=bold guifg=LightBlue guibg=grey30
 hi Question term=standout ctermfg=LightGreen gui=bold guifg=Green

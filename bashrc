@@ -27,27 +27,34 @@ alias json='python -m json.tool'
 alias enc='openssl aes-256-cbc -salt'
 alias dec='openssl aes-256-cbc -d -salt'
 
-# "Remind In" - schedule a popup reminder in X minutes
+# "Remind In" - schedule a popup reminder in X minutes or at a specific time
 rin() {
 	if [ "$2" = "" ]; then
-		echo "usage: rin <minutes> <text>"
+		echo "usage: rin <minutes|time> <text>"
+		echo "   ex: rin +30   Check the turkey"
+		echo "   ex: rin 16:00 Watch hockey"
 		return
 	fi
 	if [ "`pgrep atd`" = "" ]; then
 		echo "error: atd is not running"
 		return
-	fi	
+	fi
 	if [ "`which zenity`" = "" ]; then
 		echo "error: zenity is not installed"
 		return
 	fi
 
-	mins=$1
+	time=$1
+	atcmd="at $time"
+	if [ "${time:0:1}" = "+" ]; then
+		# time is relative to now
+		atcmd="at now + ${time:1} min"
+	fi
 	shift
 	if [ -x "/usr/bin/capslock_light" ]; then
-		echo "/usr/bin/capslock_light on ; zenity --display=:0 --info --text=\"Reminder: $*\" ; /usr/bin/capslock_light off" | at now + $mins min
+		echo "/usr/bin/capslock_light on ; zenity --display=:0 --info --text=\"Reminder: $*\" ; /usr/bin/capslock_light off" | $atcmd
 	else
-		echo "zenity --display=:0 --info --text=\"Reminder: $*\"" | at now + $mins min
+		echo "zenity --display=:0 --info --text=\"Reminder: $*\"" | $atcmd
 	fi
 	atq
 }

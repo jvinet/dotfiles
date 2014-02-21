@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if [ ! -d ~/work/betsmart ]; then
+	echo "Mount the work partition first, so lsyncd can run."
+	exit 1
+fi
+
+if [ ! "`pgrep ssh-agent`" ]; then
+	echo "Start your SSH agent first, so lsyncd can run."
+	exit 1
+fi
+
+#echo -n "cpupower.py... "
+#~/bin/cpupower.py &
+
+echo -n "doorman.py... "
+~/bin/doorman.py
+
+echo -n "CPU governor... powersave"
+sudo cpupower frequency-set -g powersave
+
+if [ ! "`pgrep redshiftgui`" ]; then
+	echo -n "redshiftgui... "
+	redshiftgui &>/dev/null &
+fi
+
+echo -n "lsyncd... "
+lsyncd ~/.lsyncd.conf
+echo
+
+echo  -n "syndaemon... "
+~/bin/touchpad on
+echo "ok"
+
+

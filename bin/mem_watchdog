@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+# Watch processes and look for any that have RSS in excess of the
+# specified threshold.  If one (or more) is found, notify some guy.
+#
+# Cobbled together by Judd Vinet <jvinet@zeroflux.org>
+#
+
+#notify=echo
+notify=notify-send
+
+# 1536MB (in KB)
+thresh=$((1536 * 1024))
+
+if [ "$1" ]; then
+        thresh=$(($1 * 1024))
+fi
+
+chk() {
+        ps aux | while read line; do
+                rss=`echo $line | awk '{print $6}'`
+
+                # nobody likes you, header
+                [ "$rss" = "RSS" ] && continue
+
+                if [ "$rss" -gt $thresh ]; then
+                        pid=`echo $line | awk '{print $2}'`
+                        virt=`echo $line | awk '{print $5}'`
+                        cmd=`echo $line | awk '{print $11}'`
+                        $notify "Process $pid ($cmd) is using $rss KB RSS"
+                fi
+        done
+}
+
+while true; do
+        chk
+        # doing this every 2 minutes should annoy me enough to take action
+        sleep 120
+done

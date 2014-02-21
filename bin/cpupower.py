@@ -13,9 +13,9 @@ bus = dbus.SessionBus()
 
 def listener(onBattery):
     if onBattery:
-        call(['/usr/bin/cpuspeed', 'slow'])
+        call(['/usr/bin/cpuspeed', 'powersave'])
     else:
-        call(['/usr/bin/cpuspeed', 'fast'])
+        call(['/usr/bin/cpuspeed', 'performance'])
 
 bus.add_signal_receiver(listener,
                         dbus_interface="org.freedesktop.PowerManagement",

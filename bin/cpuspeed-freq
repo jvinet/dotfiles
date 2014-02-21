@@ -11,7 +11,7 @@ if [ "`whoami`" != "root" ]; then
 fi
 
 sys=/sys/devices/system/cpu/intel_pstate
-if [ ! -f $sys ]; then
+if [ ! -w $sys ]; then
 	echo "Error: intel-pstate driver is not enabled."
 	exit 1
 fi

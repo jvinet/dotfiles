@@ -13,7 +13,7 @@ if [ -z "$dir" ]; then
 fi
 
 max=`cat $dev/max_brightness`
-incr=`echo "$max / 12" | bc`
+incr=`echo "$max / 14" | bc`
 
 cur=`cat $dev/brightness`
 
@@ -22,6 +22,8 @@ if [ "$dir" -lt 0 ]; then
 else
 	cur=$(($cur + $incr))
 fi
+
+[ "$cur" -lt 0 ] && cur=0
 
 curpcnt=`echo "$cur * 100 / $max" | bc`
 

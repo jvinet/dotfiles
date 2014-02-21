@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Connect to zeroflux wireless network.
+#
+
+essid='zeroflux'
+
+netnum=`wicd-cli --wireless --scan --list-networks | grep $essid | cut -f1`
+if [ "$netnum" ]; then
+	notify-send "Connecting to $essid"
+
+	wicd-cli --wireless --connect -n $netnum
+	if [ $? -eq 0 ]; then
+		notify-send "Connected to $essid"
+	fi
+fi

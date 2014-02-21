@@ -1,0 +1,15 @@
+#!/bin/bash
+#
+# Keep an eye on the CPU fan speed and alert me if it exceeds a
+# nominal threshold.
+#
+
+THRESH=3500
+
+while true; do
+	fanrpm=`exec sensors | grep 'RPM' | awk '{print $3}'`
+	if [ "$fanrpm" -gt $THRESH ]; then
+		notify-send "CPU fan speed is currently $fanrpm RPM"
+	fi
+	sleep 120
+done

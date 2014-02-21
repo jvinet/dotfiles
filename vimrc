@@ -17,7 +17,11 @@ set mouse=a
 
 set encoding=utf8
 
+" Color theme
 syntax on
+"color molokai
+"let g:molokai_original=1
+"let g:rehash256=1
 color dusk
 
 " Make sure we're getting 256 colors when it's available
@@ -239,8 +243,13 @@ hi TabLine ctermfg=000 ctermbg=255
 hi TabLineSel ctermfg=000 ctermbg=247 cterm=underline
 hi TabTitle ctermfg=018 cterm=bold
 
-" Show the border between <80 and >80 columns
-"set colorcolumn=80
+" Change the bg color of all the editor space at 80 and >120 cols
+let &colorcolumn="80,".join(range(120,999), ",")
+highlight ColorColumn ctermbg=233
+
+" Highlight trailing whitespace   
+highlight TrailingWhitespace ctermbg=052
+match TrailingWhitespace /\s\+$/
 
 " Visually indicate when I'm over 80-cols on line length, and add the ability
 " to turn it on/off.
@@ -252,7 +261,7 @@ function! ToggleOverLength()
 		call matchdelete(w:m1)
 		let w:m1=0
 	else
-		let w:m1=matchadd('OverLength', '\%81v.\+', -1)
+		let w:m2=matchadd('OverLength', '\%120v.\+', 11)
 	endif
 endfunction
 call ToggleOverLength()
@@ -265,7 +274,7 @@ set statusline+=%-99f    " Filename, set to aggressive fill
 
 set statusline+=%=    " everything after this is right-aligned
 set statusline+=%3*%{&modified?'[+]\ ':''} " modified flag
-set statusline+=%4*%{&readonly?'[RO]\ ':''} " read-only flag 
+set statusline+=%4*%{&readonly?'[RO]\ ':''} " read-only flag
 set statusline+=%5*%{&paste?'[P]\ ':''} " paste mode
 
 set statusline+=%< " Truncate here if we run out of space

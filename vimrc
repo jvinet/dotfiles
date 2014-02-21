@@ -261,7 +261,7 @@ function! ToggleOverLength()
 		call matchdelete(w:m1)
 		let w:m1=0
 	else
-		let w:m2=matchadd('OverLength', '\%120v.\+', 11)
+		let w:m1=matchadd('OverLength', '\%81v.\+', 11)
 	endif
 endfunction
 call ToggleOverLength()

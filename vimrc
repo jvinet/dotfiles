@@ -7,13 +7,12 @@ autocmd BufNewFile,BufRead *.md   setlocal et tw=74
 autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
 autocmd BufNewFile,BufRead *.rst  setlocal sw=4 ts=4 sts=4 tw=74 et
 
-" {{{ Command mappings
+" Command mappings
 autocmd BufNewFile,BufRead *.php map <leader>; :!php -l %<CR>
 autocmd BufNewFile,BufRead *.js map <leader>; :!jshint %<CR>
 autocmd BufNewFile,BufRead *.py map <leader>; :!pylint -r n -f colorized %<CR>
-" }}}
 
-"set mouse=
+" Use the mouse
 set mouse=a
 
 set encoding=utf8
@@ -168,10 +167,6 @@ map <leader>r :redraw!<CR>
 map j gj
 map k gk
 
-" PageUp/PageDown without requiring a Fn+Up/Dn combo
-"noremap [ [5~
-"noremap ] [6~
-
 " Easy movement between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -189,39 +184,34 @@ map <leader>[  :tabprev<CR>
 " Don't remove indentation when adding '#' comments
 inoremap # X#
 
-" {{{ Automatic close char mapping
+" Automatic close char mapping
 "inoremap { {<CR>}<C-O>O
 "inoremap [ []<LEFT>
 "inoremap ( ()<LEFT>
 "inoremap " ""<LEFT>
 "inoremap ' ''<LEFT>
-" }}}
 
-" {{{ Wrap visual selections with chars
+" Wrap visual selections with chars
 vnoremap ( "zdi(<C-R>z)<ESC>
 vnoremap { "zdi{<C-R>z}<ESC>
 vnoremap [ "zdi[<C-R>z]<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
 vnoremap " "zdi"<C-R>z"<ESC>
-" }}}
 
 " Activate pathogen
 execute pathogen#infect()
 
-" {{{ NERDTree
+" NERDTree
 nmap <leader>e :NERDTreeToggle<CR>
-" }}}
 
-" {{{ TagBar
+" TagBar
 nmap <leader>b :TagbarToggle<CR>
-" }}}
 
-" {{{ QFN
+" QFN
 map mn :QFNAddQ<CR>
 map ms :QFNSave annotations.txt<CR>
-" }}}
 
-" {{{ Ctrl-P Plugin
+" Ctrl-P Plugin
 "set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_map = '<leader>t'
 let g:ctrlp_match_window_bottom = 0
@@ -230,31 +220,44 @@ let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
-" }}}
 
-" {{{ VimWiki
+" VimWiki
 let g:vimwiki_list = [{'path': '~/work/personal/vimwiki/', 'path_html': '~/work/personal/vimwiki/html'},
                    \  {'path': '~/work/betsmart/vimwiki/', 'path_html': '~/work/betsmart/vimwiki/html'}]
-" }}}
 
-" {{{ Cursorline
+" Cursorline
 hi CursorLine ctermbg=017 cterm=none
 augroup CursorLine
 	au!
 	au InsertEnter * setlocal cursorline
 	au InsertLeave * setlocal nocursorline
 augroup END
-" }}}
 
-" {{{ Tabs
+" Tabs
 hi TabLineFill ctermfg=255 ctermbg=255 cterm=underline
 hi TabLine ctermfg=000 ctermbg=255
 hi TabLineSel ctermfg=000 ctermbg=247 cterm=underline
 hi TabTitle ctermfg=018 cterm=bold
-" }}}
-	
 
-" {{{ Statusline
+" Show the border between <80 and >80 columns
+"set colorcolumn=80
+
+" Visually indicate when I'm over 80-cols on line length, and add the ability
+" to turn it on/off.
+highlight OverLength ctermbg=052
+let w:m1=0
+map <leader>o :call ToggleOverLength()<CR>
+function! ToggleOverLength()
+	if w:m1
+		call matchdelete(w:m1)
+		let w:m1=0
+	else
+		let w:m1=matchadd('OverLength', '\%81v.\+', -1)
+	endif
+endfunction
+call ToggleOverLength()
+
+" Statusline
 set laststatus=2
 
 set statusline=
@@ -300,4 +303,3 @@ call ResetStatuslineColor()
 au InsertEnter * call InsertStatuslineColor(v:insertmode)
 au InsertChange * call InsertStatuslineColor(v:insertmode)
 au InsertLeave * call ResetStatuslineColor()
-" }}}

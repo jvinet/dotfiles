@@ -94,7 +94,6 @@ if [ "`uname`" = "Linux" ]; then
 	if [ -n "$pid" ]; then
 		export SSH_AGENT_PID=$pid
 		dir=`/bin/ls -d1 /tmp/ssh-*/agent* | head -n 1`
-		export SSH_AGENT_PID=$pid
 		export SSH_AUTH_SOCK=$dir
 	fi
 else
@@ -118,7 +117,7 @@ export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
 
 # Lua
-function setlua51() {	
+function setlua51() {
 	export LUA_HOME="$HOME/.luarocks/share/lua/5.1"
 	export LUA_PATH="./?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/lib/lua/5.1/?.lua;/usr/lib/lua/5.1/?/init.lua"
 	export LUA_PATH="$LUA_PATH;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua"

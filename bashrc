@@ -117,23 +117,29 @@ export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
 
 # Lua
-function setlua51() {
-	export LUA_HOME="$HOME/.luarocks/share/lua/5.1"
-	export LUA_PATH="./?.lua;/usr/share/lua/5.1/?.lua;/usr/share/lua/5.1/?/init.lua;/usr/lib/lua/5.1/?.lua;/usr/lib/lua/5.1/?/init.lua"
+function setlua() {
+	if [ "$1" = "" ]; then
+		echo "usage: setlua <version>"
+		echo "ex:    setlua 5.1"
+		return
+	fi
+	export LUA_HOME="$HOME/.luarocks/share/lua/$1"
+	export LUA_PATH="./?.lua;/usr/share/lua/$1/?.lua;/usr/share/lua/$1/?/init.lua;/usr/lib/lua/$1/?.lua;/usr/lib/lua/$1/?/init.lua"
 	export LUA_PATH="$LUA_PATH;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua"
-	export LUA_CHOME="$HOME/.luarocks/lib/lua/5.1"
-	export LUA_CPATH="./?.so;/usr/lib/lua/5.1/?.so;/usr/lib/lua/5.1/loadall.so"
+	export LUA_CHOME="$HOME/.luarocks/lib/lua/$1"
+	export LUA_CPATH="./?.so;/usr/lib/lua/$1/?.so;/usr/lib/lua/$1/loadall.so"
 	export LUA_CPATH="./?.so;$LUA_CHOME/?.so;$LUA_CHOME/loadall.so"
+	if [ "$1" = "5.1" ]; then
+		alias lua='lua5.1'
+		alias luac='luac5.1'
+		alias luarocks='luarocks-5.1'
+	elif [ "$1" = "5.2" ]; then
+		unalias lua 2>/dev/null
+		unalias luac 2>/dev/null
+		unalias luarocks 2>/dev/null
+	fi
 }
-function setlua52() {
-	export LUA_HOME="$HOME/.luarocks/share/lua/5.2"
-	export LUA_PATH="./?.lua;/usr/share/lua/5.2/?.lua;/usr/share/lua/5.2/?/init.lua;/usr/lib/lua/5.2/?.lua;/usr/lib/lua/5.2/?/init.lua"
-	export LUA_PATH="$LUA_PATH;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua;$LUA_HOME/?.lua;$LUA_HOME/?/init.lua"
-	export LUA_CHOME="$HOME/.luarocks/lib/lua/5.2"
-	export LUA_CPATH="./?.so;/usr/lib/lua/5.2/?.so;/usr/lib/lua/5.2/loadall.so"
-	export LUA_CPATH="./?.so;$LUA_CHOME/?.so;$LUA_CHOME/loadall.so"
-}
-setlua51
+setlua 5.1
 
 # Android
 export PATH=$PATH:$HOME/android/tools:$HOME/android/platform-tools

@@ -12,6 +12,7 @@ bind -m vi-insert "\C-l":clear-screen
 bind -m vi-insert "\C-a":beginning-of-line
 bind -m vi-insert "\C-e":end-of-line
 
+# I type these things a lot
 alias grep='grep --color'
 alias vi='vim'
 alias t='todo'
@@ -20,6 +21,7 @@ alias r='ranger'
 alias xc='xclip -selection clipboard'
 alias xp='xclip -selection clipboard -o'
 
+# Python has some very handy treats
 alias http='python -m http.server'
 alias json='python -m json.tool'
 
@@ -61,17 +63,32 @@ rin() {
 
 # I markdown things a lot, and they should look nice
 md() {
-	if [ "$2" = "" ]; then
-		echo "usage: md <in.md> <out.html>"
+	if [ "$1" = "" ]; then
+		echo "usage: md <in.md> [out.html]"
 		return
 	fi
+	dst=$2
+	[ -z "$dst" ] && dst=${1%.*}.html
 
-	echo '<meta charset="utf-8">' >$2
-	echo '<link rel="stylesheet" href="http://jasonm23.github.io/markdown-css-themes/markdown8.css">' >>$2
-	markdown <$1 >>$2
+	# Make it look decent
+	css='http://jasonm23.github.io/markdown-css-themes/markdown8.css'
+
+	# We overwrite with impunity, no erasies
+	echo '<!doctype html>' >$dst
+	echo '<html><head><meta charset="utf-8">' >>$dst
+	echo '<style type="text/css">' >>$dst
+	curl -s $css >>$dst
+	echo '</style></head><body>' >>$dst
+	markdown <$1 >>$dst
+	echo '</body></html>' >>$dst
 }
+# Markdown and view immediately in a browser, then remove the html file
 mdv() {
-	dst=${1%%.*}.md.html
+	if [ "$1" = "" ]; then
+		echo "usage: mdv <in.md>"
+		return
+	fi
+	dst=${1%.*}.md.html
 	md $1 $dst
 	if [ -f $dst ]; then
 		$BROWSER $dst
@@ -120,7 +137,7 @@ export PATH=$PATH:$GOPATH/bin
 function setlua() {
 	if [ "$1" = "" ]; then
 		echo "usage: setlua <version>"
-		echo "ex:    setlua 5.1"
+		echo "   ex: setlua 5.1"
 		return
 	fi
 	export LUA_HOME="$HOME/.luarocks/share/lua/$1"

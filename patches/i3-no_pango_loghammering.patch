@@ -1,0 +1,15 @@
+diff -Naur i3-4.7.2-orig/libi3/font.c i3-4.7.2/libi3/font.c
+--- i3-4.7.2-orig/libi3/font.c	2014-01-23 13:52:24.000000000 -0800
++++ i3-4.7.2/libi3/font.c	2014-02-11 11:08:40.140521997 -0800
+@@ -43,9 +43,9 @@
+                        (double)root_screen->height_in_millimeters;
+     if (logged_dpi != dpi) {
+         logged_dpi = dpi;
+-        LOG("X11 root window dictates %f DPI\n", dpi);
++        /*LOG("X11 root window dictates %f DPI\n", dpi);*/
+     } else {
+-        DLOG("X11 root window dictates %f DPI\n", dpi);
++        /*DLOG("X11 root window dictates %f DPI\n", dpi);*/
+     }
+     pango_cairo_context_set_resolution(context, dpi);
+     layout = pango_layout_new(context);

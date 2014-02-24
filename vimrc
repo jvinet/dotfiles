@@ -245,7 +245,7 @@ hi TabTitle ctermfg=018 cterm=bold
 
 " Change the bg color of all the editor space at 80 and >120 cols
 let &colorcolumn="80,".join(range(120,999), ",")
-highlight ColorColumn ctermbg=233
+highlight ColorColumn ctermbg=234
 
 " Highlight trailing whitespace   
 highlight TrailingWhitespace ctermbg=052
@@ -255,17 +255,16 @@ match TrailingWhitespace /\s\+$/
 " to turn it on/off. Show text with a dark-red background, but show regular
 " syntax highlighting.
 highlight OverLength ctermbg=052
-let w:m1=0
 map <leader>o :call ToggleOverLength()<CR>
 function! ToggleOverLength()
-	if w:m1
+	if exists('w:m1')
 		call matchdelete(w:m1)
-		let w:m1=0
+		unlet w:m1
 	else
 		let w:m1=matchadd('OverLength', '\%81v.\+', 11)
 	endif
 endfunction
-call ToggleOverLength()
+"call ToggleOverLength()
 
 " Statusline
 set laststatus=2

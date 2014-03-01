@@ -13,6 +13,9 @@ fi
 #echo -n "cpupower.py... "
 #~/bin/cpupower.py &
 
+echo -n "unclutter... "
+unclutter -grab &
+
 echo -n "doorman.py... "
 ~/bin/doorman.py
 

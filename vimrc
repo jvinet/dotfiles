@@ -205,8 +205,8 @@ vnoremap " "zdi"<C-R>z"<ESC>
 " Activate pathogen
 execute pathogen#infect()
 
-" NERDTree
-nmap <leader>e :NERDTreeToggle<CR>
+" NERDTree (often requires a redraw)
+nmap <leader>e :NERDTreeToggle<CR>:sleep 100m<CR>:redraw!<CR>
 
 " TagBar
 nmap <leader>b :TagbarToggle<CR>

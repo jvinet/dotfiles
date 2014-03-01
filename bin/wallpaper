@@ -1,0 +1,9 @@
+#!/bin/bash
+#
+# Pick a random image from a directory and make it wallpaper.
+#
+
+dir=$HOME/Pictures/wallpaper/milky_way
+
+fn="`find $dir -type f | sort -R | tail -n 1`"
+feh --bg-scale "`realpath $fn`"

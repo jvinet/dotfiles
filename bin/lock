@@ -3,5 +3,11 @@
 # Lock the desktop and turn off the display.
 #
 
+# Save brightness
+bri=`/usr/bin/mon_backlight`
+
 (sleep 2; xset dpms force standby) &
 slock
+
+# Restore brightness
+sudo /usr/bin/mon_backlight $bri

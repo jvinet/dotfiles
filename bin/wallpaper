@@ -6,4 +6,4 @@
 dir=$HOME/Pictures/wallpaper/milky_way
 
 fn="`find $dir -type f | sort -R | tail -n 1`"
-feh --bg-scale "`realpath $fn`"
+DISPLAY=:0 feh --bg-scale "`realpath $fn`"

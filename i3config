@@ -169,14 +169,14 @@ for_window [title="galculator"] floating enable
 for_window [class="Gnuplot"] floating enable
 
 # Programs to run at startup
-exec /usr/bin/dropboxd
-exec /usr/bin/wicd-client
-exec /usr/bin/pidgin
-exec /usr/bin/redshiftgui
-exec dbus-launch dunst
+exec --no-startup-id /usr/bin/dropboxd
+exec --no-startup-id /usr/bin/wicd-client
+exec --no-startup-id /usr/bin/pidgin
+exec --no-startup-id /usr/bin/redshiftgui
+exec --no-startup-id dbus-launch dunst
 
 # Set a wallpaper
-exec sh $HOME/.fehbg
+exec --no-startup-id sh $HOME/.fehbg
 
 # Quick toggle between two most recent workspaces
 bindsym $mod+Tab workspace back_and_forth
@@ -185,19 +185,19 @@ bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+w exec --no-startup-id quickswitch.py
 
 # Custom app bindings
-bindsym $mod+BackSpace exec $HOME/bin/lock
-bindsym $mod+p exec galculator
-bindsym $mod+b exec i3-msg border toggle
-bindsym $mod+slash exec $HOME/bin/touchpad toggle
-bindsym $mod+bracketleft exec $HOME/bin/cpuspeed slow
-bindsym $mod+bracketright exec $HOME/bin/cpuspeed fast
-bindsym $mod+comma exec compton-trans -c -5
-bindsym $mod+period exec compton-trans -c +5
-bindsym XF86MonBrightnessUp exec $HOME/bin/mon_bl +1
-bindsym XF86MonBrightnessDown exec $HOME/bin/mon_bl -1
-bindsym XF86KbdBrightnessUp exec $HOME/bin/kbd_bl +1
-bindsym XF86KbdBrightnessDown exec $HOME/bin/kbd_bl -1
-bindsym XF86AudioRaiseVolume exec $HOME/bin/vol_ctl up
-bindsym XF86AudioLowerVolume exec $HOME/bin/vol_ctl down
-bindsym XF86AudioMute exec $HOME/bin/vol_ctl mute
+bindsym $mod+BackSpace exec --no-startup-id $HOME/bin/lock
+bindsym $mod+p exec --no-startup-id galculator
+bindsym $mod+b exec --no-startup-id i3-msg border toggle
+bindsym $mod+slash exec --no-startup-id $HOME/bin/touchpad toggle
+bindsym $mod+bracketleft exec --no-startup-id $HOME/bin/cpuspeed slow
+bindsym $mod+bracketright exec --no-startup-id $HOME/bin/cpuspeed fast
+bindsym $mod+comma exec --no-startup-id compton-trans -c -5
+bindsym $mod+period exec --no-startup-id compton-trans -c +5
+bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/bin/mon_bl +1
+bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/bin/mon_bl -1
+bindsym XF86KbdBrightnessUp exec --no-startup-id $HOME/bin/kbd_bl +1
+bindsym XF86KbdBrightnessDown exec --no-startup-id $HOME/bin/kbd_bl -1
+bindsym XF86AudioRaiseVolume exec --no-startup-id $HOME/bin/vol_ctl up
+bindsym XF86AudioLowerVolume exec --no-startup-id $HOME/bin/vol_ctl down
+bindsym XF86AudioMute exec --no-startup-id $HOME/bin/vol_ctl mute
 

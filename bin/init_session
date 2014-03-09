@@ -14,7 +14,7 @@ fi
 #~/bin/cpupower.py &
 
 echo -n "unclutter... "
-unclutter -grab &
+unclutter -noevents &
 
 echo -n "doorman.py... "
 ~/bin/doorman.py

@@ -43,6 +43,10 @@ noremap <leader>l :set list!<CR>
 " Toggle line numbers
 noremap <leader>n :set number!<CR>
 
+" List characters use a less-noisy pipe to show tabs, instead of ^I
+" Don't both showing EOL character either.
+set listchars=tab:\|.,trail:.,extends:>,precedes:<,eol:\ 
+
 " Switch CWD to the directory of the open buffer
 " This (and more) inspired from http://amix.dk/vim/vimrc.html
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
@@ -142,6 +146,9 @@ map <leader>c :copen<CR>
 " Quick AES encryption/decryption
 command! Enc execute '%!openssl aes-256-cbc -salt'
 command! Dec execute '%!openssl aes-256-cbc -d -salt'
+
+" I often hit :W when I actually mean :w
+command! W write
 
 " Jump 5 lines when running out of the screen
 set scrolljump=5

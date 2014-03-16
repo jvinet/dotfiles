@@ -35,7 +35,7 @@ hi MoreMsg term=bold ctermfg=LightGreen gui=bold guifg=SeaGreen
 hi NonText term=bold ctermfg=LightBlue gui=bold guifg=LightBlue guibg=grey30
 hi Question term=standout ctermfg=LightGreen gui=bold guifg=Green
 hi Search term=reverse ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black
-hi SpecialKey term=bold ctermfg=DarkGrey guifg=DarkGrey
+hi SpecialKey term=bold ctermfg=237 guifg=DarkGrey
 hi Title term=bold ctermfg=LightMagenta gui=bold guifg=Magenta
 hi WarningMsg term=standout ctermfg=LightRed guifg=Red
 hi WildMenu term=standout ctermbg=Yellow ctermfg=Black guibg=Yellow guifg=Black

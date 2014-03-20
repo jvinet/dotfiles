@@ -7,7 +7,17 @@ autocmd BufNewFile,BufRead *.md   setlocal et tw=74
 autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
 autocmd BufNewFile,BufRead *.rst  setlocal sw=4 ts=4 sts=4 tw=74 et
 
-" Command mappings
+" Show tabs when coding
+autocmd BufNewFile,BufRead *.py     setlocal list
+autocmd BufNewFile,BufRead *.php    setlocal list
+autocmd BufNewFile,BufRead *.js     setlocal list
+autocmd BufNewFile,BufRead *.c      setlocal list
+autocmd BufNewFile,BufRead *.cpp    setlocal list
+autocmd BufNewFile,BufRead *.lua    setlocal list
+autocmd BufNewFile,BufRead *.html   setlocal list
+autocmd BufNewFile,BufRead *.coffee setlocal list
+
+" Linters
 autocmd BufNewFile,BufRead *.php map <leader>; :!php -l %<CR>
 autocmd BufNewFile,BufRead *.js map <leader>; :!jshint %<CR>
 autocmd BufNewFile,BufRead *.py map <leader>; :!pylint -r n -f colorized %<CR>
@@ -93,7 +103,7 @@ set foldlevel=99
 " Don't bother folding small blocks
 set foldminlines=5
 
-" Autoclose folds, when moving out of them
+" Autoclose folds when moving out of them
 "set foldclose=all
 
 " Fold column
@@ -105,6 +115,10 @@ set ignorecase
 set smartcase
 set hlsearch
 nmap <leader>q :nohlsearch<CR>
+
+" When in visual-block mode, hit 's' to replace selected tabs with 2 spaces.
+" Relies on the vis plugin.
+vnoremap s :B s/	/  /g<CR>
 
 " When in visual mode, pressing * or # searches for the current selection
 vnoremap <silent> * :call VisualSelection('f')<CR>
@@ -139,9 +153,11 @@ command! -nargs=+ Grep execute 'silent grep! -r <args>' | copen 33
 map <leader>g :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 
 " Close the quickfix window
-map <leader>w :cclose<CR>
+map <leader>cw :cclose<CR>
 " Open the quickfix window
-map <leader>c :copen<CR>
+map <leader>co :copen<CR>
+" Clear the quickfix window
+map <leader>cc :call setqflist([])<CR>
 
 " Quick AES encryption/decryption
 command! Enc execute '%!openssl aes-256-cbc -salt'
@@ -218,9 +234,9 @@ nmap <leader>e :NERDTreeToggle<CR>:sleep 100m<CR>:redraw!<CR>
 " TagBar
 nmap <leader>b :TagbarToggle<CR>
 
-" QFN
-map mn :QFNAddQ<CR>
-map ms :QFNSave annotations.txt<CR>
+" QFN (mnemonic: 'a' for annotate)
+map <leader>an :QFNAddQ<CR>
+map <leader>as :QFNSave annotations.txt<CR>
 
 " Ctrl-P Plugin
 "set runtimepath^=~/.vim/bundle/ctrlp.vim

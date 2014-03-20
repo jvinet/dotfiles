@@ -83,11 +83,11 @@ endif
 "endfunction
 
 " basic maps
-if !hasmapto('<Plug>QuickFixNote')
-  map <unique> <Leader>m <Plug>QuickFixNote
-endif
+"if !hasmapto('<Plug>QuickFixNote')
+"  map <unique> <Leader>m <Plug>QuickFixNote
+"endif
 
-if !hasmapto('<Plug>QuickFixSave')
-  map <unique> <Leader>s <Plug>QuickFixSave quickfix.err
-endif
+"if !hasmapto('<Plug>QuickFixSave')
+"  map <unique> <Leader>s <Plug>QuickFixSave quickfix.err
+"endif
 

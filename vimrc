@@ -299,6 +299,13 @@ set laststatus=2
 let &stl=""
 if exists('*StatuslineColor')
 	let &stl.="%{StatuslineColor()}"
+else
+	hi StatusLine ctermfg=237 ctermbg=250
+	hi User1 ctermfg=015 ctermbg=237
+	hi User2 ctermfg=232 ctermbg=237
+	hi User3 ctermfg=184 ctermbg=237
+	hi User4 ctermfg=184 ctermbg=237
+	hi User5 ctermfg=184 ctermbg=237
 endif
 let &stl.="%1*%-99f"                       " filename, set to aggressive fill
 

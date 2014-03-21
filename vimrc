@@ -19,8 +19,8 @@ autocmd BufNewFile,BufRead *.coffee setlocal list
 
 " Linters
 autocmd BufNewFile,BufRead *.php map <leader>; :!php -l %<CR>
-autocmd BufNewFile,BufRead *.js map <leader>; :!jshint %<CR>
-autocmd BufNewFile,BufRead *.py map <leader>; :!pylint -r n -f colorized %<CR>
+autocmd BufNewFile,BufRead *.js  map <leader>; :!jshint %<CR>
+autocmd BufNewFile,BufRead *.py  map <leader>; :!pylint -r n -f colorized %<CR>
 
 " Use the mouse
 set mouse=a
@@ -29,10 +29,22 @@ set encoding=utf8
 
 " Color theme
 syntax on
-"color molokai
-"let g:molokai_original=1
-"let g:rehash256=1
-color dusk
+
+" Figure out what sort of color scheme we should be using. The default is
+" 'dusk', my bright-on-dark scheme. If the VIMCOLOR environemnt variable is
+" set, then use that, giving preference to "solarized" if it's set to a
+" generic value of "light".
+if $VIMCOLOR == 'light'
+	color solarized
+elseif $VIMCOLOR == 'molokai'
+	color molokai
+	let g:molokai_original=1
+	let g:rehash256=1
+elseif $VIMCOLOR != ''
+	color $VIMCOLOR
+else
+	color dusk
+endif
 
 " Make sure we're getting 256 colors when it's available
 if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
@@ -149,8 +161,11 @@ map <leader>p :setlocal paste!<CR>
 
 " Show vimgrep matches in the quickfix window
 command! -nargs=+ Grep execute 'silent grep! -r <args>' | copen 33
-" Search for the word under the cursor and display results in the quickfix
-map <leader>g :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+" Search for the word under the cursor within the current file and display
+" results in the quickfix.
+map <leader>g :execute "vimgrep /" . expand("<cword>") . "/j %" <Bar> cw<CR>
+" Same as above, but do it recursively for all files under the CWD.
+map <leader>gr :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 
 " Close the quickfix window
 map <leader>cw :cclose<CR>
@@ -252,86 +267,49 @@ let g:ctrlp_switch_buffer = 0
 let g:vimwiki_list = [{'path': '~/work/personal/vimwiki/', 'path_html': '~/work/personal/vimwiki/html'},
                    \  {'path': '~/work/betsmart/vimwiki/', 'path_html': '~/work/betsmart/vimwiki/html'}]
 
-" Cursorline
-hi CursorLine ctermbg=017 cterm=none
-augroup CursorLine
-	au!
-	au InsertEnter * setlocal cursorline
-	au InsertLeave * setlocal nocursorline
-augroup END
-
-" Tabs
-hi TabLineFill ctermfg=255 ctermbg=255 cterm=underline
-hi TabLine ctermfg=000 ctermbg=255
-hi TabLineSel ctermfg=000 ctermbg=247 cterm=underline
-hi TabTitle ctermfg=018 cterm=bold
-
 " Change the bg color of all the editor space at 80 and >120 cols
 let &colorcolumn="80,".join(range(120,999), ",")
-highlight ColorColumn ctermbg=234
 
 " Highlight trailing whitespace   
-highlight TrailingWhitespace ctermbg=052
-match TrailingWhitespace /\s\+$/
+if hlexists("TrailingWhitespace")
+	match TrailingWhitespace /\s\+$/
+endif
 
 " Visually indicate when I'm over 80-cols on line length, and add the ability
 " to turn it on/off. Show text with a dark-red background, but show regular
 " syntax highlighting.
-highlight OverLength ctermbg=052
-map <leader>o :call ToggleOverLength()<CR>
-function! ToggleOverLength()
-	if exists('w:m1')
-		call matchdelete(w:m1)
-		unlet w:m1
-	else
-		let w:m1=matchadd('OverLength', '\%81v.\+', 11)
-	endif
-endfunction
-"call ToggleOverLength()
+if hlexists("OverLength")
+	map <leader>o :call ToggleOverLength()<CR>
+	function! ToggleOverLength()
+		if exists('w:m1')
+			call matchdelete(w:m1)
+			unlet w:m1
+		else
+			let w:m1=matchadd('OverLength', '\%81v.\+', 11)
+		endif
+	endfunction
+	"call ToggleOverLength()
+else"
+	map <leader>o :echo "No 'OverLength' highlight group in color settings."<CR>
+endif
 
 " Statusline
 set laststatus=2
 
-set statusline=
-set statusline+=%-99f                       " filename, set to aggressive fill
+let &stl=""
+if exists('*StatuslineColor')
+	let &stl.="%{StatuslineColor()}"
+endif
+let &stl.="%1*%-99f"                       " filename, set to aggressive fill
 
-set statusline+=%=                          " everything after this is right-aligned
-set statusline+=%3*%{&modified?'[+]\ ':''}  " modified flag
-set statusline+=%4*%{&readonly?'[RO]\ ':''} " read-only flag
-set statusline+=%5*%{&paste?'[P]\ ':''}     " paste mode
+let &stl.="%="                          " everything after this is right-aligned
+let &stl.="%3*%{&modified?'[+]\ ':''}"  " modified flag
+let &stl.="%4*%{&readonly?'[R]\ ':''}"  " read-only flag
+let &stl.="%5*%{&paste?'[P]\ ':''}"     " paste mode
 
-set statusline+=%<                          " truncate here if we run out of space
-set statusline+=%2*\|\ %1*\%{&ff}\ %2*\|    " file format
-set statusline+=%1*\ %{strlen(&fenc)?&fenc:'none'}\ %2*\| " file encoding
-set statusline+=%1*\ %{tolower(&ft)}\ %2*\| " filetype, lowercase without surrounding square brackets
-set statusline+=%1*\ %l,%c\ %2*\|           " line, col position
-set statusline+=%1*\ %p%%                   " total lines, % of file
-
-" TODO: add guibg/fg color triplets
-"       http://vim.wikia.com/wiki/Xterm256_color_names_for_console_Vim
-
-function! InsertStatuslineColor(mode)
-	if a:mode == 'i'
-		hi statusline guifg=#5f87d7 ctermfg=068 ctermbg=255
-		hi statuslineNC ctermbg=248 ctermfg=237
-	elseif a:mode == 'r'
-		hi statusline guifg=#870000 ctermfg=088 ctermbg=255
-		hi statuslineNC ctermbg=248 ctermfg=237
-	endif
-endfunction
-
-function! ResetStatuslineColor()
-	hi statusline ctermbg=252 ctermfg=022
-	hi statuslineNC ctermbg=248 ctermfg=237
-	hi User1 ctermfg=245 ctermbg=237
-	hi User2 ctermfg=240 ctermbg=237
-	hi User3 ctermfg=184 ctermbg=237
-	hi User4 ctermfg=173 ctermbg=237
-	hi User5 ctermfg=195 ctermbg=237
-endfunction
-
-call ResetStatuslineColor()
-
-au InsertEnter * call InsertStatuslineColor(v:insertmode)
-au InsertChange * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * call ResetStatuslineColor()
+let &stl.="%<"                          " truncate here if we run out of space
+let &stl.="%2*\|\ %1*\%{&ff}\ %2*\|"    " file format
+let &stl.="%1*\ %{strlen(&fenc)?&fenc:'none'}\ %2*\|" " file encoding
+let &stl.="%1*\ %{tolower(&ft)}\ %2*\|" " filetype, lowercase without surrounding square brackets
+let &stl.="%1*\ %l,%c\ %2*\|"           " line, col position
+let &stl.="%1*\ %p%%"                   " total lines, % of file

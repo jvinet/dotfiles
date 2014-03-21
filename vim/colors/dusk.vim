@@ -1,12 +1,11 @@
 " Vim color file
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last Change:	2006 Apr 14
-
-" This color scheme uses a dark grey background.
+" Maintainer:  Judd Vinet <jvinet@gmail.com>
+" Last Change: 2014-03-21
 
 " Modified from "evening" scheme to honour a transparent background
+" Original Maintainer: Bram Moolenaar <Bram@vim.org>
 
-" First remove all existing highlighting.
+" First, remove all existing highlighting.
 set background=dark
 hi clear
 if exists("syntax_on")
@@ -56,6 +55,17 @@ if &t_Co > 8
 endif
 hi Ignore ctermfg=DarkGrey guifg=grey20
 
+" Tabs
+hi TabLineFill ctermfg=255 ctermbg=255 cterm=underline
+hi TabLine ctermfg=000 ctermbg=255
+hi TabLineSel ctermfg=000 ctermbg=247 cterm=underline
+hi TabTitle ctermfg=018 cterm=bold
+
+" Extra visual indicators
+hi ColorColumn ctermbg=234
+hi TrailingWhitespace ctermbg=052
+hi OverLength ctermbg=052
+
 " For HTML (and markdown)
 hi htmlTitle ctermfg=LightRed
 hi htmlH1 ctermfg=LightCyan
@@ -63,5 +73,42 @@ hi htmlH2 ctermfg=LightCyan
 hi htmlH3 ctermfg=LightCyan
 hi htmlH4 ctermfg=LightCyan
 hi htmlH5 ctermfg=LightCyan
+
+" Cursorline - show a different bg color on the line being edited.
+hi CursorLine ctermbg=017 cterm=none
+augroup CursorLine
+	au!
+	au InsertEnter * setlocal cursorline
+	au InsertLeave * setlocal nocursorline
+augroup END
+
+function! StatuslineColor()
+	redraw
+	let l:mode = mode()
+
+	if     mode ==# "n" | let l:bg = '022' " normal
+	elseif mode ==# "i" | let l:bg = '023' " insert
+	elseif mode ==# "R" | let l:bg = '088' " replace
+	elseif mode ==# "v" | let l:bg = '054' " visual
+	elseif mode ==# "V" | let l:bg = '057' " v-line
+	else                | let l:bg = '018' " v-block
+	endif
+
+	" User1: filename
+	" User2: separator
+	" User3: modified indicator
+	" User4: readonly indicator
+	" User5: paste-mode indicator
+	exec 'hi statusline ctermfg=237 ctermbg=250'
+	exec 'hi User1 ctermfg=015 ctermbg=' . l:bg
+	exec 'hi User2 ctermfg=232 ctermbg=' . l:bg
+	exec 'hi User3 ctermfg=184 ctermbg=' . l:bg
+	exec 'hi User4 ctermfg=184 ctermbg=' . l:bg
+	exec 'hi User5 ctermfg=184 ctermbg=' . l:bg
+	return ''
+endfunction
+
+exec StatuslineColor()
+hi statuslineNC ctermfg=248 ctermbg=237
 
 " vim: sw=2

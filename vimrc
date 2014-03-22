@@ -31,15 +31,21 @@ set encoding=utf8
 syntax on
 
 " Figure out what sort of color scheme we should be using. The default is
-" 'dusk', my bright-on-dark scheme. If the VIMCOLOR environemnt variable is
-" set, then use that, giving preference to "solarized" if it's set to a
-" generic value of "light".
+" 'dusk', my bright-on-dark scheme. If the VIMCOLOR environment variable is
+" set, then use that, giving preference to "solarized" for the generic
+" settings of "light" or "dark".
 if $VIMCOLOR == 'light'
+	set background=light
+	let g:solarized_termcolors=256
+	color solarized
+elseif $VIMCOLOR == 'dark'
+	set background=dark
+	let g:solarized_termcolors=256
 	color solarized
 elseif $VIMCOLOR == 'molokai'
-	color molokai
 	let g:molokai_original=1
 	let g:rehash256=1
+	color molokai
 elseif $VIMCOLOR != ''
 	color $VIMCOLOR
 else

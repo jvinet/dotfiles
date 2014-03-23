@@ -313,7 +313,7 @@ else
 	hi User4 ctermfg=184 ctermbg=237
 	hi User5 ctermfg=184 ctermbg=237
 endif
-let &stl.="%1*%f"                       " filename, set to aggressive fill
+let &stl.="%f"                       " filename
 
 let &stl.="%="                          " everything after this is right-aligned
 let &stl.="%3*%{&modified?'[+]\ ':''}"  " modified flag

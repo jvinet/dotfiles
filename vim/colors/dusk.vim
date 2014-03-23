@@ -94,12 +94,13 @@ function! StatuslineColor()
 	else                | let l:bg = '018' " v-block
 	endif
 
+	exec 'hi StatusLine ctermfg=015 ctermbg=' . l:bg
+
 	" User1: filename
 	" User2: separator
 	" User3: modified indicator
 	" User4: readonly indicator
 	" User5: paste-mode indicator
-	exec 'hi statusline ctermfg=237 ctermbg=250'
 	exec 'hi User1 ctermfg=015 ctermbg=' . l:bg
 	exec 'hi User2 ctermfg=232 ctermbg=' . l:bg
 	exec 'hi User3 ctermfg=184 ctermbg=' . l:bg
@@ -108,7 +109,8 @@ function! StatuslineColor()
 	return ''
 endfunction
 
+hi StatusLine   ctermfg=237 ctermbg=250 cterm=bold
+hi StatusLineNC ctermfg=248 ctermbg=237 cterm=none
 exec StatuslineColor()
-hi statuslineNC ctermfg=248 ctermbg=237
 
 " vim: sw=2

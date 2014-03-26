@@ -259,6 +259,19 @@ nmap <leader>b :TagbarToggle<CR>
 map <leader>an :QFNAddQ<CR>
 map <leader>as :QFNSave annotations.txt<CR>
 
+" I don't even know how to use Ex mode.
+nnoremap Q <nop>
+
+" Toggle on diff mode for the current buffer.
+nmap <leader>d :call DiffToggle()<CR>
+function! DiffToggle()
+	if &diff
+		diffoff
+	else
+		diffthis
+	end
+endfunction
+
 " Ctrl-P Plugin
 "set runtimepath^=~/.vim/bundle/ctrlp.vim
 let g:ctrlp_map = '<leader>t'
@@ -268,6 +281,9 @@ let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
+
+" Search by tag - massively useful
+map <leader>. :CtrlPTag<CR>
 
 " VimWiki
 let g:vimwiki_list = [{'path': '~/work/personal/vimwiki/', 'path_html': '~/work/personal/vimwiki/html'},
@@ -313,7 +329,7 @@ else
 	hi User4 ctermfg=184 ctermbg=237
 	hi User5 ctermfg=184 ctermbg=237
 endif
-let &stl.="%f"                       " filename
+let &stl.="%1*%f"                       " filename
 
 let &stl.="%="                          " everything after this is right-aligned
 let &stl.="%3*%{&modified?'[+]\ ':''}"  " modified flag

@@ -16,6 +16,8 @@ xset r rate 300
 # load keyboard modifications
 xmodmap ~/.Xmodmap
 
+xrdb -merge ~/.Xresources
+
 # compositing
 compton --inactive-dim 0.02 -b
 

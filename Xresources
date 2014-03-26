@@ -5,3 +5,65 @@ Xft.antialias:  true
 Xft.rgba:       rgb
 Xft.hinting:    true
 Xft.hintstyle:  hintslight
+
+! URxvt settings ---------------------------------------------------------------
+
+URxvt.font: xft:Menlo:size=9
+URxvt.boldFont: xft:Menlo:bold:size=9
+
+!URxvt.intensityStyles: false
+urxvt.background: #000000
+urxvt.foreground: #D3D2D3
+! Colors from terminator -> http://crunchbanglinux.org/wiki/urxvt
+! black
+URxvt.color0 : #2E2E34343636
+URxvt.color8 : #555557575353
+! red
+URxvt.color1 : #CCCC00000000
+URxvt.color9 : #EFEF29292929
+! green
+URxvt.color2 : #4E4E9A9A0606
+URxvt.color10 : #8A8AE2E23434
+! yellow
+URxvt.color3 : #C4C4A0A00000
+URxvt.color11 : #FCFCE9E94F4F
+! blue
+URxvt.color4 : #34346565A4A4
+URxvt.color12 : #72729F9FCFCF
+! magenta
+URxvt.color5 : #757550507B7B
+URxvt.color13 : #ADAD7F7FA8A8
+! cyan
+URxvt.color6 : #060698209A9A
+URxvt.color14 : #3434E2E2E2E2
+! white
+URxvt.color7 : #D3D3D7D7CFCF
+URxvt.color15 : #EEEEEEEEECEC
+
+URxvt.letterSpace: -2
+
+! Hide the pointer when typing (no need for unclutter)
+URxvt*pointerBlank: false
+
+URxvt.loginShell: false
+URxvt.utmpInhibit: true
+URxvt.imLocale: en_US-UTF-8
+
+! No extra padding
+URxvt*internalBorder: 0
+URxvt*externalBorder: 0
+URxvt*lineSpace: 0
+
+URxvt*scrollBar: false
+URxvt*saveLines: 12000
+
+! Set urgent hint on a bell
+! Used mostly for irc (weechat/irssi) notifications
+URxvt*urgentOnBell: true
+
+URxvt.url-select.launcher: /usr/bin/xdg-open
+URxvt.url-select.underline: true
+
+URxvt.keysym.M-c: perl:clipboard:copy
+URxvt.keysym.M-v: perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped

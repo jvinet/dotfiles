@@ -311,6 +311,10 @@ else"
 	map <leader>k :echo "No 'OverLength' highlight group in color settings."<CR>
 endif
 
+" Reset any residual colour styling that may persist after Vim exits.
+"   NB: If in tmux, you'll probably want this option: set-window-option -g alternate-screen off
+au VimLeave * :!/bin/sh -c "echo -ne \"\033[0m\""
+
 " Statusline
 set laststatus=2
 

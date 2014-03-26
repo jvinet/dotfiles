@@ -142,24 +142,24 @@ vnoremap s :B s/	/  /g<CR>
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 function! VisualSelection(direction) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
+	let l:saved_reg = @"
+	execute "normal! vgvy"
 
-    let l:pattern = escape(@", '\\/.*$^~[]')
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
+	let l:pattern = escape(@", '\\/.*$^~[]')
+	let l:pattern = substitute(l:pattern, "\n$", "", "")
 
-    if a:direction == 'b'
-        execute "normal ?" . l:pattern . "^M"
-    elseif a:direction == 'gv'
-        call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-    elseif a:direction == 'f'
-        execute "normal /" . l:pattern . "^M"
-    endif
+	if a:direction == 'b'
+		execute "normal ?" . l:pattern . "^M"
+	elseif a:direction == 'gv'
+		call CmdLine("vimgrep " . '/'. l:pattern . '/' . ' **/*.')
+	elseif a:direction == 'replace'
+		call CmdLine("%s" . '/'. l:pattern . '/')
+	elseif a:direction == 'f'
+		execute "normal /" . l:pattern . "^M"
+	endif
 
-    let @/ = l:pattern
-    let @" = l:saved_reg
+	let @/ = l:pattern
+	let @" = l:saved_reg
 endfunction
 
 " Toggle paste mode
@@ -207,9 +207,6 @@ set timeoutlen=400
 let g:buftabs_only_basename=1
 noremap <C-p> :bprev<CR>
 noremap <C-n> :bnext<CR>
-
-" Redraw the screen
-map <leader>r :redraw!<CR>
 
 " Treat long lines as break lines
 map j gj
@@ -273,8 +270,7 @@ function! DiffToggle()
 endfunction
 
 " Ctrl-P Plugin
-"set runtimepath^=~/.vim/bundle/ctrlp.vim
-let g:ctrlp_map = '<leader>t'
+let g:ctrlp_map = '<leader>o'
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
 let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
@@ -301,7 +297,7 @@ endif
 " to turn it on/off. Show text with a dark-red background, but show regular
 " syntax highlighting.
 if hlexists("OverLength")
-	map <leader>o :call ToggleOverLength()<CR>
+	map <leader>k :call ToggleOverLength()<CR>
 	function! ToggleOverLength()
 		if exists('w:m1')
 			call matchdelete(w:m1)
@@ -312,7 +308,7 @@ if hlexists("OverLength")
 	endfunction
 	"call ToggleOverLength()
 else"
-	map <leader>o :echo "No 'OverLength' highlight group in color settings."<CR>
+	map <leader>k :echo "No 'OverLength' highlight group in color settings."<CR>
 endif
 
 " Statusline

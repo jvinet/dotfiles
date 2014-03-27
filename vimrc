@@ -246,6 +246,16 @@ vnoremap " "zdi"<C-R>z"<ESC>
 " Activate pathogen
 execute pathogen#infect()
 
+" Easy Motion: Search for character
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_use_upper = 1
+let g:EasyMotion_smartcase = 1
+nmap s <Plug>(easymotion-s)
+nmap S <Plug>(easymotion-s2)
+
+" Gundo: Toggle undo history pane.
+nmap <leader>u :GundoToggle<CR>
+
 " NERDTree (often requires a redraw)
 nmap <leader>e :NERDTreeToggle<CR>:sleep 100m<CR>:redraw!<CR>
 
@@ -271,10 +281,13 @@ endfunction
 
 " Ctrl-P Plugin
 let g:ctrlp_map = '<leader>o'
+
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
+
 let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
 let g:ctrlp_working_path_mode = 0
+
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
 

@@ -89,9 +89,9 @@ function! StatuslineColor()
 	if     mode ==# "n" | let l:bg = '022' " normal
 	elseif mode ==# "i" | let l:bg = '023' " insert
 	elseif mode ==# "R" | let l:bg = '088' " replace
-	elseif mode ==# "v" | let l:bg = '054' " visual
+	elseif mode ==# "v" | let l:bg = '018' " visual
 	elseif mode ==# "V" | let l:bg = '057' " v-line
-	else                | let l:bg = '018' " v-block
+	else                | let l:bg = '054' " v-block
 	endif
 
 	exec 'hi StatusLine ctermfg=015 ctermbg=' . l:bg

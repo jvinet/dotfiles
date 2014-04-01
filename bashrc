@@ -12,6 +12,10 @@ bind -m vi-insert "\C-l":clear-screen
 bind -m vi-insert "\C-a":beginning-of-line
 bind -m vi-insert "\C-e":end-of-line
 
+# Locale
+export LANG='en_US.UTF-8'
+export LC_ALL='en_US.UTF-8'
+
 # I type these things a lot
 alias grep='grep --color'
 alias vi='vim'

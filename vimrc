@@ -60,8 +60,13 @@ endif
 " Don't save backups
 set nobackup
 
+" Don't clear the screen after exit
+set t_ti=
+set t_te=
+
 " Enable smart keyword matching ('%' key) and smart(er) file types
 filetype plugin on
+filetype indent on
 runtime macros/matchit.vim
 
 " Redraw
@@ -326,7 +331,7 @@ endif
 
 " Reset any residual colour styling that may persist after Vim exits.
 "   NB: If in tmux, you'll probably want this option: set-window-option -g alternate-screen off
-au VimLeave * :!/bin/sh -c "echo -ne \"\033[0m\""
+"au VimLeave * :!/bin/sh -c "echo -ne \"\033[0m\""
 
 " Statusline
 set laststatus=2

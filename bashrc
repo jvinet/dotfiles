@@ -29,6 +29,21 @@ alias json='python -m json.tool'
 alias enc='openssl aes-256-cbc -salt'
 alias dec='openssl aes-256-cbc -d -salt'
 
+# Retrieve a URL if it is not already in my cache
+fetch() {
+	if [ "$1" = "" ]; then
+		echo "usage: fetch <url>"
+		return
+	fi
+	fn=`basename $1`
+	if [ -f ~/.cache/$fn ]; then
+		cat ~/.cache/$fn
+		return
+	fi
+	curl -s $1 >~/.cache/$fn
+	cat ~/.cache/$fn
+}
+
 # "Remind In" - schedule a popup reminder in X minutes or at a specific time
 rin() {
 	if [ "$2" = "" ]; then
@@ -77,7 +92,7 @@ md() {
 	echo '<!doctype html>' >$dst
 	echo '<html><head><meta charset="utf-8">' >>$dst
 	echo '<style type="text/css">' >>$dst
-	curl -s $css >>$dst
+	fetch $css >>$dst
 	echo '</style></head><body>' >>$dst
 	markdown <$1 >>$dst
 	echo '</body></html>' >>$dst

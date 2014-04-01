@@ -3,11 +3,16 @@
 # Lock the desktop and turn off the display.
 #
 
-# Save brightness
-bri=`/usr/bin/mon_backlight`
+# Save brightness for screen and keyboard.
+mon_bri=`/usr/bin/mon_backlight`
+kbd_bri=`/usr/bin/kbd_backlight`
+
+# Dim the keyboard backlight.
+sudo /usr/bin/kbd_backlight 0
 
 (sleep 2; xset dpms force standby) &
 slock
 
-# Restore brightness
-sudo /usr/bin/mon_backlight $bri
+# Restore brightness for screen and keyboard.
+sudo /usr/bin/mon_backlight $mon_bri
+sudo /usr/bin/kbd_backlight $kbd_bri

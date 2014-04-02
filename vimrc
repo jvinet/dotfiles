@@ -178,6 +178,18 @@ map <leader>g :execute "vimgrep /" . expand("<cword>") . "/j %" <Bar> cw<CR>
 " Same as above, but do it recursively for all files under the CWD.
 map <leader>gr :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 
+" Switch to hexadecimal view.
+map <leader>h :call ToggleHex()<CR>
+function! ToggleHex()
+	if exists('w:hex')
+		unlet w:hex
+		exec ':%!xxd -r'
+	else
+		exec ':%!xxd'
+		let w:hex=1
+	endif
+endfunction
+
 " Close the quickfix window
 map <leader>cw :cclose<CR>
 " Open the quickfix window

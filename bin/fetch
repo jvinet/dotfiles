@@ -1,0 +1,20 @@
+#!/bin/bash
+#
+# Retrieve a URL if it is not already in my cache
+#
+
+if [ "$1" = "" ]; then
+	echo "usage: fetch <url>"
+	exit 1
+fi
+
+cache_path=~/.cache/urls
+fn=`basename $1`
+
+[ -d $cache_path ] || mkdir -p $cache_path
+if [ -f $cache_path/$fn ]; then
+	cat $cache_path/$fn
+	exit 0
+fi
+curl -s $1 >$cache_path/$fn
+cat $cache_path/$fn

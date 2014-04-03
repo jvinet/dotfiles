@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# I markdown things a lot, and they should look nice
+#
+
+if [ "$1" = "" ]; then
+	echo "usage: md <in.md> [out.html]"
+	exit 1
+fi
+dst=$2
+[ -z "$dst" ] && dst=${1%.*}.html
+
+# Make it look decent
+css='http://jasonm23.github.io/markdown-css-themes/markdown8.css'
+
+# We overwrite with impunity, no erasies
+echo '<!doctype html>' >$dst
+echo '<html><head><meta charset="utf-8">' >>$dst
+echo '<style type="text/css">' >>$dst
+fetch $css >>$dst
+echo '</style></head><body>' >>$dst
+markdown <$1 >>$dst
+echo '</body></html>' >>$dst

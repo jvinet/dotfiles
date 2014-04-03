@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+# Markdown and view immediately in a browser, then remove the html file
+#
+
+if [ "$1" = "" ]; then
+	echo "usage: mdv <in.md>"
+	exit 1
+fi
+dst=${1%.*}.md.html
+md $1 $dst
+if [ -f $dst ]; then
+	$BROWSER $dst
+	sleep 2
+	rm $dst
+fi

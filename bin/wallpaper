@@ -3,7 +3,7 @@
 # Pick a random image from a directory and make it wallpaper.
 #
 
-dir=$HOME/Pictures/wallpaper/milky_way
+dir=$HOME/Pictures/wallpaper
 
 fn="`find $dir -type f | sort -R | tail -n 1`"
 DISPLAY=:0 feh --bg-scale "`realpath $fn`"

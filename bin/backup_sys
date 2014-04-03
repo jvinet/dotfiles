@@ -22,7 +22,12 @@ pip2 list >pip2.txt
 pip3 list >pip3.txt
 npm ls -g >npm.txt
 
+if [ -d /home/jvinet/.local/system_state ]; then
+	cp -v /home/jvinet/.local/system_state/* ./
+fi
+
 cd ..
-tar cz backup_sys >$cwd/kilo_system.tar.gz
+d=`date +%Y%m%d`
+tar cz backup_sys >$cwd/kilo_system_${d}.tar.gz
 
 rm -rf backup_sys

@@ -204,6 +204,10 @@ command! Dec execute '%!openssl aes-256-cbc -d -salt'
 " I often hit :W when I actually mean :w
 command! W write
 
+" Switch 0 and ^ (we can use _ instead of ^ to avoid a recursive mapping)
+map 0 _
+map ^ 999h
+
 " Jump 5 lines when running out of the screen
 set scrolljump=5
 

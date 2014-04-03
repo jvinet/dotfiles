@@ -33,89 +33,6 @@ alias json='python -m json.tool'
 alias enc='openssl aes-256-cbc -salt'
 alias dec='openssl aes-256-cbc -d -salt'
 
-# Retrieve a URL if it is not already in my cache
-fetch() {
-	if [ "$1" = "" ]; then
-		echo "usage: fetch <url>"
-		return
-	fi
-	fn=`basename $1`
-	if [ -f ~/.cache/$fn ]; then
-		cat ~/.cache/$fn
-		return
-	fi
-	curl -s $1 >~/.cache/$fn
-	cat ~/.cache/$fn
-}
-
-# "Remind In" - schedule a popup reminder in X minutes or at a specific time
-rin() {
-	if [ "$2" = "" ]; then
-		echo "usage: rin <minutes|time> <text>"
-		echo "   ex: rin +30   Check the turkey"
-		echo "   ex: rin 16:00 Watch hockey"
-		return
-	fi
-	if [ "`pgrep atd`" = "" ]; then
-		echo "error: atd is not running"
-		return
-	fi
-	if [ "`which zenity`" = "" ]; then
-		echo "error: zenity is not installed"
-		return
-	fi
-
-	time=$1
-	atcmd="at $time"
-	if [ "${time:0:1}" = "+" ]; then
-		# time is relative to now
-		atcmd="at now + ${time:1} min"
-	fi
-	shift
-	if [ -x "/usr/bin/capslock_light" ]; then
-		echo "/usr/bin/capslock_light on ; zenity --display=:0 --info --text=\"Reminder: $*\" ; /usr/bin/capslock_light off" | $atcmd
-	else
-		echo "zenity --display=:0 --info --text=\"Reminder: $*\"" | $atcmd
-	fi
-	atq
-}
-
-# I markdown things a lot, and they should look nice
-md() {
-	if [ "$1" = "" ]; then
-		echo "usage: md <in.md> [out.html]"
-		return
-	fi
-	dst=$2
-	[ -z "$dst" ] && dst=${1%.*}.html
-
-	# Make it look decent
-	css='http://jasonm23.github.io/markdown-css-themes/markdown8.css'
-
-	# We overwrite with impunity, no erasies
-	echo '<!doctype html>' >$dst
-	echo '<html><head><meta charset="utf-8">' >>$dst
-	echo '<style type="text/css">' >>$dst
-	fetch $css >>$dst
-	echo '</style></head><body>' >>$dst
-	markdown <$1 >>$dst
-	echo '</body></html>' >>$dst
-}
-# Markdown and view immediately in a browser, then remove the html file
-mdv() {
-	if [ "$1" = "" ]; then
-		echo "usage: mdv <in.md>"
-		return
-	fi
-	dst=${1%.*}.md.html
-	md $1 $dst
-	if [ -f $dst ]; then
-		$BROWSER $dst
-		sleep 2
-		rm $dst
-	fi
-}
-
 if [ "`uname`" = "Linux" ]; then
 	alias ls='ls --color'
 	alias open='xdg-open'
@@ -140,7 +57,20 @@ else
 	export LSCOLORS=ExGxFxdxCxDxDxBxBxacac
 fi
 
-export PATH=$PATH:$HOME/bin:$HOME/.local/bin:$HOME/.gem/ruby/1.9.1/bin:$HOME/.gem/ruby/2.0.0/bin
+export PATH=$PATH:$HOME/bin:$HOME/.local/bin
+
+# Ruby
+export PATH=$PATH:$HOME/.gem/ruby/1.9.1/bin:$HOME/.gem/ruby/2.0.0/bin
+
+# Node
+export PATH=$PATH:$HOME/node_modules/.bin
+
+# Go
+export GOPATH=~/go
+export PATH=$PATH:$GOPATH/bin
+
+# Android
+export PATH=$PATH:$HOME/android/tools:$HOME/android/platform-tools
 
 # Preferred applications
 export EDITOR=vim
@@ -148,11 +78,7 @@ export PAGER=less
 export BROWSER=firefox
 export TERMINAL=terminator
 
-# Go
-export GOPATH=~/go
-export PATH=$PATH:$GOPATH/bin
-
-# Lua
+# Lua: easy switching between 5.1 and 5.2
 function setlua() {
 	if [ "$1" = "" ]; then
 		echo "usage: setlua <version>"
@@ -176,9 +102,6 @@ function setlua() {
 	fi
 }
 setlua 5.1
-
-# Android
-export PATH=$PATH:$HOME/android/tools:$HOME/android/platform-tools
 
 # tmux / color terms
 export TERM=xterm-256color

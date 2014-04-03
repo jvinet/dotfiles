@@ -1,0 +1,66 @@
+#!/bin/bash
+#
+# A simple notification system. Like smart phones, the notifications
+# are stored until I choose to view them.
+#
+# An indicator can be displayed in the i3 status bar.
+#
+
+state_dir=~/.local/notifications
+[ -d $state_dir ] || mkdir -p $state_dir
+
+usage() {
+	echo -e "usage: notify <notification_text>\n"
+	echo "list to stdout:      notify -l"
+	echo "list to dmenu:       notify -d"
+	echo "count notifications: notify -c"
+	exit 1
+}
+
+[ "$1" = "" ] && usage
+
+get_mtime() {
+	stat $1 | grep 'Modify:' | awk '{print $2, $3}' | cut -d. -f1
+}
+
+# Count notificaitons.
+count() {
+	view_stdout | wc -l
+}
+
+# Remove a notification by index.
+remove() {
+	rm `/bin/ls -1tr $state_dir/* 2>/dev/null | head -n $1 | tail -n 1`
+}
+
+# List notifications to stdout.
+view_stdout() {
+	i=1
+	/bin/ls -1tr $state_dir/* 2>/dev/null | while read fn; do
+		mt=`get_mtime $fn`
+		echo "$i $mt `cat $fn`"
+		i=$((i+1))
+	done
+}
+
+# List notifications in a dmenu view.
+view_dmenu() {
+	sel=`view_stdout | dmenu -b -i -l 20`
+	[ "$sel" = "" ] && return
+	i=`echo "$sel" | cut -d' ' -f1`
+	remove $i
+}
+
+while getopts "ldc" arg; do
+	case $arg in
+		l) view_stdout ; exit 0 ;;
+		d) view_dmenu ; exit 0 ;;
+		c) count ; exit 0 ;;
+		*) usage
+	esac
+done
+
+# Otherwise, create a new notification.
+fn=`mktemp -p $state_dir notify_XXXXX`
+echo "$*" >$fn
+

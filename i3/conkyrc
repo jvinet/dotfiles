@@ -14,16 +14,16 @@ override_utf8_locale yes
 TEXT
 [\
   {"full_text": " ✶ ${execi 10 $HOME/.i3/brightness}% ", "color":"\#aaaa00"},\
-  {"full_text": " ♪ ${execi 10 $HOME/bin/vol_ctl get} ", "color":"\#268BD2"},\
+  {"full_text": " ♪ ${execi 10 $HOME/bin/vol_ctl get} ", "color":"\#268bd2"},\
   {"full_text": " ⚂ ${mem} ", "color":"\#00fff2"},\
   {"full_text": " ☉ ${fs_free /} ", "color":"\#b58900"},\
-  {"full_text": " ■ ${cpu cpu0}% ", "color":"\#00A9B5"},\
+  {"full_text": " ■ ${cpu cpu0}% ", "color":"\#00a9b5"},\
   {"full_text": " ≈ ${freq_g 1}GHz ${execi 10 sensors | grep 'Core 0' | awk '{print $3}' | grep -o -E '[0-9]+' | head -n 1}°C ","color":"\#cc5555"},\
-  {"full_text": " ≈ ${freq_g 2}GHz ${execi 10 sensors | grep 'Core 1' | awk '{print $3}' | grep -o -E '[0-9]+' | head -n 1}°C ","color":"\#d268bd2"},\
+  {"full_text": " ≈ ${freq_g 2}GHz ${execi 10 sensors | grep 'Core 1' | awk '{print $3}' | grep -o -E '[0-9]+' | head -n 1}°C ","color":"\#d268bd"},\
   {"full_text": " ❋ ${execi 10 sensors | grep 'RPM' | awk '{print $3}'} RPM ", "color": "\#ffffff"},\
   {"full_text": " ${execi 10 $HOME/.i3/ipaddr} ", "color": "\#268BD2"},\
   {"full_text": " ⚡ ${battery_percent BAT0}% ${battery_time BAT0}", "color": "\#cccc00"},\
-  {"full_text": " ⣿ ${execi 10 $HOME/bin/notify -c}", "color": "\#ffffff"},\
+  {"full_text": " ⣿ ${execi 10 $HOME/bin/notify -c}", "color": "${execi 10 $HOME/.i3/dynstring \#abb9ff \#ff6a6a [ "`$HOME/bin/notify -c`" == "0" ]}"},\
   {"full_text": " ${time %a %d %b} ${time %H:%M} ","color": "\#2fdc57"}\
 ],
 

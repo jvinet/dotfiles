@@ -23,7 +23,9 @@ else
 	cur=$(($cur + $incr))
 fi
 
-curpcnt=`echo "$cur * 100 / $max" | bc`
+[ "$cur" -lt 0 ] && cur=0
+
+#curpcnt=`echo "$cur * 100 / $max" | bc`
 
 sudo /usr/bin/kbd_backlight $cur
 

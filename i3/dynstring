@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+# A dumb little string switching utility. Useful for colourizing output
+# for conky.
+#
+# Usage: ./dynstring #ffffff #ff0000 ./check_stuff.sh
+#    or: ./dynstring abc def [ "`cmd./sh`" = "" ]
+#
+# If ./check_stuff.sh returns a zero return code, then the first string
+# is outputted. Otherwise, the second string is outputted.
+
+str1=$1 ; shift
+str2=$1 ; shift
+
+$* >/dev/null 2>/dev/null
+
+if [ "$?" -eq 0 ]; then
+	echo $str1
+else
+	echo $str2
+fi
+

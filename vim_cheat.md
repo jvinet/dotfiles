@@ -77,3 +77,6 @@ Misc
   - Turn off search highlighting: \q
   - Go back to previous location (jump list): <C-o>
   - Go forward to next location: <C-i>
+  - Execute a command on lines matching a regex: g
+    - eg: to remove blank lines: g/^$/d
+

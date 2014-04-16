@@ -7,6 +7,12 @@ autocmd BufNewFile,BufRead *.md   setlocal et tw=74
 autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
 autocmd BufNewFile,BufRead *.rst  setlocal sw=4 ts=4 sts=4 tw=74 et
 
+" Cheap/simple spreadsheets in Vim
+autocmd BufNewFile,BufRead *.tsv  setlocal ts=16 sts=16 noet number list
+" Columnar movements
+autocmd BufNewFile,BufRead *.tsv  map L f	W
+autocmd BufNewFile,BufRead *.tsv  map H F	B
+
 " Show tabs when coding
 autocmd BufNewFile,BufRead *.py     setlocal list
 autocmd BufNewFile,BufRead *.php    setlocal list
@@ -77,7 +83,7 @@ noremap <leader>l :set list!<CR>
 noremap <leader>n :set number!<CR>
 
 " List characters use a less-noisy pipe to show tabs, instead of ^I
-" Don't both showing EOL character either.
+" Don't bother showing EOL characters either.
 set listchars=tab:\|.,trail:.,extends:>,precedes:<,eol:\ 
 
 " Switch CWD to the directory of the open buffer
@@ -120,6 +126,7 @@ set nonumber
 "au BufNewFile,BufRead *              set foldlevel=99
 
 set foldmethod=indent
+
 " Don't fold anything by default - I'll close the folds myself
 set foldlevel=99
 
@@ -207,6 +214,7 @@ command! W write
 " Switch 0 and ^ (we can use _ instead of ^ to avoid a recursive mapping)
 map 0 _
 map ^ 999h
+map <leader>0 ^
 
 " Jump 5 lines when running out of the screen
 set scrolljump=5

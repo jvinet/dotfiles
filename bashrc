@@ -24,6 +24,7 @@ alias ll='ls -l'
 alias r='ranger'
 alias xc='xclip -selection clipboard'
 alias xp='xclip -selection clipboard -o'
+alias tc='tabs -16 ; tcalc '
 
 # Python has some very handy treats
 alias http='python -m http.server'

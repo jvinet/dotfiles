@@ -1,38 +1,45 @@
 #!/bin/bash
 
+# lsyncd needs a few things before it can run.
 if [ ! -d ~/work/betsmart ]; then
 	echo "Mount the work partition first, so lsyncd can run."
 	exit 1
 fi
-
 if [ ! "`pgrep ssh-agent`" ]; then
 	echo "Start your SSH agent first, so lsyncd can run."
 	exit 1
 fi
+ssh-add -l &>/dev/null
+if [ $? -ne 0 ]; then
+	echo "Populate your SSH agent first, so lsyncd can run."
+	exit 1
+fi
+
+# Do a naive check to see if a program is already running, and if not, start it.
+start() {
+	bn=`basename $1`
+	echo -n "${bn}: "
+	if [ "`pgrep -f $bn`" ]; then
+		echo "already running."
+		return
+	fi
+	echo "starting: $*"
+	$* &
+}
 
 #echo -n "cpupower.py... "
 #~/bin/cpupower.py &
 
-echo -n "unclutter... "
-unclutter -noevents &
+start unclutter -noevents
+start $HOME/bin/doorman.py
+start redshiftgui --min
+start lsyncd $HOME/.lsyncd.conf
 
-echo -n "doorman.py... "
-~/bin/doorman.py
-
-echo -n "CPU governor... powersave"
-sudo cpupower frequency-set -g powersave
-
-if [ ! "`pgrep redshiftgui`" ]; then
-	echo -n "redshiftgui... "
-	redshiftgui &>/dev/null &
-fi
-
-echo -n "lsyncd... "
-lsyncd ~/.lsyncd.conf
+echo -n "CPU powersave... "
+sudo cpupower frequency-set -g powersave >/dev/null
 echo
 
-echo  -n "syndaemon... "
-~/bin/touchpad on
-echo "ok"
-
+echo -n "touchpad... "
+$HOME/bin/touchpad on
+echo
 

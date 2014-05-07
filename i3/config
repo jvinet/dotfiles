@@ -185,6 +185,11 @@ bindsym $mod+Tab workspace back_and_forth
 # Window list
 bindsym $mod+w exec --no-startup-id quickswitch.py
 
+# Switch to next unused workspace
+bindsym $mod+plus exec --no-startup-id $HOME/bin/i3-free-workspace.py switch next
+# Move current window to next unused workspace
+bindsym $mod+shift+plus exec --no-startup-id $HOME/bin/i3-free-workspace.py move next
+
 # Notification list
 bindsym $mod+n exec --no-startup-id $HOME/bin/notify -d
 

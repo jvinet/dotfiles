@@ -197,7 +197,7 @@ bindsym $mod+bracketleft exec --no-startup-id $HOME/bin/cpuspeed slow
 bindsym $mod+bracketright exec --no-startup-id $HOME/bin/cpuspeed fast
 bindsym $mod+comma exec --no-startup-id compton-trans -c -5
 bindsym $mod+period exec --no-startup-id compton-trans -c +5
-bindsym $mod+q exec --no-startup-id /usr/bin/bl 500
+bindsym $mod+q exec --no-startup-id /usr/bin/bl 250
 bindsym XF86MonBrightnessUp exec --no-startup-id $HOME/bin/mon_bl +1
 bindsym XF86MonBrightnessDown exec --no-startup-id $HOME/bin/mon_bl -1
 bindsym XF86KbdBrightnessUp exec --no-startup-id $HOME/bin/kbd_bl +1

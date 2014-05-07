@@ -60,6 +60,9 @@ fi
 
 export PATH=$PATH:$HOME/bin:$HOME/.local/bin
 
+# Perl
+export PATH=$PATH:/usr/bin/vendor_perl
+
 # Ruby
 export PATH=$PATH:$HOME/.gem/ruby/1.9.1/bin:$HOME/.gem/ruby/2.0.0/bin
 

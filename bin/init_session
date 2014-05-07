@@ -1,20 +1,5 @@
 #!/bin/bash
 
-# lsyncd needs a few things before it can run.
-if [ ! -d ~/work/betsmart ]; then
-	echo "Mount the work partition first, so lsyncd can run."
-	exit 1
-fi
-if [ ! "`pgrep ssh-agent`" ]; then
-	echo "Start your SSH agent first, so lsyncd can run."
-	exit 1
-fi
-ssh-add -l &>/dev/null
-if [ $? -ne 0 ]; then
-	echo "Populate your SSH agent first, so lsyncd can run."
-	exit 1
-fi
-
 # Do a naive check to see if a program is already running, and if not, start it.
 start() {
 	bn=`basename $1`
@@ -23,13 +8,49 @@ start() {
 		echo "already running."
 		return
 	fi
-	echo "starting: $*"
-	$* &
+	echo "starting: $@"
+	$@ &
 }
 
-#echo -n "cpupower.py... "
-#~/bin/cpupower.py &
+# Run a command through sudo, echoing the command first.
+sudocmd() {
+	echo '> ' sudo $@
+	sudo $@
+}
 
+
+#------------------------------------------------------------------------
+# PRE-CHECKS: MOSTLY REQ'D FOR LSYNCD.
+#------------------------------------------------------------------------
+if [ ! -d ~/work/betsmart ]; then
+	echo "Mount the work partition first, so lsyncd can run."
+	exit 1
+fi
+
+if [ ! "`pgrep ssh-agent`" ]; then
+	echo "Start your SSH agent first, so lsyncd can run."
+	exit 1
+fi
+
+ssh-add -l &>/dev/null
+if [ $? -ne 0 ]; then
+	echo "Populate your SSH keychain first, so lsyncd can run."
+	exit 1
+fi
+
+
+#------------------------------------------------------------------------
+# START VPNS.
+#------------------------------------------------------------------------
+ifconfig zeroflux &>/dev/null || sudocmd systemctl start tincd@zeroflux
+ifconfig bsm &>/dev/null || sudocmd systemctl start tincd@bsm
+
+
+#------------------------------------------------------------------------
+# START DESKTOP APPS/SERVICES.
+#------------------------------------------------------------------------
+
+#start $HOME/bin/cpupower.py
 start unclutter -noevents
 start $HOME/bin/doorman.py
 start redshiftgui --min

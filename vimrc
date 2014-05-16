@@ -13,15 +13,15 @@ autocmd BufNewFile,BufRead *.tsv  setlocal ts=16 sts=16 noet number list
 autocmd BufNewFile,BufRead *.tsv  map L f	W
 autocmd BufNewFile,BufRead *.tsv  map H F	B
 
-" Show tabs when coding
-autocmd BufNewFile,BufRead *.py     setlocal list
-autocmd BufNewFile,BufRead *.php    setlocal list
-autocmd BufNewFile,BufRead *.js     setlocal list
-autocmd BufNewFile,BufRead *.c      setlocal list
-autocmd BufNewFile,BufRead *.cpp    setlocal list
-autocmd BufNewFile,BufRead *.lua    setlocal list
-autocmd BufNewFile,BufRead *.html   setlocal list
-autocmd BufNewFile,BufRead *.coffee setlocal list
+" Show tabs and line numbers when coding
+autocmd BufNewFile,BufRead *.py     setlocal list number
+autocmd BufNewFile,BufRead *.php    setlocal list number
+autocmd BufNewFile,BufRead *.js     setlocal list number
+autocmd BufNewFile,BufRead *.c      setlocal list number
+autocmd BufNewFile,BufRead *.cpp    setlocal list number
+autocmd BufNewFile,BufRead *.lua    setlocal list number
+autocmd BufNewFile,BufRead *.html   setlocal list number
+autocmd BufNewFile,BufRead *.coffee setlocal list number
 
 " Linters
 autocmd BufNewFile,BufRead *.php map <leader>; :!php -l %<CR>

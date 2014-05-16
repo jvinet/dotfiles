@@ -12,7 +12,7 @@ xrandr \
 	--output HDMI2 --off \
 	--output VGA1 --off \
 	--output eDP1 --mode 1366x768 --pos 0x0 --rotate normal \
-	--output $DISP --mode 1368x768_59.90 --right-of eDP1 --rotate normal
+	--output $DISP --mode 1368x768_59.90 --right-of eDP1 --rotate normal --primary
 
 # re-scale wallpaper on new display
 [ -f $HOME/.fehbg ] && . $HOME/.fehbg

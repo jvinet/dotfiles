@@ -1,10 +1,10 @@
 #!/bin/bash
 #
-# A dumb little string switching utility. Useful for colourizing output
+# A dumb little string-switching utility. Useful for colourizing output
 # for conky.
 #
 # Usage: ./dynstring #ffffff #ff0000 ./check_stuff.sh
-#    or: ./dynstring abc def [ "`cmd./sh`" = "" ]
+#    or: ./dynstring abc def [ "`cmd.sh`" = "" ]
 #
 # If ./check_stuff.sh returns a zero return code, then the first string
 # is outputted. Otherwise, the second string is outputted.

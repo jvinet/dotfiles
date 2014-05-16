@@ -2,6 +2,7 @@
 #
 # Generate a tarball of:
 #   - /etc (w/o shadow files)
+#   - Crontabs
 #   - installed package list (pacman)
 #   - installed package list (pip2/3)
 #   - installed package lsit (npm)
@@ -23,8 +24,10 @@ pip3 list >pip3.txt
 npm ls -g >npm.txt
 
 if [ -d /home/jvinet/.local/system_state ]; then
-	cp -v /home/jvinet/.local/system_state/* ./
+	cp -av /home/jvinet/.local/system_state ./
 fi
+
+cp -av /var/spool/cron ./
 
 cd ..
 d=`date +%Y%m%d`

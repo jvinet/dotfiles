@@ -171,6 +171,7 @@ bindsym $mod+apostrophe scratchpad show
 bar {
 	#status_command i3status
 	status_command $HOME/.i3/conky-i3bar
+	tray_output primary
 }
 
 popup_during_fullscreen leave_fullscreen

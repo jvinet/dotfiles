@@ -5,5 +5,16 @@
 
 dir=$HOME/Pictures/wallpaper
 
-fn="`find $dir -type f | sort -R | tail -n 1`"
+# If the current wallpaper is solid black, don't change it.
+#  (To reset this when you want a new wallpaper, just remove ~/.fehbg)
+if [ -r ~/.fehbg ]; then
+	[ -n "`grep black_bg.png ~/.fehbg`" ] && exit
+fi
+
+if [ "$1" = "blank" ]; then
+	fn="$dir/black_bg.png"
+else
+	fn="`find $dir -type f | sort -R | tail -n 1`"
+fi
+
 DISPLAY=:0 feh --bg-scale "`realpath $fn`"

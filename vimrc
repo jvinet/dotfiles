@@ -3,7 +3,7 @@ set nocompatible
 
 " Per-file options
 autocmd BufNewFile,BufRead *.py   setlocal sw=4 ts=4 sts=4 et
-autocmd BufNewFile,BufRead *.md   setlocal et tw=74
+autocmd BufNewFile,BufRead *.md   setlocal noet tw=74 list
 autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
 autocmd BufNewFile,BufRead *.rst  setlocal sw=4 ts=4 sts=4 tw=74 et
 

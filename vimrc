@@ -17,6 +17,7 @@ autocmd BufNewFile,BufRead *.tsv  map H F	B
 autocmd BufNewFile,BufRead *.py     setlocal list number
 autocmd BufNewFile,BufRead *.php    setlocal list number
 autocmd BufNewFile,BufRead *.js     setlocal list number
+autocmd BufNewFile,BufRead *.go     setlocal list number
 autocmd BufNewFile,BufRead *.c      setlocal list number
 autocmd BufNewFile,BufRead *.cpp    setlocal list number
 autocmd BufNewFile,BufRead *.lua    setlocal list number

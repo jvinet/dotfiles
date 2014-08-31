@@ -87,9 +87,6 @@ bindsym $mod+a focus parent
 # focus a child container
 bindsym $mod+c focus child
 
-# focus the child container
-#bindsym $mod+d focus child
-
 # switch to workspace
 bindsym $mod+1 workspace number 1
 bindsym $mod+2 workspace number 2
@@ -208,6 +205,9 @@ bindsym $mod+shift+plus exec --no-startup-id $HOME/bin/i3-free-workspace.py move
 
 # Notification list
 bindsym $mod+n exec --no-startup-id $HOME/bin/notify -d
+
+# Change the wallpaper
+bindsym $mod+shift+w exec --no-startup-id $HOME/bin/wallpaper
 
 # Custom app bindings
 bindsym $mod+BackSpace exec --no-startup-id $HOME/bin/lock

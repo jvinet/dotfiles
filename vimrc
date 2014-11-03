@@ -185,6 +185,8 @@ command! -nargs=+ Grep execute 'silent grep! -r <args>' | copen 33
 map <leader>g :execute "vimgrep /" . expand("<cword>") . "/j %" <Bar> cw<CR>
 " Same as above, but do it recursively for all files under the CWD.
 map <leader>gr :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+" Same as above, but use Ack.
+map <leader>ga :execute "Ack " . expand("<cword>")<CR>
 
 " Switch to hexadecimal view.
 map <leader>h :call ToggleHex()<CR>
@@ -208,6 +210,63 @@ map <leader>cc :call setqflist([])<CR>
 " Quick AES encryption/decryption
 command! Enc execute '%!openssl aes-256-cbc -salt'
 command! Dec execute '%!openssl aes-256-cbc -d -salt'
+
+" Auto encrypt/decrypt .aes files with AESCrypt
+"   (It's more portable than openssl on Android)
+function! s:AESReadPre()
+    set cmdheight=3
+    set viminfo=
+    set noswapfile
+    set shell=/bin/sh
+    set bin
+endfunction
+function! s:AESReadPost()
+    let l:expr = "0,$!aescrypt -d -"
+
+    silent! execute l:expr
+    if v:shell_error
+        silent! 0,$y
+        silent! undo
+        echo "COULD NOT DECRYPT USING EXPRESSION: " . expr
+        echo "ERROR FROM AESCRYPT:"
+        echo @"
+        echo "COULD NOT DECRYPT"
+        return
+    endif
+    set nobin
+    set cmdheight&
+    set shell&
+    execute ":doautocmd BufReadPost ".expand("%:r")
+    redraw!
+endfunction
+function! s:AESWritePre()
+    set cmdheight=3
+    set shell=/bin/sh
+    set bin
+		let l:expr = "0,$!aescrypt -e -"
+
+    silent! execute l:expr
+    if v:shell_error
+        silent! 0,$y
+        silent! undo
+        echo "COULD NOT ENCRYPT USING EXPRESSION: " . expr
+        echo "ERROR FROM AESCRYPT:"
+        echo @"
+        echo "COULD NOT ENCRYPT"
+        return
+    endif
+endfunction
+function! s:AESWritePost()
+    silent! undo
+    set nobin
+    set shell&
+    set cmdheight&
+    redraw!
+endfunction
+autocmd BufReadPre,FileReadPre     *.aescrypt call s:AESReadPre()
+autocmd BufReadPost,FileReadPost   *.aescrypt call s:AESReadPost()
+autocmd BufWritePre,FileWritePre   *.aescrypt call s:AESWritePre()
+autocmd BufWritePost,FileWritePost *.aescrypt call s:AESWritePost()
 
 " I often hit :W when I actually mean :w
 command! W write
@@ -288,6 +347,7 @@ nmap <leader>u :GundoToggle<CR>
 
 " NERDTree (often requires a redraw)
 nmap <leader>e :NERDTreeToggle<CR>:sleep 100m<CR>:redraw!<CR>
+nmap <leader>f :NERDTreeFocus<CR>
 
 " TagBar
 nmap <leader>b :TagbarToggle<CR>

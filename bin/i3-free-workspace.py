@@ -34,3 +34,5 @@ if args.action[0] == 'switch':
     i3.command('workspace', str(ws))
 else:
     i3.command('move container to workspace', str(ws))
+    # Switch to the new workspace.
+    i3.command('workspace', str(ws))

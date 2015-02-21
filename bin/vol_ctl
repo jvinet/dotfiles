@@ -18,7 +18,7 @@ vol_up() {
 
 vol_down() {
 	#amixer -c 0 set Master 5%-
-	pactl set-sink-volume 0 -- -5%
+	pactl set-sink-volume 0 -5%
 	#show_level
 }
 

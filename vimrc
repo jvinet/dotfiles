@@ -3,9 +3,10 @@ set nocompatible
 
 " Per-file options
 autocmd BufNewFile,BufRead *.py   setlocal sw=4 ts=4 sts=4 et
+autocmd BufNewFile,BufRead *.clj  setlocal sw=3 ts=3 sts=3 et
 autocmd BufNewFile,BufRead *.md   setlocal noet tw=74 list
 autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
-autocmd BufNewFile,BufRead *.rst  setlocal sw=4 ts=4 sts=4 tw=74 et
+autocmd BufNewFile,BufRead *.rst  setlocal sw=3 ts=3 sts=3 tw=74 et
 
 " Cheap/simple spreadsheets in Vim
 autocmd BufNewFile,BufRead *.tsv  setlocal ts=16 sts=16 noet number list
@@ -17,8 +18,12 @@ autocmd BufNewFile,BufRead *.tsv  map H F	B
 autocmd BufNewFile,BufRead *.py     setlocal list number
 autocmd BufNewFile,BufRead *.php    setlocal list number
 autocmd BufNewFile,BufRead *.js     setlocal list number
+autocmd BufNewFile,BufRead *.clj    setlocal list number
+autocmd BufNewFile,BufRead *.java   setlocal list number
 autocmd BufNewFile,BufRead *.go     setlocal list number
 autocmd BufNewFile,BufRead *.c      setlocal list number
+autocmd BufNewFile,BufRead *.h      setlocal list number
+autocmd BufNewFile,BufRead *.m      setlocal list number
 autocmd BufNewFile,BufRead *.cpp    setlocal list number
 autocmd BufNewFile,BufRead *.lua    setlocal list number
 autocmd BufNewFile,BufRead *.html   setlocal list number
@@ -82,6 +87,8 @@ noremap <leader>r :redraw!<CR>
 noremap <leader>l :set list!<CR>
 " Toggle line numbers
 noremap <leader>n :set number!<CR>
+" Toggle visual marks
+noremap <leader>m :SignatureToggle<CR>
 
 " List characters use a less-noisy pipe to show tabs, instead of ^I
 " Don't bother showing EOL characters either.
@@ -267,6 +274,18 @@ autocmd BufReadPre,FileReadPre     *.aescrypt call s:AESReadPre()
 autocmd BufReadPost,FileReadPost   *.aescrypt call s:AESReadPost()
 autocmd BufWritePre,FileWritePre   *.aescrypt call s:AESWritePre()
 autocmd BufWritePost,FileWritePost *.aescrypt call s:AESWritePost()
+
+" Un-minify Javascript
+" Source: https://coderwall.com/p/lxajqq
+command! UnMinify call UnMinify()
+function! UnMinify()
+    %s/{\ze[^\r\n]/{\r/g
+    %s/){/) {/g
+    %s/};\?\ze[^\r\n]/\0\r/g
+    %s/;\ze[^\r\n]/;\r/g
+    %s/[^\s]\zs[=&|]\+\ze[^\s]/ \0 /g
+    normal ggVG=
+endfunction
 
 " I often hit :W when I actually mean :w
 command! W write

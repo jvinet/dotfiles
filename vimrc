@@ -87,8 +87,13 @@ noremap <leader>r :redraw!<CR>
 noremap <leader>l :set list!<CR>
 " Toggle line numbers
 noremap <leader>n :set number!<CR>
-" Toggle visual marks
+" Toggle visual marks (vim-signature plugin)
 noremap <leader>m :SignatureToggle<CR>
+" Investigate (investigate.vim plugin)
+noremap <leader>i :call investigate#Investigate()<CR>
+" Use Zeal for Investigate.
+" let g:investigate_command_for_python = '/usr/bin/zeal --query ^s'
+noremap <leader>z :!zeal --query "<cword>"&<CR><CR>
 
 " List characters use a less-noisy pipe to show tabs, instead of ^I
 " Don't bother showing EOL characters either.

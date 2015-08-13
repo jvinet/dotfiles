@@ -28,6 +28,7 @@ autocmd BufNewFile,BufRead *.cpp    setlocal list number
 autocmd BufNewFile,BufRead *.lua    setlocal list number
 autocmd BufNewFile,BufRead *.html   setlocal list number
 autocmd BufNewFile,BufRead *.coffee setlocal list number
+autocmd BufNewFile,BufRead *.rkt    setlocal list number
 
 " Linters
 autocmd BufNewFile,BufRead *.php map <leader>; :!php -l %<CR>
@@ -219,6 +220,11 @@ map <leader>co :copen<CR>
 " Clear the quickfix window
 map <leader>cc :call setqflist([])<CR>
 
+" Close the location-list window
+map <leader>lw :lclose<CR>
+" Open the location-list window
+map <leader>lo :lopen<CR>
+
 " Quick AES encryption/decryption
 command! Enc execute '%!openssl aes-256-cbc -salt'
 command! Dec execute '%!openssl aes-256-cbc -d -salt'
@@ -392,6 +398,18 @@ function! DiffToggle()
 		diffthis
 	end
 endfunction
+
+" Syntastic Plugin
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enabled_signs = 1
+let g:syntastic_enabled_highlighting = 0
+let g:syntastic_mode_map = {"mode": "passive"}
+map <leader>st :SyntasticToggleMode<CR>
+map <leader>sc :SyntasticCheck<CR>
+map <leader>sr :SyntasticReset<CR>
 
 " Ctrl-P Plugin
 let g:ctrlp_map = '<leader>o'

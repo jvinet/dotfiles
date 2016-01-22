@@ -1,39 +1,8 @@
 set tabstop=2 shiftwidth=2 softtabstop=2
 set nocompatible
 
-" Per-file options
-autocmd BufNewFile,BufRead *.py   setlocal sw=4 ts=4 sts=4 et
-autocmd BufNewFile,BufRead *.clj  setlocal sw=3 ts=3 sts=3 et
-autocmd BufNewFile,BufRead *.md   setlocal noet tw=74 list
-autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
-autocmd BufNewFile,BufRead *.rst  setlocal sw=3 ts=3 sts=3 tw=74 et
-
-" Cheap/simple spreadsheets in Vim
-autocmd BufNewFile,BufRead *.tsv  setlocal ts=16 sts=16 noet number list
-" Columnar movements
-autocmd BufNewFile,BufRead *.tsv  map L f	W
-autocmd BufNewFile,BufRead *.tsv  map H F	B
-
-" Show tabs and line numbers when coding
-autocmd BufNewFile,BufRead *.py     setlocal list number
-autocmd BufNewFile,BufRead *.php    setlocal list number
-autocmd BufNewFile,BufRead *.js     setlocal list number
-autocmd BufNewFile,BufRead *.clj    setlocal list number
-autocmd BufNewFile,BufRead *.java   setlocal list number
-autocmd BufNewFile,BufRead *.go     setlocal list number
-autocmd BufNewFile,BufRead *.c      setlocal list number
-autocmd BufNewFile,BufRead *.h      setlocal list number
-autocmd BufNewFile,BufRead *.m      setlocal list number
-autocmd BufNewFile,BufRead *.cpp    setlocal list number
-autocmd BufNewFile,BufRead *.lua    setlocal list number
-autocmd BufNewFile,BufRead *.html   setlocal list number
-autocmd BufNewFile,BufRead *.coffee setlocal list number
-autocmd BufNewFile,BufRead *.rkt    setlocal list number
-
-" Linters
-autocmd BufNewFile,BufRead *.php map <leader>; :!php -l %<CR>
-autocmd BufNewFile,BufRead *.js  map <leader>; :!jshint %<CR>
-autocmd BufNewFile,BufRead *.py  map <leader>; :!pylint -r n -f colorized %<CR>
+" Activate pathogen
+execute pathogen#infect()
 
 " Use the mouse
 set mouse=a
@@ -76,6 +45,40 @@ set nobackup
 " Don't clear the screen after exit
 set t_ti=
 set t_te=
+
+" Per-file options
+autocmd BufNewFile,BufRead *.py   setlocal sw=4 ts=4 sts=4 et
+autocmd BufNewFile,BufRead *.clj  setlocal sw=3 ts=3 sts=3 et
+autocmd BufNewFile,BufRead *.md   setlocal et tw=74 list ft=ghmarkdown
+autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
+autocmd BufNewFile,BufRead *.rst  setlocal sw=3 ts=3 sts=3 tw=74 et
+
+" Cheap/simple spreadsheets in Vim
+autocmd BufNewFile,BufRead *.tsv  setlocal ts=16 sts=16 noet number list
+" Columnar movements
+autocmd BufNewFile,BufRead *.tsv  map L f	W
+autocmd BufNewFile,BufRead *.tsv  map H F	B
+
+" Show tabs and line numbers when coding
+autocmd BufNewFile,BufRead *.py     setlocal list number
+autocmd BufNewFile,BufRead *.php    setlocal list number
+autocmd BufNewFile,BufRead *.js     setlocal list number
+autocmd BufNewFile,BufRead *.clj    setlocal list number
+autocmd BufNewFile,BufRead *.java   setlocal list number
+autocmd BufNewFile,BufRead *.go     setlocal list number
+autocmd BufNewFile,BufRead *.c      setlocal list number
+autocmd BufNewFile,BufRead *.h      setlocal list number
+autocmd BufNewFile,BufRead *.m      setlocal list number
+autocmd BufNewFile,BufRead *.cpp    setlocal list number
+autocmd BufNewFile,BufRead *.lua    setlocal list number
+autocmd BufNewFile,BufRead *.html   setlocal list number
+autocmd BufNewFile,BufRead *.coffee setlocal list number
+autocmd BufNewFile,BufRead *.rkt    setlocal list number
+
+" Linters
+autocmd BufNewFile,BufRead *.php map <leader>; :!php -l %<CR>
+autocmd BufNewFile,BufRead *.js  map <leader>; :!jshint %<CR>
+autocmd BufNewFile,BufRead *.py  map <leader>; :!pylint -r n -f colorized %<CR>
 
 " Enable smart keyword matching ('%' key) and smart(er) file types
 filetype plugin on
@@ -361,9 +364,6 @@ vnoremap { "zdi{<C-R>z}<ESC>
 vnoremap [ "zdi[<C-R>z]<ESC>
 vnoremap ' "zdi'<C-R>z'<ESC>
 vnoremap " "zdi"<C-R>z"<ESC>
-
-" Activate pathogen
-execute pathogen#infect()
 
 " Easy Motion: Search for character
 let g:EasyMotion_do_mapping = 0

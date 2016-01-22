@@ -10,8 +10,17 @@ fi
 dst=$2
 [ -z "$dst" ] && dst=${1%.*}.html
 
+# Which markdown are we using? Look for marked first, as it supports GFM.
+#   'npm install -g marked'
+if [ -x "`which marked`" ]; then
+	markdown="`which marked` --gfm --tables --breaks"
+else
+	markdown="`which markdown`"
+fi
+
 # Make it look decent
 css='http://jasonm23.github.io/markdown-css-themes/markdown8.css'
+css='http://zeroflux.org/markdown.css'
 
 # We overwrite with impunity, no erasies
 echo '<!doctype html>' >$dst
@@ -19,5 +28,7 @@ echo '<html><head><meta charset="utf-8">' >>$dst
 echo '<style type="text/css">' >>$dst
 fetch $css >>$dst
 echo '</style></head><body>' >>$dst
-markdown <$1 >>$dst
+echo '<article class="markdown-body">' >>$dst
+$markdown <$1 >>$dst
+echo '</article>' >>$dst
 echo '</body></html>' >>$dst

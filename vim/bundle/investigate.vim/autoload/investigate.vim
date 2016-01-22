@@ -12,7 +12,9 @@ endif
 
 " Return the executable tool for documentation opening ------ {{{
 function! s:Executable()
-  if has("mac")
+	return "/usr/bin/open "
+
+  if has("macunix")
     if executable("open")
       return "open "
     elseif executable("/usr/bin/open")
@@ -42,7 +44,7 @@ endfunction
 
 " Determine whether documentation should open with dash ------ {{{
 function! s:UseDash()
-  if has("mac") && g:investigate_use_dash
+  if has("macunix") && g:investigate_use_dash
     return 1
   endif
 

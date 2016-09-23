@@ -20,15 +20,16 @@ export LC_ALL='en_US.UTF-8'
 alias grep='grep --color'
 alias vi='vim'
 alias t='todo'
-alias ll='ls -l'
+alias ll='ls -lh'
 alias r='ranger'
 alias xc='xclip -selection clipboard'
 alias xp='xclip -selection clipboard -o'
 alias tc='tabs -16 ; tcalc '
+alias op='netstat -tanl | grep LISTEN | grep tcp4 | sort'
 
 # Python has some very handy treats
-alias http='python -m http.server'
-alias json='python -m json.tool'
+alias http='python3 -m http.server'
+alias json='python3 -m json.tool'
 
 # Quick AES encryption/decryption
 alias enc='openssl aes-256-cbc -salt'
@@ -52,13 +53,14 @@ if [ "`uname`" = "Linux" ]; then
 	fi
 else
 	alias ls='ls -G'
+	alias firefox='open -a Firefox'
 
 	# Colorize Mac/BSD ls output
 	export CLICOLOR=1
 	export LSCOLORS=ExGxFxdxCxDxDxBxBxacac
 fi
 
-export PATH=$PATH:$HOME/bin:$HOME/.local/bin
+export PATH=$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/sbin
 
 # Perl
 export PATH=$PATH:/usr/bin/vendor_perl
@@ -68,6 +70,9 @@ export PATH=$PATH:$HOME/.gem/ruby/1.9.1/bin:$HOME/.gem/ruby/2.0.0/bin
 
 # Node
 export PATH=$PATH:$HOME/node_modules/.bin
+if [ "`uname`" = "Darwin" ]; then
+	export NODE_PATH=/usr/local/lib/node_modules
+fi
 
 # Go
 export GOPATH=~/go
@@ -75,6 +80,7 @@ export PATH=$PATH:$GOPATH/bin
 
 # Android
 export PATH=$PATH:$HOME/android/tools:$HOME/android/platform-tools
+export ANDROID_HOME=/usr/local/opt/android-sdk
 
 # Preferred applications
 export EDITOR=vim
@@ -113,3 +119,5 @@ export TERM=xterm-256color
 
 PS1='[\u@\h \W]\$ '
 
+# OPAM configuration
+. /Users/jvinet/.opam/opam-init/init.sh > /dev/null 2> /dev/null || true

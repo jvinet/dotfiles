@@ -52,6 +52,7 @@ autocmd BufNewFile,BufRead *.clj  setlocal sw=3 ts=3 sts=3 et
 autocmd BufNewFile,BufRead *.md   setlocal et tw=74 list ft=ghmarkdown
 autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
 autocmd BufNewFile,BufRead *.rst  setlocal sw=3 ts=3 sts=3 tw=74 et
+autocmd BufNewFile,BufRead *.json setlocal ft=javascript
 
 " Cheap/simple spreadsheets in Vim
 autocmd BufNewFile,BufRead *.tsv  setlocal ts=16 sts=16 noet number list
@@ -63,6 +64,7 @@ autocmd BufNewFile,BufRead *.tsv  map H F	B
 autocmd BufNewFile,BufRead *.py     setlocal list number
 autocmd BufNewFile,BufRead *.php    setlocal list number
 autocmd BufNewFile,BufRead *.js     setlocal list number
+autocmd BufNewFile,BufRead *.json   setlocal list number
 autocmd BufNewFile,BufRead *.clj    setlocal list number
 autocmd BufNewFile,BufRead *.java   setlocal list number
 autocmd BufNewFile,BufRead *.go     setlocal list number
@@ -427,8 +429,8 @@ let g:ctrlp_switch_buffer = 0
 map <leader>. :CtrlPTag<CR>
 
 " VimWiki
-let g:vimwiki_list = [{'path': '~/work/personal/vimwiki/', 'path_html': '~/work/personal/vimwiki/html'},
-                   \  {'path': '~/work/betsmart/vimwiki/', 'path_html': '~/work/betsmart/vimwiki/html'}]
+let g:vimwiki_list = [{'path': '~/personal/personal/vimwiki/', 'path_html': '~/work/personal/vimwiki/html'},
+                   \  {'path': '~/personal/betsmart/vimwiki/', 'path_html': '~/work/betsmart/vimwiki/html'}]
 
 " Change the bg color of all the editor space at 80 and >120 cols
 let &colorcolumn="80,".join(range(120,999), ",")

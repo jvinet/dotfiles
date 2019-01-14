@@ -1,0 +1,25 @@
+#!/bin/bash
+
+PIDFILE=/usr/local/var/run/sshuttle.pid
+
+if [ "$1" = "stop" ]; then
+	kill `cat $PIDFILE`
+	echo "VPN down"
+	exit 0
+fi
+
+if [ "$1" = "start" ]; then
+	sshuttle --dns \
+		--daemon --pidfile $PIDFILE \
+		-r jvinet@zeroflux.org 0/0
+	echo "VPN up"
+	exit 0
+fi
+
+if [ -f $PIDFILE ]; then
+	echo "VPN is running"
+	exit 0
+else
+	echo "VPN is not running"
+	exit 1
+fi

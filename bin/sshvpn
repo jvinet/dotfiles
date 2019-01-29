@@ -2,6 +2,18 @@
 
 PIDFILE=/usr/local/var/run/sshuttle.pid
 
+REMOTE=jvinet@zeroflux.org
+#REMOTE=jvinet@siphon.zeroflux.org
+
+if [ -z "$1" ]; then
+	echo "usage: `basename $0` <start|stop> [remote]"
+	exit 1
+fi
+
+if [ -n "$2" ]; then
+	REMOTE=$2
+fi
+
 if [ "$1" = "stop" ]; then
 	kill `cat $PIDFILE`
 	echo "VPN down"
@@ -11,7 +23,7 @@ fi
 if [ "$1" = "start" ]; then
 	sshuttle --dns \
 		--daemon --pidfile $PIDFILE \
-		-r jvinet@zeroflux.org 0/0
+		-r $REMOTE 0/0
 	echo "VPN up"
 	exit 0
 fi

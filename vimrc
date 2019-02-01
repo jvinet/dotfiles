@@ -53,6 +53,7 @@ autocmd BufNewFile,BufRead *.md   setlocal et tw=74 list ft=ghmarkdown
 autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
 autocmd BufNewFile,BufRead *.rst  setlocal sw=3 ts=3 sts=3 tw=74 et
 autocmd BufNewFile,BufRead *.json setlocal ft=javascript
+autocmd BufNewFile,BufRead *.yaml setlocal sw=2 ts=2 sts=2 et
 
 " Cheap/simple spreadsheets in Vim
 autocmd BufNewFile,BufRead *.tsv  setlocal ts=16 sts=16 noet number list

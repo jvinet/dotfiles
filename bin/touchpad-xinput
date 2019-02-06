@@ -1,0 +1,38 @@
+#!/bin/bash
+
+usage() {
+	echo "usage: $0 <on|off|toggle>"
+	exit 1
+}
+
+get_id() {
+	xinput | grep Touchpad | cut -f2 | cut -d= -f2
+}
+
+on() {
+	echo "ID: `get_id`"
+	xinput enable `get_id`
+	notify-send "Touchpad enabled"
+}
+
+off() {
+	echo "ID: `get_id`"
+	xinput disable `get_id`
+	notify-send "Touchpad disabled"
+}
+
+toggle() {
+	enabled=`xinput list-props $(get_id) | grep 'Device Enabled' | cut -d: -f2`
+	if [ "$enabled" -gt 0 ]; then
+		off
+	else
+		on
+	fi
+}
+
+case "$1" in
+	on)     on ;;
+	off)    off ;;
+	toggle) toggle ;;
+	*)   usage
+esac

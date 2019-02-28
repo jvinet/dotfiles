@@ -12,13 +12,13 @@ get_id() {
 on() {
 	echo "ID: `get_id`"
 	xinput enable `get_id`
-	notify-send "Touchpad enabled"
+	notify-send --hint=int:transient:1 "Touchpad enabled"
 }
 
 off() {
 	echo "ID: `get_id`"
 	xinput disable `get_id`
-	notify-send "Touchpad disabled"
+	notify-send --hint=int:transient:1 "Touchpad disabled"
 }
 
 toggle() {

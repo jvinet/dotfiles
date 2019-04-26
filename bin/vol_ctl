@@ -1,41 +1,44 @@
 #!/bin/bash
 #
-# Basic volume control.
+# Basic volume control via Pulseaudio. Operates on the active sink.
 #
 
-dir=$1
+cmd=$1
 
-if [ -z "$dir" ]; then
+if [ -z "$cmd" ]; then
 	echo "usage: $0 <up|down|mute|get>"
 	exit 1
 fi
 
+# Find the active sink.
+SINK_NUM=`pacmd list-sinks | awk '/* index:/ {print $3}'`
+
 vol_up() {
-	#amixer -c 0 set Master 5%+
-	pactl set-sink-volume 0 +5%
-	#show_level
+	pactl set-sink-volume $SINK_NUM +5%
+	show_level
 }
 
 vol_down() {
-	#amixer -c 0 set Master 5%-
-	pactl set-sink-volume 0 -5%
-	#show_level
+	pactl set-sink-volume $SINK_NUM -5%
+	show_level
 }
 
 vol_mute() {
-	if [ "`pactl list sinks | grep Mute:.yes`" ]; then
-		pactl set-sink-mute 0 0
-		notify-send "Volume Un-muted"
+	pactl set-sink-mute $SINK_NUM toggle
+	is_muted=$(pacmd list-sinks \
+		| awk '/* index:/ {seen = 1} seen {print}' \
+		| awk '/muted:/ {print $2}' \
+		| head -n 1)
+
+	if [ "$is_muted" = "no" ]; then
 		show_level
 	else
-		pactl set-sink-mute 0 1
 		notify-send "Volume Muted"
 	fi
 }
 
 vol_get() {
-	#amixer -c 0 get Master | grep -o -E '[0-9]+%'
-	pactl list sinks | grep Volume: | grep -o -E '[0-9]+%' | head -n 1
+	pacmd list-sinks | awk '/* index/ {seen = 1} seen {print}' | grep -E '^\s*volume:' | awk '{print $5}'
 }
 
 show_level() {
@@ -43,7 +46,7 @@ show_level() {
 	notify-send "Volume Level: $pcnt"
 }
 
-case "$dir" in
+case "$cmd" in
 	up)   vol_up ;;
 	down) vol_down ;;
 	mute) vol_mute ;;

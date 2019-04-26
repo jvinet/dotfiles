@@ -1,9 +1,10 @@
 #!/bin/bash
 
-PIDFILE=/usr/local/var/run/sshuttle.pid
+PIDFILE=$HOME/var/run/sshuttle.pid
 
 REMOTE=jvinet@zeroflux.org
-#REMOTE=jvinet@siphon.zeroflux.org
+REMOTE=jvinet@siphon.zeroflux.org
+REMOTE=jvinet@oldzf
 
 if [ -z "$1" ]; then
 	echo "usage: `basename $0` <start|stop> [remote]"

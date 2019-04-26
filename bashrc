@@ -50,12 +50,15 @@ if [ "`uname`" = "Linux" ]; then
 		export DISPLAY=:0
 	fi
 
-	# Look for an active SSH agent - we lose it in tmux juggling sometimes
+	# Look for an active SSH agent - we lose it in tmux juggling sometimes.
+	# If one isn't found, start it.
 	pid="`pgrep ssh-agent`"
 	if [ -n "$pid" ]; then
 		export SSH_AGENT_PID=$pid
 		dir=`/bin/ls -d1 /tmp/ssh-*/agent* | head -n 1`
 		export SSH_AUTH_SOCK=$dir
+	else
+		eval `ssh-agent`
 	fi
 else
 	alias ls='ls -G'
@@ -91,7 +94,7 @@ export ANDROID_HOME=/usr/local/opt/android-sdk
 # Preferred applications
 export EDITOR=vim
 export PAGER=less
-export BROWSER=firefox
+export BROWSER=firefox-wayland
 export TERMINAL=terminator
 
 # Some apps (eg: Electron) need this for Sway's system tray.

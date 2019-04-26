@@ -13,7 +13,8 @@ dst=$2
 # Which markdown are we using? Look for marked first, as it supports GFM.
 #   'npm install -g marked'
 if [ -x "`which marked`" ]; then
-	markdown="`which marked` --gfm --tables --breaks"
+	markdown="`which marked` --gfm --tables"
+	#markdown="`which marked` --gfm --tables --breaks"
 else
 	markdown="`which markdown`"
 fi

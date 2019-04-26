@@ -1,0 +1,28 @@
+#!/bin/bash
+
+usage() {
+	echo "usage: $0 <on|off|toggle>"
+	exit 1
+}
+
+on() {
+	swaymsg input 1739:30383:DELL07E6:00_06CB:76AF_Touchpad events enabled
+	notify-send -t 1500 --hint=int:transient:1 "Touchpad enabled"
+}
+
+off() {
+	swaymsg input 1739:30383:DELL07E6:00_06CB:76AF_Touchpad events disabled
+	notify-send -t 1500 --hint=int:transient:1 "Touchpad disabled"
+}
+
+toggle() {
+	swaymsg input 1739:30383:DELL07E6:00_06CB:76AF_Touchpad events toggle enabled disabled
+	notify-send -t 1500 --hint=int:transient:1 "Touchpad toggled"
+}
+
+case "$1" in
+	on)     on ;;
+	off)    off ;;
+	toggle) toggle ;;
+	*)   usage
+esac

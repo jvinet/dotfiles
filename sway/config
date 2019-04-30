@@ -4,11 +4,12 @@
 set $mod Mod4
 set $term terminator
 set $lock swaylock -c 000000 -e -F
-set $menu dmenu_run
-set $appmenu i3-dmenu-desktop
+#set $menu bemenu-run -p '' --fn 'Monospace 10'
+set $menu rofi -show run
+set $appmenu rofi -show drun
 set $screenclip slurp | grim -g - - | wl-copy
 set $screenshot slurp | grim -g - ~/Pictures/screenshots/$(date +"%Y-%m-%d-%H-%M-%S").png
-set $background ~/Pictures/wallpaper/d1aehdnbq0h21.jpg
+set $background ~/Pictures/wallpaper/moon.jpg
 
 # Workspaces.
 set $ws1  1:1
@@ -123,15 +124,16 @@ for_window [class="Gnuplot"] floating enable
 # BRIGHTNESS AND VOLUME
 #------------------------------------------------------------------------
 
-bindsym XF86MonBrightnessUp exec light -A 10
-bindsym Shift+XF86MonBrightnessUp exec light -A 5
-bindsym XF86MonBrightnessDown exec light -U 10
-bindsym Shift+XF86MonBrightnessDown exec light -U 5
-bindsym $mod+q exec light -S 5
+bindsym --locked XF86MonBrightnessUp exec light -A 10
+bindsym --locked XF86MonBrightnessDown exec light -U 10
+bindsym --locked $mod+q exec light -S 5
 
-bindsym XF86AudioRaiseVolume exec $HOME/bin/vol_ctl up
-bindsym XF86AudioLowerVolume exec $HOME/bin/vol_ctl down
-bindsym XF86AudioMute exec $HOME/bin/vol_ctl mute
+bindsym --locked XF86AudioRaiseVolume exec $HOME/bin/vol_ctl up
+bindsym --locked XF86AudioLowerVolume exec $HOME/bin/vol_ctl down
+bindsym --locked XF86AudioMute exec $HOME/bin/vol_ctl mute
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl previous
 
 bindsym XF86PowerOff exec swaynag -t warning -m 'Are you sure you want to exit?' -b 'Yes, exit' 'swaymsg exit'
 

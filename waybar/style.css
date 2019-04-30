@@ -1,0 +1,96 @@
+* {
+    border:        none;
+    border-radius: 0;
+    font-family:   "DejaVu Sans Mono";
+    font-size:     13px;
+    box-shadow:    none;
+    text-shadow:   none;
+}
+
+window {
+    color:      rgba(217, 216, 216, 1);
+    background: rgba(43, 48, 59, 0.5);
+}
+
+#workspaces {
+    margin: 0 5px
+}
+
+#workspaces button {
+    padding:    0 5px;
+    color:      rgba(217, 216, 216, 0.4);
+}
+
+#workspaces button.visible {
+    color:      rgba(217, 216, 216, 1);
+}
+
+#workspaces button.focused {
+    color:      rgba(0, 157, 220, 1);
+}
+
+#workspaces button.urgent {
+    color:      rgba(238, 46, 36, 1);
+}
+
+#mode, #battery, #cpu, #memory, #network, #pulseaudio, #backlight, #custom-storage, #custom-spotify, #custom-weather, #custom-mail {
+    margin:     0px 6px 0px 10px;
+    min-width:  25px;
+}
+
+#cpu {
+	color: #fa6868;
+}
+
+#backlight {
+	color: #ffff00;
+}
+
+#memory {
+	color: #00fff2;
+}
+
+#network {
+	color: #268bd2;
+}
+
+#idle_inhibitor {
+    margin:     0px 6px 0px 1px;
+}
+
+#tray {
+    margin:     0px 1px 0px 20px;
+}
+
+#clock {
+    margin:     0px 16px 0px 10px;
+    min-width:  140px;
+}
+
+#pulseaudio {
+	color: #4BFA3C;
+}
+
+#battery {
+	color: #cccc00;
+}
+
+#battery.warning {
+   color:       rgba(255, 210, 4, 1);
+}
+
+#battery.critical {
+    color:      rgba(238, 46, 36, 1);
+}
+
+#battery.charging {
+    color:      rgba(217, 216, 216, 1);
+}
+
+#custom-storage.warning {
+    color:      rgba(255, 210, 4, 1);
+}
+
+#custom-storage.critical {
+    color:      rgba(238, 46, 36, 1);
+}

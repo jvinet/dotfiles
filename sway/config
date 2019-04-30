@@ -127,7 +127,7 @@ bindsym XF86MonBrightnessUp exec light -A 10
 bindsym Shift+XF86MonBrightnessUp exec light -A 5
 bindsym XF86MonBrightnessDown exec light -U 10
 bindsym Shift+XF86MonBrightnessDown exec light -U 5
-bindsym $mod+q exec light -S 10
+bindsym $mod+q exec light -S 5
 
 bindsym XF86AudioRaiseVolume exec $HOME/bin/vol_ctl up
 bindsym XF86AudioLowerVolume exec $HOME/bin/vol_ctl down

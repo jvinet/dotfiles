@@ -60,6 +60,12 @@ if [ "`uname`" = "Linux" ]; then
 	else
 		eval `ssh-agent`
 	fi
+
+	# Look for the Sway IPC socket - we lose it in tmux juggling.
+	pid=`pgrep -x sway`
+	if [ -n "$pid" ]; then
+		export SWAYSOCK=/run/user/`id -u`/sway-ipc.`id -u`.$pid.sock
+	fi
 else
 	alias ls='ls -G'
 	alias firefox='open -a Firefox'

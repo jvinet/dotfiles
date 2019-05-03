@@ -231,7 +231,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Tab workspace back_and_forth
 
 # Show window list.
-bindsym $mod+w exec rofi -m $(expr $(swaymsg -t get_tree | jq '.nodes | map([recurse(.nodes[]?, .floating_nodes[]?) | .focused] | any) | index(true)') - 1) -show drun -run-command 'swaymsg exec -- {cmd}'
+bindsym $mod+w exec ~/bin/sway-window-switch.sh
 
 # Switch to next unused workspace.
 bindsym $mod+plus exec $HOME/bin/i3-free-workspace.py switch next
@@ -239,7 +239,7 @@ bindsym $mod+plus exec $HOME/bin/i3-free-workspace.py switch next
 bindsym $mod+Shift+plus exec $HOME/bin/i3-free-workspace.py move next
 
 # Rename a workspace (mnemonic: 'd' for 'designate').
-bindsym $mod+d exec i3-input -F 'rename workspace to "%s"' -P 'New name: '
+bindsym $mod+d exec i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '
 
 # Reload the configuration file.
 bindsym $mod+Shift+c reload

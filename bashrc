@@ -65,6 +65,13 @@ if [ "`uname`" = "Linux" ]; then
 	pid=`pgrep -x sway`
 	if [ -n "$pid" ]; then
 		export SWAYSOCK=/run/user/`id -u`/sway-ipc.`id -u`.$pid.sock
+
+		# Yep, you guessed it - we also lose the DBus session.
+		ds=`xargs -n 1 -0 < /proc/$pid/environ | grep DBUS_SESSION_BUS_ADDRESS`
+		if [ "$ds" ]; then
+			eval export $ds
+		fi
+		unset ds
 	fi
 else
 	alias ls='ls -G'
@@ -100,8 +107,11 @@ export ANDROID_HOME=/usr/local/opt/android-sdk
 # Preferred applications
 export EDITOR=vim
 export PAGER=less
-export BROWSER=firefox-wayland
-export TERMINAL=terminator
+export BROWSER=firefox
+export TERMINAL=alacritty
+
+# Ask Firefox to enable Wayland support
+export MOZ_ENABLE_WAYLAND=1
 
 # Some apps (eg: Electron) need this for Sway's system tray.
 [ -n "$WAYLAND_DISPLAY" ] && export XDG_CURRENT_DESKTOP=Unity

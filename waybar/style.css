@@ -83,10 +83,6 @@ window {
     color:      rgba(238, 46, 36, 1);
 }
 
-#battery.charging {
-    color:      rgba(217, 216, 216, 1);
-}
-
 #custom-storage.warning {
     color:      rgba(255, 210, 4, 1);
 }

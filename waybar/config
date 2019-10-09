@@ -31,7 +31,7 @@
     "battery": {
         "format": "{icon}<span color=\"#cccccc\"> {capacity}</span>",
         "format-icons": ["", "", "", "", ""],
-        "format-charging": "{capacity}% ⚡",
+        "format-charging": "⚡<span color=\"#cccccc\"> {capacity}</span>",
         "interval": 30,
         "states": {
             "warning": 25,

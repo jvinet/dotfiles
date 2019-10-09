@@ -2,7 +2,7 @@
 # VARIABLES
 #------------------------------------------------------------------------
 set $mod Mod4
-set $term terminator
+set $term alacritty
 set $lock swaylock -c 000000 -e -F
 #set $menu bemenu-run -p '' --fn 'Monospace 10'
 set $menu rofi -show run
@@ -76,8 +76,11 @@ focus_follows_mouse yes
 output * bg $background fill
 
 # Window borders.
-default_border normal 1
-default_floating_border normal 1
+default_border normal 2
+default_floating_border normal 2
+
+# Mouse pointer moves to the newly-focused output.
+mouse_warping output
 
 hide_edge_borders smart
 smart_borders on
@@ -124,9 +127,9 @@ for_window [class="Gnuplot"] floating enable
 # BRIGHTNESS AND VOLUME
 #------------------------------------------------------------------------
 
-bindsym --locked XF86MonBrightnessUp exec light -A 10
-bindsym --locked XF86MonBrightnessDown exec light -U 10
-bindsym --locked $mod+q exec light -S 5
+bindsym --locked XF86MonBrightnessUp exec sudo light -A 10
+bindsym --locked XF86MonBrightnessDown exec sudo light -U 10
+bindsym --locked $mod+q exec sudo light -S 5
 
 bindsym --locked XF86AudioRaiseVolume exec $HOME/bin/vol_ctl up
 bindsym --locked XF86AudioLowerVolume exec $HOME/bin/vol_ctl down

@@ -1463,7 +1463,8 @@ c.tabs.background = True
 ## Type: Dict
 c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
                        'sp': 'https://www.startpage.com/do/search?q={}',
-                       'g': 'https://www.google.com/search?q={}'}
+                       'g': 'https://www.google.com/search?q={}',
+                       'w': 'https://en.wikipedia.org/wiki/{}'}
 
 ## Page(s) to open at the start.
 ## Type: List of FuzzyUrl, or FuzzyUrl
@@ -1485,11 +1486,16 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
 
 ## Default zoom level.
 ## Type: Perc
-# c.zoom.default = '100%'
+c.zoom.default = '100%'
 
 ## Available zoom levels.
 ## Type: List of Perc
-# c.zoom.levels = ['25%', '33%', '50%', '67%', '75%', '90%', '100%', '110%', '125%', '150%', '175%', '200%', '250%', '300%', '400%', '500%']
+c.zoom.levels = ['25%', '33%', '50%', '67%', '75%', '90%',
+                 '100%', '115%', '125%', '150%', '175%',
+                 '200%', '250%',
+                 '300%', '350%',
+                 '400%',
+                 '500%']
 
 ## Number of zoom increments to divide the mouse wheel movements to.
 ## Type: Int
@@ -1500,10 +1506,13 @@ c.url.searchengines = {'DEFAULT': 'https://duckduckgo.com/?q={}',
 # c.zoom.text_only = False
 
 ## Bindings for normal mode
+
 config.bind('x', 'tab-close')
 config.bind('X', 'undo')
 config.bind('d', 'scroll-page 0 0.5')
 config.bind('u', 'scroll-page 0 -0.5')
+config.bind('j', 'scroll down ;; scroll down')
+config.bind('k', 'scroll up ;; scroll up')
 
 # config.bind("'", 'enter-mode jump_mark')
 # config.bind('+', 'zoom-in')
@@ -1634,6 +1643,8 @@ config.bind('u', 'scroll-page 0 -0.5')
 # config.bind('sk', 'set-cmd-text -s :bind')
 # config.bind('sl', 'set-cmd-text -s :set -t')
 # config.bind('ss', 'set-cmd-text -s :set')
+config.bind('sd', 'set -p -t -u {url} content.javascript.enabled false')
+config.bind('se', 'set -p -t -u {url} content.javascript.enabled true')
 # config.bind('tIH', 'config-cycle -p -u *://*.{url:host}/* content.images ;; reload')
 # config.bind('tIh', 'config-cycle -p -u *://{url:host}/* content.images ;; reload')
 # config.bind('tIu', 'config-cycle -p -u {url} content.images ;; reload')

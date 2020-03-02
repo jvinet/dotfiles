@@ -14,7 +14,7 @@ set $screenshot slurp | grim -g - ~/Pictures/screenshots/$(date +"%Y-%m-%d-%H-%M
 set $background ~/Pictures/wallpaper/moon.jpg
 
 # Hardware IDs
-set $touchscreen 1267:9754:ELAN9038:00_04F3:261A_Touchscreen
+set $touchscreen 1267:9456:ELAN24F0:00_04F3:24F0
 set $trackpad 1739:30383:DELL07E6:00_06CB:76AF_Touchpad
 
 # Workspaces.

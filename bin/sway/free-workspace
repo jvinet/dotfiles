@@ -1,0 +1,54 @@
+#!/usr/bin/env python3
+
+import argparse
+import os
+import os.path
+import sys
+
+from i3ipc import Connection
+
+parser = argparse.ArgumentParser(description='switch to or move container to next or prev free workspace')
+parser.add_argument('action', nargs=1, choices=['switch', 'move'])
+parser.add_argument('direction', nargs=1, choices=['prev', 'next'])
+
+dirname = os.path.dirname(sys.argv[0])
+socket_path = os.popen(f'{dirname}/find-socket.sh').read().strip()
+if not socket_path:
+    socket_path = os.environ.get('SWAYSOCK')
+    if not socket_path:
+        print("error: SWAYSOCK env var is not set")
+        sys.exit(1)
+
+args = parser.parse_args()
+
+i3 = Connection(socket_path)
+focused = i3.get_tree().find_focused()
+
+workspaces = i3.get_workspaces()
+current_ws = 1
+for ws in workspaces:
+    if ws.focused:
+        current_ws = ws
+
+ws_list = list(range(current_ws.num + 1, 11)) + list(range(1, current_ws.num))
+
+if args.direction[0] == 'prev':
+    ws_list.reverse()
+
+used_ws = [ws.num for ws in i3.get_workspaces()]
+
+try:
+    ws = next(ws for ws in ws_list if ws not in used_ws)
+except StopIteration:
+    print("No available workspace found")
+    sys.exit(3)
+
+# We use the format "1:1" (see the Sway config)
+ws = '%s:%s' % (ws, ws)
+
+if args.action[0] == 'switch':
+    i3.command('workspace %s' % ws)
+else:
+    i3.command('move container to workspace %s' % ws)
+    # Switch to the new workspace.
+    i3.command('workspace %s' % ws)

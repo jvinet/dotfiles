@@ -1,0 +1,19 @@
+#!/bin/bash
+
+. $(dirname $0)/sway-find-socket.sh
+
+xf=$(swaymsg -r -t get_outputs | jq -r '.[] | select(.name == "eDP-1") | .transform')
+
+echo "XF: $xf"
+if [ "$xf" = "normal" ]; then
+	echo "270"
+	swaymsg output eDP-1 transform 270
+else
+	echo "0"
+	swaymsg output eDP-1 transform 0
+fi
+
+# Tell the touchscreen that we have a new orientation, so touch events are
+# recorded correctly.
+swaymsg input 1267:9754:ELAN9038:00_04F3:261A_Touchscreen map_to_output eDP-1
+

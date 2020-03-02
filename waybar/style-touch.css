@@ -1,0 +1,114 @@
+* {
+  border:        none;
+  border-radius: 0;
+  font-family:   "DejaVu Sans Mono";
+  font-size:     20px;
+  box-shadow:    none;
+  text-shadow:   none;
+}
+
+window {
+  color:      rgba(217, 216, 216, 1);
+  background: rgba(43, 48, 59, 0.5);
+}
+
+#custom-close_bar, #custom-close_window, #custom-toggle_keyboard, #custom-launcher,
+#custom-terminal, #custom-toggle_keyboard, #custom-launcher, #custom-layout,
+#custom-move_to_new_workspace, #custom-switch_to_new_workspace, #custom-rotate,
+#custom-change_focus {
+  margin-left: 0px;
+  margin-right: 30px;
+  min-width:  25px;
+	color: #ffffff;
+}
+
+#custom-close_bar, #custom-close_window {
+	color: #fa6868;
+}
+
+#custom-terminal {
+	margin-right: 15px;
+}
+
+#custom-volume_icon, #custom-volume_down, #custom-volume_up {
+	color: #4BFA3C;
+	margin: 0;
+}
+#custom-volume_down {
+	margin-left: 8px;
+}
+#custom-volume_up {
+	margin-left: 8px;
+	margin-right: 20px;
+}
+
+#custom-backlight_icon, #custom-backlight_down, #custom-backlight_up {
+	color: #ffff00;
+	margin: 0;
+}
+#custom-backlight_down {
+	margin-left: 8px;
+}
+#custom-backlight_up {
+	margin-left: 8px;
+	margin-right: 20px;
+}
+
+#custom-sleep {
+	margin-left: 20px;
+}
+
+
+
+#cpu {
+	color: #fa6868;
+}
+
+#backlight {
+	color: #ffff00;
+}
+
+#memory {
+	color: #00fff2;
+}
+
+#network {
+	color: #268bd2;
+}
+
+#idle_inhibitor {
+    margin:     0px 6px 0px 1px;
+}
+
+#tray {
+    margin:     0px 1px 0px 20px;
+}
+
+#clock {
+    margin:     0px 8px 0px 16px;
+    min-width:  100px;
+}
+
+#pulseaudio {
+	color: #4BFA3C;
+}
+
+#battery {
+	color: #cccc00;
+}
+
+#battery.warning {
+   color:       rgba(255, 210, 4, 1);
+}
+
+#battery.critical {
+    color:      rgba(238, 46, 36, 1);
+}
+
+#custom-storage.warning {
+    color:      rgba(255, 210, 4, 1);
+}
+
+#custom-storage.critical {
+    color:      rgba(238, 46, 36, 1);
+}

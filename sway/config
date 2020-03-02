@@ -2,14 +2,16 @@
 # VARIABLES
 #------------------------------------------------------------------------
 set $mod Mod4
+set $bin /home/jvinet/bin/sway
+set $font Monospace 8
 set $term alacritty
 set $lock swaylock -c 000000 -e -F
-#set $menu bemenu-run -p '' --fn 'Monospace 10'
-set $menu rofi -show run
-set $appmenu rofi -show drun
+set $menu rofi -show run -config ~/.config/rofi/launcher-keys.rasi
+set $appmenu rofi -show drun -config ~/.config/rofi/launcher-keys.rasi
 set $screenclip slurp | grim -g - - | wl-copy
 set $screenshot slurp | grim -g - ~/Pictures/screenshots/$(date +"%Y-%m-%d-%H-%M-%S").png
 set $background ~/Pictures/wallpaper/moon.jpg
+#set $menu bemenu-run -p "" --fn "$font"
 
 # Workspaces.
 set $ws1  1:1
@@ -35,14 +37,18 @@ input 1:1:AT_Translated_Set_2_keyboard {
     repeat_delay 250
 		xkb_options "caps:escape"
 }
-
-# Disable touchscreen.
-input 1267:9456:ELAN24F0:00_04F3:24F0 {
-	events disabled
+input 1118:2415:Microsoft_Surface_Type_Cover {
+    repeat_delay 250
+		xkb_options "caps:escape"
 }
 
+# Disable touchscreen.
+#input 1267:9754:ELAN9038:00_04F3:261A_Touchscreen {
+#	events disabled
+#}
+
 # Enable tap-to-click on trackpad.
-input 1739:30383:DELL07E6:00_06CB:76AF_Touchpad {
+input 1118:2415:Microsoft_Surface_Type_Cover_Touchpad {
 	tap enabled
 }
 
@@ -50,10 +56,9 @@ input 1739:30383:DELL07E6:00_06CB:76AF_Touchpad {
 seat seat0 hide_cursor 3000
 
 # Set HiDPI scaling on the primary screen.
-output eDP-1 scale 2.0
-output eDP-1 pos 0 0 res 3840 2160
+output eDP-1 scale 1.5
 
-font pango:Monospace 10
+font pango:$font
 
 bar {
 	swaybar_command waybar
@@ -92,14 +97,16 @@ gaps inner 5
 #------------------------------------------------------------------------
 
 # Notification daemon.
-exec mako --default-timeout 2500
+exec mako --default-timeout 2500 --font "$font"
 
-# Idle controls - lock screen after 5 mins, shut off displays after 10 mins.
+# Virtual keyboard
+exec $bin/virtkbd start
+
+# Idle controls - lock screen after 5 mins, hibernate after 10 mins.
 exec swayidle -w \
-	timeout 300 'swaylock -c 000000 -e -F' \
-	timeout 600 'swaymsg "output * dpms off"' \
-		resume 'swaymsg "output * dpms on"' \
-	before-sleep 'swaylock -c 000000 -e -F'
+	timeout 300 'swaylock -f -c 000000 -e -F' \
+	timeout 600 'systemctl hibernate' \
+	before-sleep 'swaylock -f -c 000000 -e -F'
 
 
 #------------------------------------------------------------------------
@@ -108,7 +115,7 @@ exec swayidle -w \
 
 bindsym $mod+Return exec $term
 bindsym $mod+p exec galculator
-bindsym $mod+slash exec $HOME/bin/touchpad-sway toggle
+bindsym $mod+slash exec $bin/touchpad toggle
 bindsym --release $mod+Print exec $screenshot
 bindsym --release $mod+Shift+Print exec $screenclip
 
@@ -119,27 +126,29 @@ bindsym --release $mod+Shift+Print exec $screenclip
 
 # Auto-float these apps.
 for_window [title="galculator"] floating enable
-for_window [title="Cisco AnyConnect Secure Mobility Client"] floating enable
 for_window [class="Gnuplot"] floating enable
+for_window [title="Onboard"] border none
 
 
 #------------------------------------------------------------------------
-# BRIGHTNESS AND VOLUME
+# BRIGHTNESS, VOLUME, AND POWER
 #------------------------------------------------------------------------
 
-bindsym --locked XF86MonBrightnessUp exec sudo light -A 10
-bindsym --locked XF86MonBrightnessDown exec sudo light -U 10
-bindsym --locked $mod+q exec sudo light -S 5
+bindsym --locked XF86MonBrightnessUp exec sudo light -A 5
+bindsym --locked XF86MonBrightnessDown exec sudo light -U 5
+bindsym --locked $mod+q exec sudo light -S 1
 
-bindsym --locked XF86AudioRaiseVolume exec $HOME/bin/vol_ctl up
-bindsym --locked XF86AudioLowerVolume exec $HOME/bin/vol_ctl down
-bindsym --locked XF86AudioMute exec $HOME/bin/vol_ctl mute
+bindsym --locked XF86AudioRaiseVolume exec $bin/vol_ctl up
+bindsym --locked XF86AudioLowerVolume exec $bin/vol_ctl down
+bindsym --locked XF86AudioMute exec $bin/vol_ctl mute
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
 
-bindsym XF86PowerOff exec swaynag -t warning -m 'Are you sure you want to exit?' -b 'Yes, exit' 'swaymsg exit'
+#bindsym XF86PowerOff exec swaynag -t warning -m 'Are you sure you want to exit?' -b 'Yes, exit' 'swaymsg exit'
+#bindsym XF86PowerOff exec sudo systemctl hibernate
 
+bindsym --locked $mod+Shift+s exec systemctl hibernate
 
 #------------------------------------------------------------------------
 # KEY BINDINGS FOR SWAY
@@ -152,10 +161,10 @@ bindsym $mod+Shift+q kill
 # First one lets you run any command within the path.
 # Second one lets you run anything with an XDG .desktop launcher file.
 bindsym $mod+grave exec $menu
-bindsym $mod+shift+grave exec $appmenu
+bindsym $mod+Shift+grave exec $appmenu
 
 # Notification list (custom).
-bindsym $mod+n exec $HOME/bin/notify -d
+bindsym $mod+n exec $bin/notify -d
 
 # Clear notifications (unrelated to above).
 bindsym Control+Space exec makoctl dismiss --all
@@ -180,12 +189,15 @@ bindsym $mod+Shift+l move right
 bindsym $mod+bar split h
 bindsym $mod+minus split v
 
+# Toggle split of focused container.
+bindsym $mod+y layout toggle tabbed split
+
 # Enter fullscreen mode for the focused container.
 bindsym $mod+f fullscreen
 
 # Adjust transparency of the focused container.
-#bindsym $mod+comma swaymsg opacity -5
-#bindsym $mod+period swaymsg opacity +5
+bindsym $mod+comma swaymsg opacity minus 0.1
+bindsym $mod+period swaymsg opacity plus 0.1
 
 # Change container layout (stacked, tabbed, toggle split).
 bindsym $mod+s layout stacking
@@ -234,12 +246,12 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 bindsym $mod+Tab workspace back_and_forth
 
 # Show window list.
-bindsym $mod+w exec ~/bin/sway-window-switch.sh
+bindsym $mod+w exec $bin/window-switch
 
 # Switch to next unused workspace.
-bindsym $mod+plus exec $HOME/bin/i3-free-workspace.py switch next
+bindsym $mod+Shift+plus exec $bin/free-workspace switch next
 # Move current window to next unused workspace.
-bindsym $mod+Shift+plus exec $HOME/bin/i3-free-workspace.py move next
+bindsym $mod+plus exec $bin/free-workspace move next
 
 # Rename a workspace (mnemonic: 'd' for 'designate').
 bindsym $mod+d exec i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '

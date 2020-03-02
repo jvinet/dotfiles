@@ -2,7 +2,7 @@
     border:        none;
     border-radius: 0;
     font-family:   "DejaVu Sans Mono";
-    font-size:     13px;
+    font-size:     10px;
     box-shadow:    none;
     text-shadow:   none;
 }
@@ -38,6 +38,10 @@ window {
     min-width:  25px;
 }
 
+#custom-touchbar {
+	color: #999999;
+}
+
 #cpu {
 	color: #fa6868;
 }
@@ -63,8 +67,8 @@ window {
 }
 
 #clock {
-    margin:     0px 16px 0px 10px;
-    min-width:  140px;
+    margin:     0px 8px 0px 16px;
+    min-width:  100px;
 }
 
 #pulseaudio {

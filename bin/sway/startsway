@@ -1,4 +1,5 @@
 #!/bin/bash
 
+mkdir -p ~/log
 exec dbus-launch --sh-syntax --exit-with-session sway >>~/log/sway-$(date +%Y%m%d).log
 

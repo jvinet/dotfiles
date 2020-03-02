@@ -1,0 +1,24 @@
+#!/bin/bash
+
+swaymsg=`dirname $0`/swaymsg
+
+DIR=~/.cache/focus-switch
+mkdir -p $DIR
+
+FN=$DIR/next
+if [ ! -f $FN ]; then
+	echo "right" >$FN
+fi
+
+direction=`cat $FN`
+$swaymsg focus $direction
+
+case $direction in
+	left) nextdir=up ;;
+	up) nextdir=right ;;
+	right) nextdir=down ;;
+	down) nextdir=left ;;
+esac
+echo "$nextdir" >$FN
+
+exit 0

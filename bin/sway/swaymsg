@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Look for the Sway IPC socket - we lose it in tmux juggling.
+find_sway_socket() {
+	pid=`pgrep -x sway`
+	if [ -n "$pid" ]; then
+		export SWAYSOCK=/run/user/`id -u`/sway-ipc.`id -u`.$pid.sock
+
+		# Yep, you guessed it - we also lose the DBus session.
+		ds=`xargs -n 1 -0 < /proc/$pid/environ | grep DBUS_SESSION_BUS_ADDRESS`
+		if [ "$ds" ]; then
+			eval export $ds
+		fi
+		unset ds
+	fi
+}
+
+find_sway_socket
+
+/usr/bin/swaymsg $*

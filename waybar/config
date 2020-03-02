@@ -6,7 +6,7 @@
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
     //"modules-right": ["tray", "custom/spotify", "custom/weather", "custom/mail", "custom/storage", "backlight", "pulseaudio", "network", "idle_inhibitor", "battery", "clock"],
-    "modules-right": ["cpu", "memory", "backlight", "pulseaudio", "network", "battery", "tray", "idle_inhibitor", "clock"],
+    "modules-right": ["cpu", "memory", "backlight", "pulseaudio", "network", "battery", "tray", "idle_inhibitor", "clock", "custom/touchbar"],
     "sway/mode": {
         "format": "{}"
     },
@@ -18,6 +18,10 @@
         "max-length": 80,
         "tooltip": false
     },
+		"custom/touchbar": {
+        "format": "",
+				"on-click": "$HOME/bin/sway/touchbar start"
+		},
     "clock": {
         "format": "{:%a %d %b %H:%M}",
         "tooltip": false
@@ -33,6 +37,7 @@
         "format-icons": ["", "", "", "", ""],
         "format-charging": "⚡<span color=\"#cccccc\"> {capacity}</span>",
         "interval": 30,
+        "bat": "BAT1",
         "states": {
             "warning": 25,
             "critical": 10

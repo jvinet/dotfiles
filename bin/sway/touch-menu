@@ -1,0 +1,45 @@
+#!/bin/bash
+
+CLOSE='  Close'
+IFS=
+MENU=(
+'Alacritty'
+'Qutebrowser'
+'Firefox'
+'Chromium'
+'Chrome'
+'Slack'
+'Libreoffice|soffice'
+'Calculator|galculator'
+'Keybase|keybase-gui'
+'Spotify'
+'File Manager|nemo'
+'Chess|pychess'
+)
+
+menu() {
+	echo $CLOSE
+	for m in ${MENU[*]}; do
+		m=`echo $m | sed 's/|.*$//g'`
+		echo $m
+	done
+}
+
+sel=`menu | rofi -dmenu -config ~/.config/rofi/launcher-touch.rasi -p '' -l 4 -lines 4`
+
+# No spaces.
+if [ "$sel" = " Close" ]; then
+	exit 0
+fi
+
+for m in ${MENU[*]}; do
+	lbl=`echo $m | sed 's/|.*$//g'`
+	if [ "$sel" == "$lbl" ]; then
+		cmd=`echo $m | sed 's/^.*|//g'`
+		if [ "$cmd" = "$lbl" ]; then
+			cmd=${cmd,,}
+		fi
+		echo "Launching $cmd"
+		bash -c "$cmd" &
+	fi
+done

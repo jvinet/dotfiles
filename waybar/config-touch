@@ -1,0 +1,133 @@
+{
+    "layer": "bottom",
+    "position": "top",
+    "height": 24,
+
+    "modules-left": ["custom/close_bar", "custom/close_window"],
+    "modules-center": ["custom/rotate", "custom/terminal", "custom/toggle_keyboard", "custom/launcher", "custom/layout", "custom/move_to_new_workspace", "custom/switch_to_new_workspace", "custom/change_focus"],
+    "modules-right": ["custom/volume_icon", "custom/volume_down", "custom/volume_up", "custom/backlight_icon", "custom/backlight_down", "custom/backlight_up", "custom/lock", "custom/sleep"],
+
+		"custom/close_bar": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/touchbar stop"
+		},
+
+		"custom/rotate": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/rotate"
+		},
+
+		"custom/terminal": {
+			"format": " ",
+			"on-click": "alacritty"
+		},
+
+		"custom/close_window": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/swaymsg kill"
+		},
+
+		"custom/toggle_keyboard": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/virtkbd toggle"
+		},
+
+		"custom/launcher": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/touch-menu"
+		},
+
+		"custom/layout": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/swaymsg layout toggle tabbed split"
+		},
+
+		"custom/move_to_new_workspace": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/free-workspace move next"
+		},
+
+		"custom/switch_to_new_workspace": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/free-workspace switch next"
+		},
+
+		"custom/change_focus": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/focus-switch"
+		},
+
+		"custom/volume_icon": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/vol_ctl mute"
+		},
+
+		"custom/volume_up": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/vol_ctl up"
+		},
+
+		"custom/volume_down": {
+			"format": "",
+			"on-click": "$HOME/bin/sway/vol_ctl down"
+		},
+
+		"custom/backlight_icon": {
+			"format": ""
+		},
+
+		"custom/backlight_up": {
+			"format": "",
+			"on-click": "sudo light -A 5"
+		},
+
+		"custom/backlight_down": {
+			"format": "",
+			"on-click": "sudo light -U 5"
+		},
+
+		"custom/lock": {
+			"format": "",
+			"on-click": "true"
+			//"on-click": "swaylock -c 000000 -e -F"
+		},
+		"custom/sleep": {
+			"format": " ",
+			"on-click": "sudo systemctl hibernate"
+		},
+
+
+    "custom/spotify": {
+        "interval": 1,
+        "return-type": "json",
+        "exec": "~/.config/waybar/modules/spotify.sh",
+        "exec-if": "pgrep spotify",
+        "escape": true
+    },
+    "custom/storage": {
+        "format": "{} ",
+        "format-alt": "{percentage}% ",
+        "format-alt-click": "click-right",
+        "return-type": "json",
+        "interval": 60,
+        "exec": "~/.config/waybar/modules/storage.sh"
+    },
+    "custom/weather": {
+        "format": "{}",
+        "format-alt": "{alt}: {}",
+        "format-alt-click": "click-right",
+        "interval": 1800,
+        "return-type": "json",
+        "exec": "~/.config/waybar/modules/weather.sh",
+        "exec-if": "ping wttr.in -c1"
+    },
+    "custom/mail": {
+        "format": "",
+        "format-alt": "{alt} ",
+        "format-alt-click": "click-right",
+        "interval": 60,
+        "return-type": "json",
+        "exec": "~/.config/waybar/modules/mail.py",
+        "tooltip": false
+    }
+}

@@ -1,0 +1,38 @@
+#!/bin/bash
+
+if [ "$1" = "" ]; then
+	echo "usage: $0 <cmd>"
+	echo ""
+	echo "commands":
+	echo "   status"
+	echo "   show"
+	echo "   hide"
+	exit 1
+fi
+
+startkbd() {
+	virtboard &
+}
+
+case "$1" in
+	status)
+		busctl call --user sm.puri.OSK0 /sm/puri/OSK0 sm.puri.OSK0 GetVisible | cut -d' ' -f2
+		;;
+	show)
+		if [ ! "`pgrep virtboard`" ]; then
+			startkbd
+		else
+			busctl call --user sm.puri.OSK0 /sm/puri/OSK0 sm.puri.OSK0 SetVisible b true
+		fi
+		;;
+	hide)
+		if [ "`pgrep virtboard`" ]; then
+			busctl call --user sm.puri.OSK0 /sm/puri/OSK0 sm.puri.OSK0 SetVisible b false
+		fi
+		;;
+	*)
+		echo "error: bad command" >&2
+		exit 1
+esac
+
+exit 0

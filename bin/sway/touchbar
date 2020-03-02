@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# Look for the Sway IPC socket - we lose it in tmux juggling.
+find_sway_socket() {
+	pid=`pgrep -x sway`
+	if [ -n "$pid" ]; then
+		export SWAYSOCK=/run/user/`id -u`/sway-ipc.`id -u`.$pid.sock
+
+		# Yep, you guessed it - we also lose the DBus session.
+		ds=`xargs -n 1 -0 < /proc/$pid/environ | grep DBUS_SESSION_BUS_ADDRESS`
+		if [ "$ds" ]; then
+			eval export $ds
+		fi
+		unset ds
+	fi
+}
+
+if [ "$1" = "" ]; then
+	echo "usage: $0 <cmd>"
+	echo ""
+	echo "commands":
+	echo "   start"
+	echo "   stop"
+	exit 1
+fi
+
+find_sway_socket
+
+start() {
+	[ "`pgrep -f 'waybar -c config-touch'`" ] && return
+	cd $HOME/.config/waybar
+	waybar -c config-touch -s style-touch.css &
+}
+
+stop() {
+	pkill -f 'waybar -c config-touch' 2>/dev/null
+}
+
+case "$1" in
+	start) start ;;
+	stop) stop ;;
+	*)
+		echo "error: bad command" >&2
+		exit 1
+esac
+
+exit 0

@@ -1,0 +1,315 @@
+#------------------------------------------------------------------------
+# VARIABLES
+#------------------------------------------------------------------------
+set $mod Mod4
+set $bin /home/jvinet/bin/sway
+set $font Monospace 10
+set $term alacritty
+set $lock swaylock -c 000000 -e -F
+set $menu rofi -show run -config ~/.config/rofi/launcher-keys.rasi
+#set $menu bemenu-run -p "" --fn "$font"
+set $appmenu rofi -show drun -config ~/.config/rofi/launcher-keys.rasi
+set $screenclip slurp | grim -g - - | wl-copy
+set $screenshot slurp | grim -g - ~/Pictures/screenshots/$(date +"%Y-%m-%d-%H-%M-%S").png
+set $background ~/Pictures/wallpaper/moon.jpg
+
+# Hardware IDs
+set $touchscreen 1267:9754:ELAN9038:00_04F3:261A_Touchscreen
+set $trackpad 1739:30383:DELL07E6:00_06CB:76AF_Touchpad
+
+# Workspaces.
+set $ws1  1:1
+set $ws2  2:2
+set $ws3  3:3
+set $ws4  4:4
+set $ws5  5:5
+set $ws6  6:6
+set $ws7  7:7
+set $ws8  8:8
+set $ws9  9:9
+set $ws10 10:10
+
+# Start on the first workspace.
+workspace $ws1
+
+#------------------------------------------------------------------------
+# INPUT DEVICES
+#------------------------------------------------------------------------
+
+# Keyboard settings.
+input 1:1:AT_Translated_Set_2_keyboard {
+    repeat_delay 250
+		xkb_options "caps:escape"
+}
+input 1118:2415:Microsoft_Surface_Type_Cover {
+    repeat_delay 250
+		xkb_options "caps:escape"
+}
+
+# Disable touchscreen.
+input $touchscreen {
+	events disabled
+}
+
+# Enable tap-to-click on trackpad.
+input $trackpad {
+	tap enabled
+}
+
+# Hide mouse cursor after a period of inactivity.
+seat seat0 hide_cursor 3000
+
+# Set HiDPI scaling on the primary screen.
+output eDP-1 scale 2.0
+output eDP-1 pos 0 0 res 3840 2160
+
+font pango:$font
+
+bar {
+	swaybar_command waybar
+}
+
+
+#------------------------------------------------------------------------
+# SWAY BEHAVIOUR
+#------------------------------------------------------------------------
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# If an app is in fullscreen and it creates a popup, leave fullscreen.
+popup_during_fullscreen leave_fullscreen
+
+focus_follows_mouse yes
+
+# Set wallpaper
+output * bg $background fill
+
+# Window borders.
+default_border normal 2
+default_floating_border normal 2
+
+# Mouse pointer moves to the newly-focused output.
+mouse_warping output
+
+hide_edge_borders smart
+smart_borders on
+smart_gaps on
+gaps inner 5
+
+#------------------------------------------------------------------------
+# PROGRAMS TO RUN AT STARTUP
+#------------------------------------------------------------------------
+
+# Notification daemon.
+exec mako --default-timeout 2500 --font "$font"
+
+# Virtual keyboard
+#exec $bin/virtkbd start
+
+# Idle controls - lock screen after 5 mins, shut off displays after 10 mins.
+exec swayidle -w \
+	timeout 300 'swaylock -f -c 000000 -e -F' \
+	timeout 600 'swaymsg "output * dpms off"' \
+	  resume 'swaymsg "output * dpms on"' \
+	before-sleep 'swaylock -f -c 000000 -e -F'
+
+
+#------------------------------------------------------------------------
+# KEY BINDINGS FOR APP LAUNCHERS
+#------------------------------------------------------------------------
+
+bindsym $mod+Return exec $term
+bindsym $mod+p exec galculator
+bindsym $mod+slash exec $bin/touchpad toggle
+bindsym --release $mod+Print exec $screenshot
+bindsym --release $mod+Shift+Print exec $screenclip
+
+
+#------------------------------------------------------------------------
+# DEFAULT WORKSPACE/STYLE FOR APPS
+#------------------------------------------------------------------------
+
+# Auto-float these apps.
+for_window [title="galculator"] floating enable
+for_window [class="Gnuplot"] floating enable
+for_window [title="Onboard"] border none
+
+
+#------------------------------------------------------------------------
+# BRIGHTNESS, VOLUME, AND POWER
+#------------------------------------------------------------------------
+
+bindsym --locked XF86MonBrightnessUp exec sudo light -A 5
+bindsym --locked XF86MonBrightnessDown exec sudo light -U 5
+bindsym --locked $mod+q exec sudo light -S 1
+
+bindsym --locked XF86AudioRaiseVolume exec $bin/vol_ctl up
+bindsym --locked XF86AudioLowerVolume exec $bin/vol_ctl down
+bindsym --locked XF86AudioMute exec $bin/vol_ctl mute
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl previous
+
+#bindsym XF86PowerOff exec swaynag -t warning -m 'Are you sure you want to exit?' -b 'Yes, exit' 'swaymsg exit'
+#bindsym XF86PowerOff exec sudo systemctl hibernate
+
+bindsym --locked $mod+Shift+s exec systemctl hibernate
+
+#------------------------------------------------------------------------
+# KEY BINDINGS FOR SWAY
+#------------------------------------------------------------------------
+
+# Kill focused window.
+bindsym $mod+Shift+q kill
+
+# Start program menus.
+# First one lets you run any command within the path.
+# Second one lets you run anything with an XDG .desktop launcher file.
+bindsym $mod+grave exec $menu
+bindsym $mod+Shift+grave exec $appmenu
+
+# Notification list (custom).
+bindsym $mod+n exec $bin/notify -d
+
+# Clear notifications (unrelated to above).
+bindsym Control+Space exec makoctl dismiss --all
+
+# Scratchpad.
+bindsym $mod+Shift+apostrophe move scratchpad
+bindsym $mod+apostrophe scratchpad show
+
+# Change focus.
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Move focused window.
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Splits.
+bindsym $mod+bar split h
+bindsym $mod+minus split v
+
+# Toggle split of focused container.
+bindsym $mod+y layout toggle tabbed split
+
+# Enter fullscreen mode for the focused container.
+bindsym $mod+f fullscreen
+
+# Adjust transparency of the focused container.
+bindsym $mod+comma swaymsg opacity minus 0.1
+bindsym $mod+period swaymsg opacity plus 0.1
+
+# Change container layout (stacked, tabbed, toggle split).
+bindsym $mod+s layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle between tiling and floating.
+bindsym $mod+Shift+space floating toggle
+
+# Change focus between tiling and floating windows.
+bindsym $mod+space focus mode_toggle
+
+# Focus the parent container.
+bindsym $mod+a focus parent
+# Focus a child container.
+bindsym $mod+c focus child
+
+# Toggle border style.
+bindsym $mod+b exec swaymsg border toggle
+
+# Switch to workspace.
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move focused container to workspace.
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+
+# Quick toggle between two most recent workspaces.
+bindsym $mod+Tab workspace back_and_forth
+
+# Show window list.
+bindsym $mod+w exec $bin/window-switch
+
+# Switch to next unused workspace.
+bindsym $mod+equal exec $bin/free-workspace switch next
+# Move current window to next unused workspace.
+bindsym $mod+plus exec $bin/free-workspace move next
+
+# Rename a workspace (mnemonic: 'd' for 'designate').
+bindsym $mod+d exec i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '
+
+# Reload the configuration file.
+bindsym $mod+Shift+c reload
+# Exit.
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Are you sure you want to exit?' -b 'Yes, exit' 'swaymsg exit'
+
+# Lock session.
+bindsym $mod+BackSpace exec $lock
+
+
+#------------------------------------------------------------------------
+# OTHER MODES
+#------------------------------------------------------------------------
+
+# Resize window (you can also use the mouse for that).
+mode "resize" {
+	# These bindings trigger as soon as you enter the resize mode
+
+	# Pressing left will shrink the window's width.
+	# Pressing right will grow the window's width.
+	# Pressing up will shrink the window's height.
+	# Pressing down will grow the window's height.
+	bindsym h resize shrink width 10 px or 5 ppt
+	bindsym j resize grow height 10 px or 5 ppt
+	bindsym k resize shrink height 10 px or 5 ppt
+	bindsym l resize grow width 10 px or 5 ppt
+
+	# same bindings, but for the arrow keys
+	bindsym Left resize shrink width 10 px or 5 ppt
+	bindsym Down resize grow height 10 px or 5 ppt
+	bindsym Up resize shrink height 10 px or 5 ppt
+	bindsym Right resize grow width 10 px or 5 ppt
+
+	# back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Move window to a different monitor, maintaining focus on the current window
+# after it moves to the new output
+mode "move" {
+	bindsym h move container to output left, workspace back_and_forth
+	bindsym j move container to output up, workspace back_and_forth
+	bindsym k move container to output down, workspace back_and_forth
+	bindsym l move container to output right, workspace back_and_forth
+
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+m mode "move"
+

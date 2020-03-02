@@ -37,7 +37,7 @@
         "format-icons": ["", "", "", "", ""],
         "format-charging": "⚡<span color=\"#cccccc\"> {capacity}</span>",
         "interval": 30,
-        "bat": "BAT1",
+        "bat": "BAT0",
         "states": {
             "warning": 25,
             "critical": 10

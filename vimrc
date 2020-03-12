@@ -62,6 +62,8 @@ autocmd BufNewFile,BufRead *.tsv  map L f	W
 autocmd BufNewFile,BufRead *.tsv  map H F	B
 
 " Show tabs and line numbers when coding
+autocmd BufNewFile,BufRead *.ex     setlocal list number
+autocmd BufNewFile,BufRead *.exs    setlocal list number
 autocmd BufNewFile,BufRead *.py     setlocal list number
 autocmd BufNewFile,BufRead *.php    setlocal list number
 autocmd BufNewFile,BufRead *.js     setlocal list number

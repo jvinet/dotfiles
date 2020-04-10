@@ -3,7 +3,7 @@
 #------------------------------------------------------------------------
 set $mod Mod4
 set $bin /home/jvinet/bin/sway
-set $font Monospace 8
+set $font Monospace 11
 set $term alacritty
 set $lock swaylock -c 000000 -e -F
 set $menu rofi -show run -config ~/.config/rofi/launcher-keys.rasi
@@ -56,7 +56,7 @@ input 1118:2415:Microsoft_Surface_Type_Cover_Touchpad {
 seat seat0 hide_cursor 3000
 
 # Set HiDPI scaling on the primary screen.
-output eDP-1 scale 1.5
+output eDP-1 scale 1.0
 
 font pango:$font
 

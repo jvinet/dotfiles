@@ -62,6 +62,8 @@ autocmd BufNewFile,BufRead *.tsv  map L f	W
 autocmd BufNewFile,BufRead *.tsv  map H F	B
 
 " Show tabs and line numbers when coding
+autocmd BufNewFile,BufRead *.ex     setlocal list number
+autocmd BufNewFile,BufRead *.exs    setlocal list number
 autocmd BufNewFile,BufRead *.py     setlocal list number
 autocmd BufNewFile,BufRead *.php    setlocal list number
 autocmd BufNewFile,BufRead *.js     setlocal list number
@@ -72,6 +74,7 @@ autocmd BufNewFile,BufRead *.go     setlocal list number
 autocmd BufNewFile,BufRead *.c      setlocal list number
 autocmd BufNewFile,BufRead *.h      setlocal list number
 autocmd BufNewFile,BufRead *.m      setlocal list number
+autocmd BufNewFile,BufRead *.nim    setlocal list number
 autocmd BufNewFile,BufRead *.cpp    setlocal list number
 autocmd BufNewFile,BufRead *.lua    setlocal list number
 autocmd BufNewFile,BufRead *.html   setlocal list number
@@ -318,9 +321,8 @@ set scrolljump=5
 " Indicate jump out of the screen when 3 lines before end of the screen
 set scrolloff=3
 
-" Correct indentation after opening a phpdocblock and automatic * on every
-" line
-set formatoptions=qroct
+" See ':help fo-table' for an explanation of each option char.
+set formatoptions=qctnj1
 
 " Repair wired terminal/vim settings
 set backspace=start,eol

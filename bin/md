@@ -2,13 +2,76 @@
 #
 # I markdown things a lot, and they should look nice
 #
+# Required Software
+#  - marked
+#  - python-md_toc
 
-if [ "$1" = "" ]; then
-	echo "usage: md <in.md> [out.html]"
+MDCSS_PATH="$HOME/.markdown"
+
+init_css() {
+	[ -d $MDCSS_PATH ] || mkdir $MDCSS_PATH
+	if [ ! "$(ls $MDCSS_PATH)" ]; then
+		echo "No themes found in $MDCSS_PATH"
+		echo -n "Attempting to download a default one... "
+
+		#css='http://jasonm23.github.io/markdown-css-themes/markdown8.css'
+		css='http://zeroflux.org/markdown.css'
+		fetch $css >$MDCSS_PATH/default.css
+
+		if [ $? -ne 0 ]; then
+			echo "Failed"
+			exit 2
+		fi
+		echo "Success"
+		echo
+	fi
+}
+
+usage() {
+	themes=$(ls -1 $MDCSS_PATH)
+	echo "usage: md [-t theme] [-c] <file.md>"
+	echo
+	echo "options:"
+	echo "    -t <theme>   Theme to use"
+	echo "    -c           Generate a table-of-contents"
+	echo
+	echo "If using -c, include these two lines as placeholders for the TOC:"
+	echo "   <!-- toc -->"
+	echo "   <!-- /toc -->"
+	echo
+	echo -n "Available themes: "
+	for t in ${themes[@]}; do
+		echo -n "${t%%.css} "
+	done
+	echo
+	echo
 	exit 1
+}
+
+init_css
+[ "$1" = "" ] && usage
+
+theme='default'
+toc=
+
+while getopts "t:c" arg; do
+	case $arg in
+		t) theme=$OPTARG ;;
+		c) toc=1 ;;
+		*) usage
+	esac
+done
+
+themefile="$MDCSS_PATH/$theme.css"
+if [ ! -r $themefile ]; then
+	echo "Theme $themefile not found"
+	exit 2
 fi
-dst=$2
-[ -z "$dst" ] && dst=${1%.*}.html
+
+mdfile=${@:$OPTIND:1}
+# Use the same basename and add an .html extension. We will overwrite this
+# file if it already exists.
+htmlfile=${mdfile%.*}.html
 
 # Which markdown are we using? Look for marked first, as it supports GFM.
 #   'npm install -g marked'
@@ -19,17 +82,85 @@ else
 	markdown="`which markdown`"
 fi
 
-# Make it look decent
-css='http://jasonm23.github.io/markdown-css-themes/markdown8.css'
-css='http://zeroflux.org/markdown.css'
 
-# We overwrite with impunity, no erasies
-echo '<!doctype html>' >$dst
-echo '<html><head><meta charset="utf-8">' >>$dst
-echo '<style type="text/css">' >>$dst
-fetch $css >>$dst
-echo '</style></head><body>' >>$dst
-echo '<article class="markdown-body">' >>$dst
-$markdown <$1 >>$dst
-echo '</article>' >>$dst
-echo '</body></html>' >>$dst
+generate_html() {
+	src=$1
+	dst=$2
+	# We overwrite with impunity, no erasies
+	echo '<!doctype html>' >$dst
+	echo '<html><head><meta charset="utf-8">' >>$dst
+	echo '<style type="text/css">' >>$dst
+	cat $themefile >>$dst
+	echo '</style></head><body>' >>$dst
+	echo '<article class="markdown-body">' >>$dst
+	$markdown <$src >>$dst
+	echo '</article>' >>$dst
+	echo '</body></html>' >>$dst
+}
+
+if [ ! "$toc" ]; then
+	generate_html $mdfile $htmlfile
+	exit 0
+fi
+
+
+# Build with a TOC.
+
+insert_file() {
+	srcf=$1  # This file...
+	dstf=$2  # ...is being inserted into this file...
+	tag=$3   # ...at the first location where this string is found.
+	         # Outputs to stdout. Files are unchanged.
+
+	top=$(grep -n "$tag" $dstf | head -n 1 | cut -d: -f1)
+	if [ ! "$top" ]; then
+		echo "Tag '$tag' not found in source file"
+		exit 2
+	fi
+	bot=$(cat $dstf | wc -l)
+	bot=$(($bot - $top))
+
+	head -n $top $dstf
+	cat $srcf
+	tail -n $bot $dstf
+}
+
+# Build the TOC markdown fragment.
+tmpf_toc=$(mktemp)
+md_toc github -l 4 $mdfile >$tmpf_toc
+
+tmpf=$(mktemp)
+insert_file $tmpf_toc $mdfile '<!-- toc' >$tmpf
+rm $tmpf_toc
+# This is now our working source file. We'll remove it at the end.
+mdfile=$tmpf
+
+generate_html $mdfile $htmlfile
+
+# Grab the TOC and move it outside the <article> tag, into its own div.
+# This gives more flexibility on the TOC's style and positioning.
+#
+# Look out: Some ugly file mangling below.
+
+top=$(grep -n '<!-- toc' $htmlfile | cut -d: -f1)
+bot=$(grep -n '<!-- /toc' $htmlfile | cut -d: -f1)
+
+# Copy the TOC block into a temp file, then remove it from the output file.
+tmpf_toc=$(mktemp)
+tmpf=$(mktemp)
+cat $htmlfile | sed -n "$top,$bot w $tmpf"
+sed -i "$top,$bot d" $htmlfile
+
+# Wrap the TOC HTML in a <div>.
+echo '<div id="toc">' >$tmpf_toc
+cat $tmpf >>$tmpf_toc
+echo '</div>' >>$tmpf_toc
+rm $tmpf
+
+tmpf_htmlfile=$(mktemp)
+insert_file $tmpf_toc $htmlfile '<body>' >$tmpf_htmlfile
+mv $tmpf_htmlfile $htmlfile
+
+rm $tmpf_toc $mdfile
+
+exit 0

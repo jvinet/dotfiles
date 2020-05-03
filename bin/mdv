@@ -7,10 +7,16 @@ if [ "$1" = "" ]; then
 	echo "usage: mdv <in.md>"
 	exit 1
 fi
-dst=${1%.*}.md.html
-md $1 $dst
-if [ -f $dst ]; then
-	$BROWSER $dst
-	sleep 2
-	rm $dst
+
+dst=${1%%.md}.html
+if [ -f "$dst" ]; then
+	echo "Destination file '$dst' already exists"
+	exit 1
+fi
+
+md $1
+echo $dst
+if [ -f "$dst" ]; then
+	$BROWSER "$dst"
+	(sleep 5; rm "$dst") &
 fi

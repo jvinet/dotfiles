@@ -1,24 +1,41 @@
-pre,
-code {
-  font-family: Menlo, Monaco, "Courier New", monospace;
+html {
+  font-size: 12px;
+  background-color: #222;
+  min-height: 100%;
+  font-size: 18px;
 }
 
-pre {
-  padding: .5rem;
-  line-height: 1.25;
-  overflow-x: auto;
-	color: #ccc;
-	font-size: 0.85rem;
+body {
+  color: #fafafa;
+  font-family: "Deja Mono", "Roboto Mono", "Courier New";
+  line-height: 1.45;
+  margin: 2rem auto 1rem auto;
+  padding: .25rem;
+}
+
+article {
+  display: block;
+  margin-left: 24%;
+}
+
+#toc_old {
+  width: 25%;
+  display: block;
+  float: left;
+  margin: 0 50px 20px 0;
+  min-height: 100%;
+  background: #2a2a2a;
 }
 
 #toc {
-	width: 25%;
-	display: block;
-	float: left;
-	margin: 0 50px 20px 0;
-	min-height: 100%;
-	background: #2a2a2a;
+  width: 22%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow: auto;
 }
+
 #toc ul {
 	list-style: none;
 	padding-left: 25px;
@@ -36,66 +53,6 @@ pre {
 	padding-left: 10px;
 }
 
-@media print {
-  *,
-  *:before,
-  *:after {
-    background: transparent !important;
-    color: #000 !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
-  }
-
-  a,
-  a:visited {
-    text-decoration: underline;
-  }
-
-  a[href]:after {
-    content: " (" attr(href) ")";
-  }
-
-  abbr[title]:after {
-    content: " (" attr(title) ")";
-  }
-
-  a[href^="#"]:after,
-  a[href^="javascript:"]:after {
-    content: "";
-  }
-
-  pre,
-  blockquote {
-    border: 1px solid #999;
-    page-break-inside: avoid;
-  }
-
-  thead {
-    display: table-header-group;
-  }
-
-  tr,
-  img {
-    page-break-inside: avoid;
-  }
-
-  img {
-    max-width: 100% !important;
-  }
-
-  p,
-  h2,
-  h3 {
-    orphans: 3;
-    widows: 3;
-  }
-
-  h2,
-  h3 {
-    page-break-after: avoid;
-  }
-}
-
 a,
 a:visited {
   color: #01ff70;
@@ -108,88 +65,73 @@ a:active {
   color: #2ecc40;
 }
 
-.retro-no-decoration {
-  text-decoration: none;
-}
-
-html {
-  font-size: 12px;
-}
-
-@media screen and (min-width: 32rem) and (max-width: 48rem) {
-  html {
-    font-size: 15px;
-  }
-}
-
-@media screen and (min-width: 48rem) {
-  html {
-    font-size: 16px;
-  }
-}
-
-p,
-.retro-p {
+p {
   font-size: 1rem;
   margin-bottom: 1.3rem;
 }
 
 h1,
-.retro-h1,
 h2,
-.retro-h2,
 h3,
-.retro-h3,
-h4,
-.retro-h4 {
+h4 {
   margin: 1.414rem 0 .5rem;
   font-weight: inherit;
   line-height: 1.42;
 }
 
-h1,
-.retro-h1 {
+h1 {
   margin-top: 0;
   font-size: 3rem;
 }
 
-h2,
-.retro-h2 {
+h2 {
   font-size: 2.027rem;
-	/*border-bottom: 0.1rem solid #027233;
-	line-height: 1.6rem;*/
 	text-decoration: underline;
 	text-decoration-color: #027233;
 }
 
-h3,
-.retro-h3 {
+h3 {
   font-size: 1.599rem;
 	text-decoration: underline;
 	text-decoration-color: #444;
 }
 
-h4,
-.retro-h4 {
+h4 {
   font-size: 1.214rem;
 }
 
-h5,
-.retro-h5 {
+h5 {
   font-size: 1.121rem;
 }
 
-h6,
-.retro-h6 {
+h6 {
   font-size: .88rem;
 }
 
-small,
-.retro-small {
-  font-size: .707em;
+blockquote {
+  border-left: 3px solid #01ff70;
+  padding-left: 1rem;
 }
 
-/* https://github.com/mrmrs/fluidity */
+pre {
+  background-color: #333;
+  padding: .5rem;
+  line-height: 1.25;
+  overflow-x: auto;
+  color: #ccc;
+  font-size: 0.85rem;
+}
+
+code {
+  background-color: #333;
+  color: #fc0;
+}
+pre > code {
+  color: #ccc;
+}
+a > code {
+  color: #2ecc40;
+}
 
 img,
 canvas,
@@ -199,33 +141,5 @@ svg,
 select,
 textarea {
   max-width: 100%;
-}
-
-html,
-body {
-  background-color: #222;
-  min-height: 100%;
-}
-
-html {
-  font-size: 18px;
-}
-
-body {
-  color: #fafafa;
-  font-family: "Courier New";
-  line-height: 1.45;
-  margin: 6rem auto 1rem;
-  max-width: 64rem;
-  padding: .25rem;
-}
-
-pre {
-  background-color: #333;
-}
-
-blockquote {
-  border-left: 3px solid #01ff70;
-  padding-left: 1rem;
 }
 

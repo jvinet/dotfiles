@@ -47,6 +47,12 @@ input 1118:2415:Microsoft_Surface_Type_Cover {
 #	events disabled
 #}
 
+# For some reason, the Surface Go ends up with a Touchpad and Mouse
+# input. Disable the Mouse one.
+input 1118:2415:Microsoft_Surface_Type_Cover_Mouse {
+	events disabled
+}
+
 # Enable tap-to-click on trackpad.
 input 1118:2415:Microsoft_Surface_Type_Cover_Touchpad {
 	tap enabled

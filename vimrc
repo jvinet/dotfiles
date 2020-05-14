@@ -49,7 +49,7 @@ set t_te=
 " Per-file options
 autocmd BufNewFile,BufRead *.py   setlocal sw=4 ts=4 sts=4 et
 autocmd BufNewFile,BufRead *.clj  setlocal sw=3 ts=3 sts=3 et
-autocmd BufNewFile,BufRead *.md   setlocal et tw=74 list ft=ghmarkdown
+autocmd BufNewFile,BufRead *.md   setlocal et tw=74 list ft=markdown
 autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
 autocmd BufNewFile,BufRead *.rst  setlocal sw=3 ts=3 sts=3 tw=74 et
 autocmd BufNewFile,BufRead *.json setlocal ft=javascript
@@ -80,6 +80,9 @@ autocmd BufNewFile,BufRead *.lua    setlocal list number
 autocmd BufNewFile,BufRead *.html   setlocal list number
 autocmd BufNewFile,BufRead *.coffee setlocal list number
 autocmd BufNewFile,BufRead *.rkt    setlocal list number
+
+" Folders
+autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
 
 " Linters
 autocmd BufNewFile,BufRead *.php map <leader>; :!php -l %<CR>
@@ -143,11 +146,6 @@ set nowrap
 set nonumber
 
 " Folding
-"au BufNewFile,BufRead *              set foldmethod=manual
-"au BufNewFile,BufRead *.c,*.h,*.php  set foldmethod=indent
-"au BufNewFile,BufRead *.c,*.h,*.php  syn region myFold start="{" end="}" transparent fold
-"au BufNewFile,BufRead *              set foldlevel=99
-
 set foldmethod=indent
 
 " Don't fold anything by default - I'll close the folds myself
@@ -168,10 +166,6 @@ set ignorecase
 set smartcase
 set hlsearch
 nmap <leader>q :nohlsearch<CR>
-
-" When in visual-block mode, hit 's' to replace selected tabs with 2 spaces.
-" Relies on the vis plugin.
-vnoremap s :B s/	/  /g<CR>
 
 " When in visual mode, pressing * or # searches for the current selection
 vnoremap <silent> * :call VisualSelection('f')<CR>
@@ -295,21 +289,6 @@ autocmd BufReadPost,FileReadPost   *.aescrypt call s:AESReadPost()
 autocmd BufWritePre,FileWritePre   *.aescrypt call s:AESWritePre()
 autocmd BufWritePost,FileWritePost *.aescrypt call s:AESWritePost()
 
-" Un-minify Javascript
-" Source: https://coderwall.com/p/lxajqq
-command! UnMinify call UnMinify()
-function! UnMinify()
-    %s/{\ze[^\r\n]/{\r/g
-    %s/){/) {/g
-    %s/};\?\ze[^\r\n]/\0\r/g
-    %s/;\ze[^\r\n]/;\r/g
-    %s/[^\s]\zs[=&|]\+\ze[^\s]/ \0 /g
-    normal ggVG=
-endfunction
-
-" I often hit :W when I actually mean :w
-command! W write
-
 " Switch 0 and ^ (we can use _ instead of ^ to avoid a recursive mapping)
 map 0 _
 map ^ 999h
@@ -356,13 +335,6 @@ map <leader>[  :tabprev<CR>
 " Don't remove indentation when adding '#' comments
 inoremap # X#
 
-" Automatic close char mapping
-"inoremap { {<CR>}<C-O>O
-"inoremap [ []<LEFT>
-"inoremap ( ()<LEFT>
-"inoremap " ""<LEFT>
-"inoremap ' ''<LEFT>
-
 " Wrap visual selections with chars
 vnoremap ( "zdi(<C-R>z)<ESC>
 vnoremap { "zdi{<C-R>z}<ESC>
@@ -404,36 +376,16 @@ function! DiffToggle()
 	end
 endfunction
 
-" Syntastic Plugin
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_enabled_signs = 1
-let g:syntastic_enabled_highlighting = 0
-let g:syntastic_mode_map = {"mode": "passive"}
-map <leader>st :SyntasticToggleMode<CR>
-map <leader>sc :SyntasticCheck<CR>
-map <leader>sr :SyntasticReset<CR>
-
 " Ctrl-P Plugin
 let g:ctrlp_map = '<leader>o'
-
 let g:ctrlp_match_window_bottom = 0
 let g:ctrlp_match_window_reversed = 0
-
 let g:ctrlp_custom_ignore = '\v\~$|\.(o|swp|pyc|wav|mp3|ogg|blend)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
 let g:ctrlp_working_path_mode = 0
-
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_switch_buffer = 0
-
 " Search by tag - massively useful
 map <leader>. :CtrlPTag<CR>
-
-" VimWiki
-let g:vimwiki_list = [{'path': '~/personal/personal/vimwiki/', 'path_html': '~/work/personal/vimwiki/html'},
-                   \  {'path': '~/personal/betsmart/vimwiki/', 'path_html': '~/work/betsmart/vimwiki/html'}]
 
 " Change the bg color of all the editor space at 80 and >120 cols
 let &colorcolumn="80,".join(range(120,999), ",")

@@ -46,9 +46,8 @@ input 1118:2415:Microsoft_Surface_Type_Cover {
 		xkb_options "caps:escape"
 }
 
-# Disable touchscreen.
 input $touchscreen {
-	events disabled
+	events enabled
 }
 
 # Enable tap-to-click on trackpad.

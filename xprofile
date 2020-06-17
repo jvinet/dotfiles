@@ -1,4 +1,9 @@
+export XDG_CURRENT_DESKTOP=Unity
+
 setxkbmap -option caps:escape
 xset r rate 250
 unclutter &
 
+if [ ! "`pgrep ssh-agent`" ]; then
+	eval `ssh-agent`
+fi

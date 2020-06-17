@@ -11,40 +11,15 @@ set encoding=utf8
 
 " Color theme
 syntax on
-
-" Figure out what sort of color scheme we should be using. The default is
-" 'dusk', my bright-on-dark scheme. If the VIMCOLOR environment variable is
-" set, then use that, giving preference to "solarized" for the generic
-" settings of "light" or "dark".
-if $VIMCOLOR == 'light'
-	set background=light
-	let g:solarized_termcolors=256
-	color solarized
-elseif $VIMCOLOR == 'dark'
-	set background=dark
-	let g:solarized_termcolors=256
-	color solarized
-elseif $VIMCOLOR == 'molokai'
-	let g:molokai_original=1
-	let g:rehash256=1
-	color molokai
-elseif $VIMCOLOR != ''
-	color $VIMCOLOR
-else
-	color dusk
-endif
+color dusk
 
 " Make sure we're getting 256 colors when it's available
-if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
-	set t_Co=256
-endif
+"if $TERM == "xterm-256color" || $TERM == "screen-256color" || $COLORTERM == "gnome-terminal"
+"	set t_Co=256
+"endif
 
 " Don't save backups
 set nobackup
-
-" Don't clear the screen after exit
-set t_ti=
-set t_te=
 
 " Per-file options
 autocmd BufNewFile,BufRead *.py   setlocal sw=4 ts=4 sts=4 et

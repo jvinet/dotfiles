@@ -29,7 +29,7 @@ hi DiffText term=reverse cterm=bold ctermbg=Red gui=bold guibg=Red
 hi Cursor guibg=Green guifg=Black
 hi lCursor guibg=Cyan guifg=Black
 hi Directory term=bold ctermfg=LightCyan guifg=Cyan
-hi LineNr term=underline ctermfg=166 ctermbg=235 guifg=Grey
+hi LineNr term=underline ctermfg=239 ctermbg=234 guifg=Grey
 hi MoreMsg term=bold ctermfg=LightGreen gui=bold guifg=SeaGreen
 hi NonText term=bold ctermfg=LightBlue gui=bold guifg=LightBlue guibg=grey30
 hi Question term=standout ctermfg=LightGreen gui=bold guifg=Green
@@ -45,7 +45,7 @@ hi DiffChange term=bold ctermbg=DarkMagenta guibg=DarkMagenta
 hi DiffDelete term=bold ctermfg=Blue ctermbg=DarkCyan gui=bold guifg=Blue guibg=DarkCyan
 hi CursorColumn term=reverse ctermbg=Black guibg=grey40
 hi CursorLine term=underline cterm=underline guibg=grey40
-hi Comment ctermfg=Blue
+hi Comment ctermfg=Blue cterm=italic
 
 " Groups for syntax highlighting
 hi Constant term=underline ctermfg=Magenta guifg=#ffa0a0 guibg=grey5

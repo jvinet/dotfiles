@@ -18,12 +18,13 @@ export LC_ALL='en_US.UTF-8'
 
 # I type these things a lot
 alias grep='grep --color'
-alias vi='vim'
+alias vi='nvim'
+alias vim='nvim'
 alias t='todo'
 alias ll='ls -lh'
 alias r='ranger'
 alias tc='tabs -16 ; tcalc '
-alias op='netstat -tanl | grep LISTEN | grep tcp4 | sort'
+alias op='netstat -tanl | grep LISTEN | sort'
 
 if [ -n "$WAYLAND_DISPLAY" ]; then
 	alias xc='wl-copy'
@@ -108,7 +109,11 @@ export ANDROID_HOME=/usr/local/opt/android-sdk
 export EDITOR=vim
 export PAGER=less
 export BROWSER=firefox
-export TERMINAL=alacritty
+export TERMINAL=kitty
+# Colorized manpages with bat(1)
+if [ "`type -p bat`" ]; then
+	export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+fi
 
 # Ask Firefox to enable Wayland support
 export MOZ_ENABLE_WAYLAND=1
@@ -118,7 +123,7 @@ export MOZ_ENABLE_WAYLAND=1
 
 # tmux / color terms
 export TERM=xterm-256color
-[ -n "$TMUX" ] && export TERM="screen-256color"
+#[ -n "$TMUX" ] && export TERM="screen-256color"
 
 PS1='[\u@\h \W]\$ '
 

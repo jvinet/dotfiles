@@ -16,6 +16,9 @@ bind -m vi-insert "\C-e":end-of-line
 export LANG='en_US.UTF-8'
 export LC_ALL='en_US.UTF-8'
 
+# Large command history
+export HISTSIZE=10000
+
 # I type these things a lot
 alias grep='grep --color'
 alias vi='nvim'
@@ -25,6 +28,7 @@ alias ll='ls -lh'
 alias r='ranger'
 alias tc='tabs -16 ; tcalc '
 alias op='netstat -tanl | grep LISTEN | sort'
+alias gst='git status -uno'
 
 if [ -n "$WAYLAND_DISPLAY" ]; then
 	alias xc='wl-copy'

@@ -25,10 +25,20 @@ alias vi='nvim'
 alias vim='nvim'
 alias t='todo'
 alias ll='ls -lh'
-alias r='ranger'
 alias tc='tabs -16 ; tcalc '
 alias op='netstat -tanl | grep LISTEN | sort'
 alias gst='git status -uno'
+alias r='ranger_cd'
+
+ranger_cd() {
+	# https://github.com/ranger/ranger/blob/master/examples/shell_automatic_cd.sh
+	temp_file="$(mktemp -t "ranger_cd.XXXXXXXXXX")"
+	ranger --choosedir="$temp_file" -- "${@:-$PWD}"
+	if chosen_dir="$(cat -- "$temp_file")" && [ -n "$chosen_dir" ] && [ "$chosen_dir" != "$PWD" ]; then
+		cd -- "$chosen_dir"
+	fi
+	rm -f -- "$temp_file"
+}
 
 if [ -n "$WAYLAND_DISPLAY" ]; then
 	alias xc='wl-copy'

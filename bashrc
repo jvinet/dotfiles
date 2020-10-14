@@ -56,6 +56,9 @@ alias json='python3 -m json.tool'
 alias enc='openssl aes-256-cbc -salt'
 alias dec='openssl aes-256-cbc -d -salt'
 
+alias dos2unix="awk '{ sub(\"\r$\", \"\"); print }'"
+alias unix2dos="awk 'sub(\"$\", \"\r\")'"
+
 if [ "`uname`" = "Linux" ]; then
 	alias ls='ls --color'
 	alias open='xdg-open'

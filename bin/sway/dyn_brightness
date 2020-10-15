@@ -1,0 +1,90 @@
+#!/usr/bin/env python
+"""
+A simple CLI utility that can adjust the display brightness based on the
+currently-focused application.
+
+Example:
+    My terminal is a dark background, and the web is a very bright place.
+    I'll keep Alacritty at 40% and Firefox at 10%.
+
+    $ ./dyn_brightness alacritty 40 firefox 10
+
+The script uses the "app_id" window property, as received by the i3 bus. To
+find it, just run this script and switch to the focused window. The script
+will output the app_id.
+
+Script assumes you use light[1] to adjust the brightness, and it assumes it
+has sudo rights to call it. There's a pretty good chance you don't have my
+exact setup. Just edit the `get_bright` and `set_bright` functions below and
+adjust them.
+
+[1] https://github.com/haikarainen/light
+"""
+import os
+import os.path
+import sys
+from subprocess import run
+from pprint import pprint
+
+from i3ipc import Connection, Event
+
+
+def set_bright(lvl):
+    run(['sudo', 'light', '-S', str(lvl)])
+
+
+def get_bright():
+    """ Acquire current brightness. """
+    r = run('light', capture_output=True)
+    # The `float()` call is necessary or `int()` freaks out.
+    return int(float(r.stdout.decode().strip()))
+
+
+def main():
+    if len(sys.argv) < 2:
+        print("usage: %s <app_id> <brightness> [app_id] [brightness] ... ")
+        print()
+        print("When the app receives focus, brightness will be increased/decreased")
+        print("by the 'brightness' value associated to that app.")
+        print()
+        print("When the program first starts, it will acquire the current brightness")
+        print("level. If a focused app does not have a configured brightness level,")
+        print("then this default value will be used.")
+        sys.exit(1)
+
+    if len(sys.argv) % 2 != 1:
+        print("error: wrong number of arguments")
+        return 1
+
+    config = {}
+    for i in range(1, len(sys.argv), 2):
+        try:
+            config[sys.argv[i].lower()] = int(sys.argv[i+1])
+        except ValueError:
+            print("error: '%s' is not an integer" % sys.argv[i+1])
+            return 1
+
+    def_bright = get_bright()
+
+    # If you live in tmux, ensure that you have the correct value in I3SOCK.
+    # If you restart i3 in-process, it's easy to lose the new socket.
+    socket_path = os.environ.get('I3SOCK') or os.environ.get('SWAYSOCK')
+    if not socket_path:
+        print("error: I3SOCK and SWAYSOCK are both unset")
+        return 1
+    i3 = Connection(socket_path)
+
+    def handler(i3, ev):
+        cur = i3.get_tree().find_focused()
+        b = config.get(cur.app_id.lower(), def_bright)
+        print("Switched to '%s', set brightness to %d" % (cur.app_id, b))
+        set_bright(b)
+
+
+    print("Default brightness is %d" % def_bright)
+    i3.on(Event.WINDOW_FOCUS, handler)
+    return i3.main()
+
+
+if __name__ == '__main__':
+    sys.exit(main())

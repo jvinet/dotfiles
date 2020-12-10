@@ -1,5 +1,5 @@
 These are copies of the files from [Rich](https://pypi.org/project/rich/)
-1.3.1 that I hand-modified to suit my preferences.
+9.3.0 that I hand-modified to suit my preferences.
 
 Rich is part of my strategy for personal notes. Since there were only 41
 million note-taking systems out there, I thought it might be faster to

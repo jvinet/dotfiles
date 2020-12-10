@@ -1,0 +1,40 @@
+diff -Naur rich.orig/default_styles.py rich/default_styles.py
+--- rich.orig/default_styles.py	2020-12-10 09:53:35.959027305 -0400
++++ rich/default_styles.py	2020-12-10 09:58:47.312334349 -0400
+@@ -131,12 +131,12 @@
+     "markdown.item.number": Style(color="yellow", bold=True),
+     "markdown.hr": Style(color="yellow"),
+     "markdown.h1.border": Style(),
+-    "markdown.h1": Style(bold=True),
+-    "markdown.h2": Style(bold=True, underline=True),
+-    "markdown.h3": Style(bold=True),
+-    "markdown.h4": Style(bold=True, dim=True),
+-    "markdown.h5": Style(underline=True),
+-    "markdown.h6": Style(italic=True),
++    "markdown.h1": Style(bold=True, color="spring_green1"),
++    "markdown.h2": Style(bold=True, underline=True, color="medium_spring_green"),
++    "markdown.h3": Style(bold=True, underline=True, color="pale_green3"),
++    "markdown.h4": Style(bold=True, color="dark_sea_green4"),
++    "markdown.h5": Style(color="dark_olive_green3"),
++    "markdown.h6": Style(color="green4"),
+     "markdown.h7": Style(italic=True, dim=True),
+     "markdown.link": Style(color="bright_blue"),
+     "markdown.link_url": Style(color="blue"),
+diff -Naur rich.orig/markdown.py rich/markdown.py
+--- rich.orig/markdown.py	2020-12-10 09:53:35.959027305 -0400
++++ rich/markdown.py	2020-12-10 09:59:12.935665530 -0400
+@@ -141,12 +141,12 @@
+         self, console: Console, options: ConsoleOptions
+     ) -> RenderResult:
+         text = self.text
+-        text.justify = "center"
++        text.justify = "left"
+         if self.level == 1:
+             # Draw a border around h1s
+             yield Panel(
+                 text,
+-                box=box.DOUBLE,
++                box=box.ROUNDED,
+                 style="markdown.h1.border",
+             )
+         else:

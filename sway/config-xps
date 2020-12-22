@@ -133,6 +133,7 @@ bindsym --release $mod+Shift+Print exec $screenclip
 for_window [title="galculator"] floating enable
 for_window [class="Gnuplot"] floating enable
 for_window [title="Onboard"] border none
+for_window [app_id="zenity"] floating enable
 
 
 #------------------------------------------------------------------------
@@ -150,10 +151,16 @@ bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
 
+#------------------------------------------------------------------------
+# MISC KEY BINDINGS
+#------------------------------------------------------------------------
+
 #bindsym XF86PowerOff exec swaynag -t warning -m 'Are you sure you want to exit?' -b 'Yes, exit' 'swaymsg exit'
 #bindsym XF86PowerOff exec sudo systemctl hibernate
 
 bindsym --locked $mod+Shift+s exec systemctl hibernate
+
+bindsym --locked $mod+n exec $HOME/bin/notify -d
 
 #------------------------------------------------------------------------
 # KEY BINDINGS FOR SWAY
@@ -167,9 +174,6 @@ bindsym $mod+Shift+q kill
 # Second one lets you run anything with an XDG .desktop launcher file.
 bindsym $mod+grave exec $menu
 bindsym $mod+Shift+grave exec $appmenu
-
-# Notification list (custom).
-bindsym $mod+n exec $bin/notify -d
 
 # Clear notifications (unrelated to above).
 bindsym Control+Space exec makoctl dismiss --all

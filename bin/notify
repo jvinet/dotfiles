@@ -6,14 +6,20 @@
 # An indicator can be displayed in the i3 status bar.
 #
 
+# TODO: connect to swaybar (look in old i3 config)
+# TODO: add ability to schedule notifications? similar to `rin`?
+
 state_dir=~/.local/notifications
 [ -d $state_dir ] || mkdir -p $state_dir
 
 usage() {
 	echo -e "usage: notify <notification_text>\n"
-	echo "list to stdout:      notify -l"
-	echo "list to dmenu:       notify -d"
-	echo "count notifications: notify -c"
+	echo "manage notifications:"
+	echo "  list to stdout:      notify -l"
+	echo "  list to dmenu:       notify -d"
+	echo "  remove item 2:       notify -x 2"
+	echo "  count notifications: notify -c"
+	echo "  output for waybar:   notify -b"
 	exit 1
 }
 
@@ -45,17 +51,27 @@ view_stdout() {
 
 # List notifications in a dmenu view.
 view_dmenu() {
-	sel=`view_stdout | dmenu -b -i -l 20`
+	sel=`view_stdout | dmenu -b -i -l 20 -p "clear message:"`
 	[ "$sel" = "" ] && return
 	i=`echo "$sel" | cut -d' ' -f1`
 	remove $i
 }
 
-while getopts "ldc" arg; do
+# Output for an i3/sway bar.
+bar() {
+	ct=`count`
+	if [ $ct -gt 0 ]; then
+		echo "📣$ct"
+	fi
+}
+
+while getopts "ldcx:b" arg; do
 	case $arg in
 		l) view_stdout ; exit 0 ;;
 		d) view_dmenu ; exit 0 ;;
 		c) count ; exit 0 ;;
+		x) remove $OPTARG ; exit 0 ;;
+		b) bar ; exit 0 ;;
 		*) usage
 	esac
 done

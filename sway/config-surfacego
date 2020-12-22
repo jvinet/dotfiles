@@ -134,6 +134,7 @@ bindsym --release $mod+Shift+Print exec $screenclip
 for_window [title="galculator"] floating enable
 for_window [class="Gnuplot"] floating enable
 for_window [title="Onboard"] border none
+for_window [app_id="zenity"] floating enable
 
 
 #------------------------------------------------------------------------

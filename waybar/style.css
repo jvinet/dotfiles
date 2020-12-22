@@ -2,7 +2,7 @@
     border:        none;
     border-radius: 0;
     font-family:   "DejaVu Sans Mono";
-    font-size:     10px;
+    font-size:     12px;
     box-shadow:    none;
     text-shadow:   none;
 }
@@ -40,6 +40,10 @@ window {
 
 #custom-touchbar {
 	color: #999999;
+}
+
+#custom-notifications {
+	color: #ffff00;
 }
 
 #cpu {

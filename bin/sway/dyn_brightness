@@ -76,9 +76,20 @@ def main():
 
     def handler(i3, ev):
         cur = i3.get_tree().find_focused()
-        b = config.get(cur.app_id.lower(), def_bright)
-        print("Switched to '%s', set brightness to %d" % (cur.app_id, b))
-        set_bright(b)
+        if not cur.app_id:
+            print("No app_id for focused window; ignoring")
+            return
+
+        # Do a substring search across all app IDs. First match wins.
+        cur_app_id = cur.app_id.lower()
+        brightness = def_bright
+        for a, b in config.items():
+            if cur_app_id.find(a) > -1:
+                brightness = b
+                break
+
+        print("Switched to '%s', set brightness to %d" % (cur.app_id, brightness))
+        set_bright(brightness)
 
 
     print("Default brightness is %d" % def_bright)

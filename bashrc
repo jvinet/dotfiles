@@ -126,7 +126,7 @@ export ANDROID_HOME=/usr/local/opt/android-sdk
 export EDITOR=vim
 export PAGER=less
 export BROWSER=firefox
-export TERMINAL=kitty
+export TERMINAL=alacritty
 # Colorized manpages with bat(1)
 if [ "`type -p bat`" ]; then
 	export MANPAGER="sh -c 'col -bx | bat -l man -p'"

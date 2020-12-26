@@ -7,6 +7,10 @@ if [ "$2" = "" ]; then
 	echo "usage: rin <minutes|time> <text>"
 	echo "   ex: rin +30   Check the turkey"
 	echo "   ex: rin 16:00 Watch hockey"
+	echo "   ex: rin '14:30 tomorrow' Pickup Bob from the airport"
+	echo
+	echo "This script uses the at(1) command, so any date formats understood"
+	echo "by at(1) should work."
 	exit 1
 fi
 if [ "`pgrep atd`" = "" ]; then
@@ -28,6 +32,6 @@ shift
 if [ -x "/usr/bin/capslock_light" ]; then
 	echo "/usr/bin/capslock_light on ; zenity --display=:0 --info --text=\"Reminder: $*\" ; /usr/bin/capslock_light off" | $atcmd
 else
-	echo "zenity --display=:0 --info --text=\"Reminder: $*\"" | $atcmd
+	echo "notify \"Reminder: $*\" ; zenity --display=:0 --info --text=\"Reminder: $*\"" | $atcmd
 fi
 atq

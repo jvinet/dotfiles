@@ -6,14 +6,14 @@
 # An indicator can be displayed in the i3 status bar.
 #
 
-# TODO: connect to swaybar (look in old i3 config)
 # TODO: add ability to schedule notifications? similar to `rin`?
 
 state_dir=~/.local/notifications
 [ -d $state_dir ] || mkdir -p $state_dir
 
 usage() {
-	echo -e "usage: notify <notification_text>\n"
+	echo "usage: notify <notification_text>"
+	echo
 	echo "manage notifications:"
 	echo "  list to stdout:      notify -l"
 	echo "  list to dmenu:       notify -d"

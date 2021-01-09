@@ -7,11 +7,15 @@ set $font Monospace 11
 set $term alacritty
 set $lock swaylock -c 000000 -e -F
 set $menu rofi -show run -config ~/.config/rofi/launcher-keys.rasi
+#set $menu bemenu-run -p "" --fn "$font"
 set $appmenu rofi -show drun -config ~/.config/rofi/launcher-keys.rasi
 set $screenclip slurp | grim -g - - | wl-copy
 set $screenshot slurp | grim -g - ~/Pictures/screenshots/$(date +"%Y-%m-%d-%H-%M-%S").png
 set $background ~/Pictures/wallpaper/moon.jpg
-#set $menu bemenu-run -p "" --fn "$font"
+
+# Hardware IDs
+set $touchscreen 1267:9754:ELAN9038:00_04F3:261A_Touchscreen
+set $trackpad 1118:2415:Microsoft_Surface_Type_Cover_Touchpad
 
 # Workspaces.
 set $ws1  1:1
@@ -43,7 +47,7 @@ input 1118:2415:Microsoft_Surface_Type_Cover {
 }
 
 # Disable touchscreen.
-#input 1267:9754:ELAN9038:00_04F3:261A_Touchscreen {
+#input $touchscreen {
 #	events disabled
 #}
 
@@ -54,7 +58,8 @@ input 1118:2415:Microsoft_Surface_Type_Cover_Mouse {
 }
 
 # Enable tap-to-click on trackpad.
-input 1118:2415:Microsoft_Surface_Type_Cover_Touchpad {
+input $trackpad {
+	events enabled
 	tap enabled
 }
 
@@ -152,10 +157,16 @@ bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
 
+#------------------------------------------------------------------------
+# MISC KEY BINDINGS
+#------------------------------------------------------------------------
+
 #bindsym XF86PowerOff exec swaynag -t warning -m 'Are you sure you want to exit?' -b 'Yes, exit' 'swaymsg exit'
 #bindsym XF86PowerOff exec sudo systemctl hibernate
 
 bindsym --locked $mod+Shift+s exec systemctl hibernate
+
+bindsym --locked $mod+n exec $HOME/bin/notify -d
 
 #------------------------------------------------------------------------
 # KEY BINDINGS FOR SWAY
@@ -169,9 +180,6 @@ bindsym $mod+Shift+q kill
 # Second one lets you run anything with an XDG .desktop launcher file.
 bindsym $mod+grave exec $menu
 bindsym $mod+Shift+grave exec $appmenu
-
-# Notification list (custom).
-bindsym $mod+n exec $bin/notify -d
 
 # Clear notifications (unrelated to above).
 bindsym Control+Space exec makoctl dismiss --all
@@ -256,7 +264,7 @@ bindsym $mod+Tab workspace back_and_forth
 bindsym $mod+w exec $bin/window-switch
 
 # Switch to next unused workspace.
-bindsym $mod+Shift+plus exec $bin/free-workspace switch next
+bindsym $mod+equal exec $bin/free-workspace switch next
 # Move current window to next unused workspace.
 bindsym $mod+plus exec $bin/free-workspace move next
 
@@ -265,8 +273,6 @@ bindsym $mod+d exec i3-input -F 'rename workspace to "%s"' -P 'Rename workspace:
 
 # Reload the configuration file.
 bindsym $mod+Shift+c reload
-# Restart Sway in-place (preserves your layout/session).
-bindsym $mod+Shift+r restart
 # Exit.
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Are you sure you want to exit?' -b 'Yes, exit' 'swaymsg exit'
 

@@ -1,0 +1,21 @@
+#!/bin/bash
+#
+# Connect a VNC client as a Sway output so it can be used as an additional
+# display.
+
+
+if [ "$1" = "" ]; then
+	echo "usage: $0 <bind_ip>"
+	exit 1
+fi
+ip=$1
+
+if [ ! "$(swaymsg -t get_outputs | grep HEADLESS-1)" ]; then
+	echo "Creating headless output in Sway..."
+	swaymsg create_output HEADLESS-1
+	swaymsg output HEADLESS-1 pos 3286 0 mode 1366x768
+fi
+
+echo "Starting WayVNC..."
+wayvnc --output=HEADLESS-1 --max-fps=20 $ip 5900 &
+

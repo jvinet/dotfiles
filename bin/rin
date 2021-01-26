@@ -4,13 +4,18 @@
 #
 
 if [ "$2" = "" ]; then
-	echo "usage: rin <minutes|time> <text>"
+	echo "usage: rin [-r] <minutes|time> <text>"
 	echo "   ex: rin +30   Check the turkey"
-	echo "   ex: rin 16:00 Watch hockey"
+	echo "   ex: rin -r 16:00 Watch hockey"
 	echo "   ex: rin '14:30 tomorrow' Pickup Bob from the airport"
+	echo
+	echo "If -r is used, then the reminder will become recurring."
 	echo
 	echo "This script uses the at(1) command, so any date formats understood"
 	echo "by at(1) should work."
+	echo
+	echo "To cancel a recurring reminder, find its identifier in the output"
+	echo "from atq(1), then remove it with atrm(1)."
 	exit 1
 fi
 if [ "`pgrep atd`" = "" ]; then
@@ -22,16 +27,29 @@ if [ "`which zenity`" = "" ]; then
 	exit 2
 fi
 
+recur=0
 time=$1
+shift
+if [ "$time" = "-r" ]; then
+	recur=1
+	time=$1
+	shift
+fi
+
 atcmd="at $time"
 if [ "${time:0:1}" = "+" ]; then
 	# time is relative to now
 	atcmd="at now + ${time:1} min"
 fi
-shift
-if [ -x "/usr/bin/capslock_light" ]; then
-	echo "/usr/bin/capslock_light on ; zenity --display=:0 --info --text=\"Reminder: $*\" ; /usr/bin/capslock_light off" | $atcmd
-else
-	echo "notify \"Reminder: $*\" ; zenity --display=:0 --info --text=\"Reminder: $*\"" | $atcmd
+
+cmd="notify \"Reminder: $*\" ; zenity --display=:0 --info --text=\"Reminder: $*\""
+if [ "$recur" = "1" ]; then
+	cmd="$cmd ; rin -r \"$time\" \"$*\""
 fi
+
+if [ -x "/usr/bin/capslock_light" ]; then
+	cmd="/usr/bin/capslock_light on ; $cmd ; /usr/bin/capslock_light off" | $atcmd
+fi
+
+echo $cmd | $atcmd
 atq

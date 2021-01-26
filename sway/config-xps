@@ -6,9 +6,9 @@ set $bin /home/jvinet/bin/sway
 set $font Monospace 10
 set $term alacritty
 set $lock swaylock -c 000000 -e -F
-set $menu rofi -show run -config ~/.config/rofi/launcher-keys.rasi
+set $menu rofi -show run
 #set $menu bemenu-run -p "" --fn "$font"
-set $appmenu rofi -show drun -config ~/.config/rofi/launcher-keys.rasi
+set $appmenu rofi -show drun
 set $screenclip slurp | grim -g - - | wl-copy
 set $screenshot slurp | grim -g - ~/Pictures/screenshots/$(date +"%Y-%m-%d-%H-%M-%S").png
 set $background ~/Pictures/wallpaper/moon.jpg
@@ -33,7 +33,7 @@ set $ws10 10:10
 workspace $ws1
 
 #------------------------------------------------------------------------
-# INPUT DEVICES
+# INPUTS
 #------------------------------------------------------------------------
 
 # Keyboard settings.
@@ -58,9 +58,18 @@ input $trackpad {
 # Hide mouse cursor after a period of inactivity.
 seat seat0 hide_cursor 3000
 
+#------------------------------------------------------------------------
+# OUTPUTS
+#------------------------------------------------------------------------
+
 # Set HiDPI scaling on the primary screen.
 output eDP-1 scale 2.0
 output eDP-1 pos 0 0 res 3840 2160
+
+output HEADLESS-1 {
+	pos 3286,0
+	mode 1366x768
+}
 
 font pango:$font
 

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ "$1" = "--help" -o "$1" = "-h" ]; then
+	echo "usage: $0 [file]"
+	echo
+	echo "- If stdin is used, then output goes to stdout"
+	echo "- If a file is specified, then output goes to <file>.enc"
+	exit 0
+fi
+
+if [ "$1" ]; then
+	openssl aes-256-cbc -pbkdf2 -salt -in $1 -out $1.enc
+else
+	openssl aes-256-cbc -pbkdf2 -salt
+fi

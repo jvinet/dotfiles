@@ -53,8 +53,8 @@ alias http='python3 -m http.server'
 alias json='python3 -m json.tool'
 
 # Quick AES encryption/decryption
-alias enc='openssl aes-256-cbc -salt'
-alias dec='openssl aes-256-cbc -d -salt'
+#alias enc='openssl aes-256-cbc -salt'
+#alias dec='openssl aes-256-cbc -d -salt'
 
 alias dos2unix="awk '{ sub(\"\r$\", \"\"); print }'"
 alias unix2dos="awk 'sub(\"$\", \"\r\")'"

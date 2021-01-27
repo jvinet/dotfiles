@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ "$1" = "--help" -o "$1" = "-h" ]; then
+	echo "usage: $0 [file]"
+	echo
+	echo "- If stdin is used, then output goes to stdout"
+	echo "- If a file ending in '.enc' is specified, the decrypted file will be of"
+	echo "  the same name, but without the '.enc' extension."
+	echo "- If a file without an '.enc' ending is specified, then the decrypted"
+	echo "  file will be <file>.dec"
+	exit 0
+fi
+
+if [ "$1" ]; then
+	fn=${1%%.enc}
+	if [ "$fn" = "$1" ]; then
+		fn="$1.dec"
+	fi
+	openssl aes-256-cbc -pbkdf2 -salt -d -in $1 -out $fn
+else
+	openssl aes-256-cbc -pbkdf2 -salt -d
+fi

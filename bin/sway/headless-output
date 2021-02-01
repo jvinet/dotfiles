@@ -10,12 +10,19 @@ if [ "$1" = "" ]; then
 fi
 ip=$1
 
-if [ ! "$(swaymsg -t get_outputs | grep HEADLESS-1)" ]; then
+if [ "$(swaymsg -t get_outputs | grep HEADLESS-1)" ]; then
+	echo "Headless output already exists"
+else
 	echo "Creating headless output in Sway..."
 	swaymsg create_output HEADLESS-1
 	swaymsg output HEADLESS-1 pos 3286 0 mode 1366x768
 fi
+ws=$(swaymsg -t get_outputs | jq '.[] | select(.name == "HEADLESS-1") | .current_workspace')
+echo "Current workspace is $ws"
 
-echo "Starting WayVNC..."
-wayvnc --output=HEADLESS-1 --max-fps=20 $ip 5900 &
-
+if [ "$(pgrep wayvnc)" ]; then
+	echo "WayVNC is already running."
+else
+	echo "Starting WayVNC..."
+	wayvnc --output=HEADLESS-1 --max-fps=20 $ip 5900 &
+fi

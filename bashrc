@@ -29,6 +29,7 @@ alias tc='tabs -16 ; tcalc '
 alias op='netstat -tanl | grep LISTEN | sort'
 alias gst='git status -uno'
 alias r='ranger_cd'
+alias nsum='awk "{ sum += \$1 } END { print sum }"'
 
 ranger_cd() {
 	# https://github.com/ranger/ranger/blob/master/examples/shell_automatic_cd.sh
@@ -52,9 +53,9 @@ fi
 alias http='python3 -m http.server'
 alias json='python3 -m json.tool'
 
-# Quick AES encryption/decryption
-#alias enc='openssl aes-256-cbc -salt'
-#alias dec='openssl aes-256-cbc -d -salt'
+# Quick encryption/decryption
+#alias enc='openssl aes-256-cbc -pbkdf2 -salt'
+#alias dec='openssl aes-256-cbc -pbkdf2 -salt -d'
 
 alias dos2unix="awk '{ sub(\"\r$\", \"\"); print }'"
 alias unix2dos="awk 'sub(\"$\", \"\r\")'"
@@ -117,6 +118,9 @@ fi
 # Go
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
+
+# Elixir
+export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Android
 export PATH=$PATH:$HOME/android/tools:$HOME/android/platform-tools

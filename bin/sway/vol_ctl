@@ -10,35 +10,31 @@ if [ -z "$cmd" ]; then
 	exit 1
 fi
 
-# Find the active sink.
-SINK_NUM=`pacmd list-sinks | awk '/* index:/ {print $3}'`
-
 vol_up() {
-	pactl set-sink-volume $SINK_NUM +5%
+	pcnt=`vol_get`
+	pulsemixer --set-volume $(($pcnt + 5))
 	show_level
 }
 
 vol_down() {
-	pactl set-sink-volume $SINK_NUM -5%
+	pcnt=`vol_get`
+	pulsemixer --set-volume $(($pcnt - 5))
 	show_level
 }
 
 vol_mute() {
-	pactl set-sink-mute $SINK_NUM toggle
-	is_muted=$(pacmd list-sinks \
-		| awk '/* index:/ {seen = 1} seen {print}' \
-		| awk '/muted:/ {print $2}' \
-		| head -n 1)
+	pulsemixer --toggle-mute
+	is_muted=`pulsemixer --get-mute`
 
-	if [ "$is_muted" = "no" ]; then
-		show_level
-	else
+	if [ "$is_muted" = "1" ]; then
 		notify-send "Volume Muted"
+	else
+		show_level
 	fi
 }
 
 vol_get() {
-	pacmd list-sinks | awk '/* index/ {seen = 1} seen {print}' | grep -E '^\s*volume:' | awk '{print $5}'
+	pulsemixer --get-volume | awk '{print $1}'
 }
 
 show_level() {

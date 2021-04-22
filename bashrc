@@ -19,6 +19,12 @@ export LC_ALL='en_US.UTF-8'
 # Large command history
 export HISTSIZE=10000
 
+# Directory bookmarks
+export CDPATH=.:~/.marks/
+function mark() {
+	ln -sr "$(pwd)" ~/.marks/"$1"
+}
+
 # I type these things a lot
 alias grep='grep --color'
 alias vi='nvim'
@@ -129,7 +135,7 @@ export ANDROID_HOME=/usr/local/opt/android-sdk
 # Preferred applications
 export EDITOR=vim
 export PAGER=less
-export BROWSER=firefox
+export BROWSER=qutebrowser
 export TERMINAL=alacritty
 # Colorized manpages with bat(1)
 if [ "`type -p bat`" ]; then
@@ -139,8 +145,13 @@ fi
 # Ask Firefox to enable Wayland support
 export MOZ_ENABLE_WAYLAND=1
 
+if [ -n "$WAYLAND_DISPLAY" ]; then
+	export XDG_SESSION_TYPE=wayland
+	export XDG_CURRENT_DESKTOP=sway
+fi
+
 # Some apps (eg: Electron) need this for Sway's system tray.
-[ -n "$WAYLAND_DISPLAY" ] && export XDG_CURRENT_DESKTOP=Unity
+#[ -n "$WAYLAND_DISPLAY" ] && export XDG_CURRENT_DESKTOP=Unity
 
 # tmux / color terms
 export TERM=xterm-256color

@@ -11,7 +11,7 @@
 #   qute://help/settings.html
 
 # Uncomment this to still load settings configured via autoconfig.yml
-# config.load_autoconfig()
+config.load_autoconfig()
 
 # Which cookies to accept. With QtWebEngine, this setting also controls
 # other features with tracking capabilities similar to those of cookies;
@@ -133,7 +133,7 @@ config.set('content.javascript.enabled', True, '*://raw.githubusercontent.com/*'
 #   - true
 #   - false
 #   - ask
-config.set('content.notifications', False, 'https://www.reddit.com')
+config.set('content.notifications.enabled', False, 'https://www.reddit.com')
 
 # Editor (and arguments) to use for the `open-editor` command. The
 # following placeholders are defined:  * `{file}`: Filename of the file
@@ -205,7 +205,11 @@ c.tabs.background = True
 #   - bottom
 #   - left
 #   - right
-c.tabs.position = 'top'
+c.tabs.position = 'left'
+c.tabs.width = '10%'
+
+# Remember the mode of each tab.
+c.tabs.mode_on_change = 'restore'
 
 # Search engines which can be used via the address bar.  Maps a search
 # engine name (such as `DEFAULT`, or `ddg`) to a URL with a `{}`

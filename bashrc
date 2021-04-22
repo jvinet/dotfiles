@@ -26,10 +26,10 @@ function mark() {
 }
 
 # I type these things a lot
+alias u='cd ..'
 alias grep='grep --color'
 alias vi='nvim'
 alias vim='nvim'
-alias t='todo'
 alias ll='ls -lh'
 alias tc='tabs -16 ; tcalc '
 alias op='netstat -tanl | grep LISTEN | sort'

@@ -9,8 +9,9 @@ set $lock swaylock -c 000000 -e -F
 set $menu rofi -show run
 #set $menu bemenu-run -p "" --fn "$font"
 set $appmenu rofi -show drun
-set $screenclip slurp | grim -g - - | wl-copy
-set $screenshot slurp | grim -g - ~/Pictures/screenshots/$(date +"%Y-%m-%d-%H-%M-%S").png
+set $screenclip_copy slurp | grim -g - - | wl-copy
+set $screenclip_edit slurp | grim -g - - | swappy -f -
+set $screenshot_save slurp | grim -g - ~/Pictures/screenshots/$(date +"%Y-%m-%d-%H-%M-%S").png
 set $background ~/Pictures/wallpaper/moon.jpg
 
 # Hardware IDs
@@ -130,8 +131,9 @@ exec swayidle -w \
 bindsym $mod+Return exec $term
 bindsym $mod+p exec galculator
 bindsym $mod+slash exec $bin/touchpad toggle
-bindsym --release $mod+Print exec $screenshot
-bindsym --release $mod+Shift+Print exec $screenclip
+bindsym --release $mod+Print exec $screenshot_save
+bindsym --release $mod+Shift+Print exec $screenclip_copy
+bindsym --release $mod+Ctrl+Shift+Print exec $screenclip_edit
 
 
 #------------------------------------------------------------------------
@@ -144,6 +146,7 @@ for_window [class="Gnuplot"] floating enable
 for_window [title="Onboard"] border none
 for_window [app_id="zenity"] floating enable
 for_window [app_id="zoom"] floating enable
+for_window [title="qb-cookie-mgr"] floating enable
 
 
 #------------------------------------------------------------------------

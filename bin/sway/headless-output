@@ -3,20 +3,49 @@
 # Connect a VNC client as a Sway output so it can be used as an additional
 # display.
 
+# Output specs for devices I own.
+MACBOOK='1366x768'
+ONEPLUS='1200x540'
+SURFACE='1800x1200'
 
-if [ "$1" = "" ]; then
-	echo "usage: $0 <bind_ip>"
+if [ -z "$1" ]; then
+	echo "usage: $0 <geometry> [bind_ip]"
+	echo
+	echo "geometry can be WxH (eg, 1366x768) or a preset:"
+	echo "    macbook, oneplus, surface"
 	exit 1
 fi
-ip=$1
+
+IP=${2:-0.0.0.0}
+
+if [[ ! $1 =~ ^[0-9]+x[0-9]+$ ]]; then
+	# This is a preset.
+	PRESET=${1^^}
+	eval "GEOM=\$$PRESET"
+	if [ -z "$GEOM" ]; then
+		echo "Invalid preset: $1"
+		exit 1
+	fi
+	echo "Preset: $PRESET"
+else
+	# Literal
+	GEOM=$1
+fi
+
+if [[ ! $GEOM =~ ^[0-9]+x[0-9]+$ ]]; then
+	echo "Invalid geometry: $GEOM"
+	exit 1
+fi
+
+echo "Geometry: $GEOM"
 
 if [ "$(swaymsg -t get_outputs | grep HEADLESS-1)" ]; then
 	echo "Headless output already exists"
 else
 	echo "Creating headless output in Sway..."
 	swaymsg create_output HEADLESS-1
-	swaymsg output HEADLESS-1 pos 3286 0 mode 1366x768
 fi
+swaymsg output HEADLESS-1 pos 3286 0 mode $GEOM
 ws=$(swaymsg -t get_outputs | jq '.[] | select(.name == "HEADLESS-1") | .current_workspace')
 echo "Current workspace is $ws"
 
@@ -24,5 +53,5 @@ if [ "$(pgrep wayvnc)" ]; then
 	echo "WayVNC is already running."
 else
 	echo "Starting WayVNC..."
-	wayvnc --output=HEADLESS-1 --max-fps=20 $ip 5900 &
+	wayvnc --output=HEADLESS-1 --max-fps=20 $IP 5900 &
 fi

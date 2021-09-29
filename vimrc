@@ -22,13 +22,16 @@ color dusk
 set nobackup
 
 " Per-file options
+autocmd BufNewFile,BufRead *.sh   setlocal sw=2 ts=2 sts=2 noet
 autocmd BufNewFile,BufRead *.py   setlocal sw=4 ts=4 sts=4 et
 autocmd BufNewFile,BufRead *.clj  setlocal sw=3 ts=3 sts=3 et
-autocmd BufNewFile,BufRead *.md   setlocal et tw=74 list ft=markdown
+autocmd BufNewFile,BufRead *.md   setlocal et tw=78 list ft=markdown
+autocmd BufNewFile,BufRead *.adoc setlocal et tw=78 list ft=asciidoc
 autocmd BufNewFile,BufRead *.wiki setlocal noet tw=74
 autocmd BufNewFile,BufRead *.rst  setlocal sw=3 ts=3 sts=3 tw=74 et
-autocmd BufNewFile,BufRead *.json setlocal ft=javascript
+autocmd BufNewFile,BufRead *.json setlocal ft=json
 autocmd BufNewFile,BufRead *.yaml setlocal sw=2 ts=2 sts=2 et
+autocmd BufNewFile,BufRead *.html setlocal sw=4 ts=4 sts=4 et
 
 " Cheap/simple spreadsheets in Vim
 autocmd BufNewFile,BufRead *.tsv  setlocal ts=16 sts=16 noet number list
@@ -38,24 +41,26 @@ autocmd BufNewFile,BufRead *.tsv  map H F	B
 
 " Show tabs and line numbers when coding
 autocmd BufNewFile,BufRead *.sh     setlocal number
-autocmd BufNewFile,BufRead *.ex     setlocal list number
-autocmd BufNewFile,BufRead *.exs    setlocal list number
-autocmd BufNewFile,BufRead *.py     setlocal list number
-autocmd BufNewFile,BufRead *.php    setlocal list number
-autocmd BufNewFile,BufRead *.js     setlocal list number
-autocmd BufNewFile,BufRead *.json   setlocal list number
-autocmd BufNewFile,BufRead *.clj    setlocal list number
-autocmd BufNewFile,BufRead *.java   setlocal list number
-autocmd BufNewFile,BufRead *.go     setlocal list number
-autocmd BufNewFile,BufRead *.c      setlocal list number
-autocmd BufNewFile,BufRead *.h      setlocal list number
-autocmd BufNewFile,BufRead *.m      setlocal list number
-autocmd BufNewFile,BufRead *.nim    setlocal list number
-autocmd BufNewFile,BufRead *.cpp    setlocal list number
-autocmd BufNewFile,BufRead *.lua    setlocal list number
-autocmd BufNewFile,BufRead *.html   setlocal list number
-autocmd BufNewFile,BufRead *.coffee setlocal list number
-autocmd BufNewFile,BufRead *.rkt    setlocal list number
+autocmd BufNewFile,BufRead *.zig    setlocal number
+autocmd BufNewFile,BufRead *.ex     setlocal number
+autocmd BufNewFile,BufRead *.exs    setlocal number
+autocmd BufNewFile,BufRead *.py     setlocal number
+autocmd BufNewFile,BufRead *.php    setlocal number
+autocmd BufNewFile,BufRead *.js     setlocal number
+autocmd BufNewFile,BufRead *.ts     setlocal number
+autocmd BufNewFile,BufRead *.json   setlocal number
+autocmd BufNewFile,BufRead *.clj    setlocal number
+autocmd BufNewFile,BufRead *.java   setlocal number
+autocmd BufNewFile,BufRead *.go     setlocal number
+autocmd BufNewFile,BufRead *.c      setlocal number
+autocmd BufNewFile,BufRead *.h      setlocal number
+autocmd BufNewFile,BufRead *.m      setlocal number
+autocmd BufNewFile,BufRead *.nim    setlocal number
+autocmd BufNewFile,BufRead *.cpp    setlocal number
+autocmd BufNewFile,BufRead *.lua    setlocal number
+autocmd BufNewFile,BufRead *.html   setlocal number
+autocmd BufNewFile,BufRead *.coffee setlocal number
+autocmd BufNewFile,BufRead *.rkt    setlocal number
 
 " Folders
 autocmd FileType markdown set foldexpr=NestedMarkdownFolds()
@@ -205,8 +210,8 @@ map <leader>lw :lclose<CR>
 map <leader>lo :lopen<CR>
 
 " Quick AES encryption/decryption
-command! Enc execute '%!openssl aes-256-cbc -salt'
-command! Dec execute '%!openssl aes-256-cbc -d -salt'
+command! Enc execute '%!openssl enc -aes-256-cbc -pbkdf2 -a -salt'
+command! Dec execute '%!openssl enc -aes-256-cbc -pbkdf2 -a -d -salt'
 
 " Auto encrypt/decrypt .aes files with AESCrypt
 "   (It's more portable than openssl on Android)
@@ -325,8 +330,8 @@ let g:EasyMotion_smartcase = 1
 nmap s <Plug>(easymotion-s)
 nmap S <Plug>(easymotion-s2)
 
-" Gundo: Toggle undo history pane.
-nmap <leader>u :GundoToggle<CR>
+" UndoTree
+nmap <leader>u :UndotreeToggle<CR>
 
 " NERDTree (often requires a redraw)
 nmap <leader>e :NERDTreeToggle<CR>:sleep 100m<CR>:redraw!<CR>

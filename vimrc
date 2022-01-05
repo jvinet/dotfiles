@@ -316,6 +316,10 @@ map <leader>[  :tabprev<CR>
 " Don't remove indentation when adding '#' comments
 inoremap # X#
 
+" If I'm in Termux or some other hamstrung environment, I may not be able to
+" remap Capslock to Esc. This is an acceptable workaround.
+inoremap jk <esc>
+
 " Wrap visual selections with chars
 vnoremap ( "zdi(<C-R>z)<ESC>
 vnoremap { "zdi{<C-R>z}<ESC>

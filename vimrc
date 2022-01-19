@@ -318,7 +318,7 @@ inoremap # X#
 
 " If I'm in Termux or some other hamstrung environment, I may not be able to
 " remap Capslock to Esc. This is an acceptable workaround.
-inoremap jk <esc>
+inoremap kj <esc>
 
 " Wrap visual selections with chars
 vnoremap ( "zdi(<C-R>z)<ESC>
@@ -401,6 +401,9 @@ endif
 " Reset any residual colour styling that may persist after Vim exits.
 "   NB: If in tmux, you'll probably want this option: set-window-option -g alternate-screen off
 "au VimLeave * :!/bin/sh -c "echo -ne \"\033[0m\""
+
+" Clear screen at exit
+au VimLeave * :!clear
 
 " Statusline
 set laststatus=2

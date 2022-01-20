@@ -68,7 +68,11 @@ alias unix2dos="awk 'sub(\"$\", \"\r\")'"
 
 if [ "`uname`" = "Linux" ]; then
 	alias ls='ls --color'
-	alias open='xdg-open'
+	if [ "`uname -o`" = "Android" ]; then
+		alias open='termux-open'
+	else
+		alias open='xdg-open'
+	fi
 
 	# Look for an active X display
 	if [ -z "$DISPLAY" -a "`pgrep xinit`" != "" ]; then
@@ -77,13 +81,18 @@ if [ "`uname`" = "Linux" ]; then
 
 	# Look for an active SSH agent - we lose it in tmux juggling sometimes.
 	# If one isn't found, start it.
-	pid="`pgrep ssh-agent`"
-	if [ -n "$pid" ]; then
-		export SSH_AGENT_PID=$pid
-		dir=`/bin/ls -d1 /tmp/ssh-*/agent* | head -n 1`
-		export SSH_AUTH_SOCK=$dir
+	if [ "`uname -o`" = "Android" ]; then
+		# Use the Termux-provided facility to hunt for an active agent.
+		source $HOME/../usr/bin/source-ssh-agent
 	else
-		eval `ssh-agent`
+		pid="`pgrep ssh-agent`"
+		if [ -n "$pid" ]; then
+			export SSH_AGENT_PID=$pid
+			dir=`/bin/ls -d1 /tmp/ssh-*/agent* | head -n 1`
+			export SSH_AUTH_SOCK=$dir
+		else
+			eval `ssh-agent`
+		fi
 	fi
 
 	# Look for the Sway IPC socket - we lose it in tmux juggling.

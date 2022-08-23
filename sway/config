@@ -48,6 +48,11 @@ input type:touchpad {
     tap enabled
 }
 
+input 2:10:TPPS/2_Elan_TrackPoint {
+    accel_profile flat
+    pointer_accel 1.0
+}
+
 # Hide mouse cursor after a period of inactivity.
 seat seat0 hide_cursor 3000
 
@@ -127,6 +132,8 @@ bindsym $mod+slash exec $bin/touchpad toggle
 bindsym --release $mod+Print exec $screenshot_save
 bindsym --release $mod+Shift+Print exec $screenclip_copy
 bindsym --release $mod+Ctrl+Shift+Print exec $screenclip_edit
+# My external keyboard doesn't have a Print key.
+bindsym --release $mod+Ctrl+Shift+Delete exec $screenclip_edit
 
 
 #------------------------------------------------------------------------
@@ -140,6 +147,7 @@ for_window [title="Onboard"] border none
 for_window [app_id="zenity"] floating enable
 for_window [app_id="zoom"] floating enable
 for_window [title="qb-cookie-mgr"] floating enable
+for_window [title="Network Settings"] floating enable
 
 
 #------------------------------------------------------------------------

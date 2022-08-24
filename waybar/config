@@ -5,7 +5,6 @@
 
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    //"modules-right": ["tray", "custom/spotify", "custom/weather", "custom/mail", "custom/storage", "backlight", "pulseaudio", "network", "idle_inhibitor", "battery", "clock"],
     "modules-right": ["cpu", "memory", "backlight", "pulseaudio", "network", "battery", "tray", "idle_inhibitor", "custom/notifications", "clock", "custom/touchbar"],
     "sway/mode": {
         "format": "{}"
@@ -22,7 +21,7 @@
       "format": "{}",
       "exec": "$HOME/bin/notify -b",
       "on-click": "$HOME/bin/notify -d",
-      "interval": 5,
+      "interval": 5
     },
     "custom/touchbar": {
       "format": "",
@@ -63,7 +62,7 @@
             "ethernet": [""],
             "disconnected": [""]
         },
-        "on-click": "termite -e nmtui",
+        "on-click": "connman-gtk",
       "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
         "tooltip": true
     },

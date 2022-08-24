@@ -111,6 +111,9 @@ gaps inner 5
 # Notification daemon.
 exec mako --default-timeout 2500 --font "$font"
 
+# Automatic display management.
+exec_always pkill kanshi; exec kanshi
+
 # Virtual keyboard
 #exec $bin/virtkbd start
 
@@ -172,8 +175,11 @@ bindsym --locked XF86AudioPrev exec playerctl previous
 #bindsym XF86PowerOff exec swaynag -t warning -m 'Are you sure you want to exit?' -b 'Yes, exit' 'swaymsg exit'
 #bindsym XF86PowerOff exec sudo systemctl hibernate
 
-bindsym --locked $mod+Shift+s exec systemctl hibernate
+# If switching from docked to undocked while asleep, I can lose my primary
+# display if kanshi isn't running for some reason.
+bindsym --locked $mod+Ctrl+Alt+backslash exec swaymsg output eDP-1 enable
 
+bindsym --locked $mod+Shift+s exec systemctl hibernate
 bindsym --locked $mod+n exec $HOME/bin/notify -d
 
 #------------------------------------------------------------------------

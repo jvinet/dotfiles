@@ -18,6 +18,8 @@ export LC_ALL='en_US.UTF-8'
 
 # Large command history
 export HISTSIZE=10000
+# Don't remember duplicate commands, or commands starting with a space
+export HISTCONTROL=ignoreboth
 
 # Directory bookmarks
 export CDPATH=.:~/.marks/
@@ -33,9 +35,14 @@ alias vim='nvim'
 alias ll='ls -lh'
 alias tc='tabs -16 ; tcalc '
 alias op='netstat -tanl | grep LISTEN | sort'
+alias opp='lsof -P -n -i tcp -s TCP:LISTEN'
 alias gst='git status -uno'
 alias r='ranger_cd'
 alias nsum='awk "{ sum += \$1 } END { print sum }"'
+
+cconv() {
+	curl "https://free.currconv.com/api/v7/convert?q=$1_$2&compact=ultra&apiKey=c1c3b44014845c2cc94d"
+}
 
 ranger_cd() {
 	# https://github.com/ranger/ranger/blob/master/examples/shell_automatic_cd.sh

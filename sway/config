@@ -167,6 +167,10 @@ bindsym --locked XF86AudioMute exec $bin/vol_ctl mute
 bindsym --locked XF86AudioPlay exec playerctl play-pause
 bindsym --locked XF86AudioNext exec playerctl next
 bindsym --locked XF86AudioPrev exec playerctl previous
+# The Thinkpad z13 doesn't have Play/Pause buttons, so we'll use the phone ones.
+bindsym --locked XF86PickupPhone exec playerctl play-pause
+bindsym --locked XF86HangupPhone exec playerctl next
+
 
 #------------------------------------------------------------------------
 # MISC KEY BINDINGS

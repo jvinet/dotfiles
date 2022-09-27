@@ -135,6 +135,8 @@ export PATH=$PATH:$HOME/.gem/ruby/1.9.1/bin:$HOME/.gem/ruby/2.0.0/bin
 export PATH=$PATH:$HOME/node_modules/.bin
 if [ "`uname`" = "Darwin" ]; then
 	export NODE_PATH=/usr/local/lib/node_modules
+else
+	export NODE_PATH=$NODE_PATH:/usr/lib/node_modules
 fi
 
 # Go

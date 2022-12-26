@@ -39,6 +39,7 @@ alias opp='lsof -P -n -i tcp -s TCP:LISTEN'
 alias gst='git status -uno'
 alias r='ranger_cd'
 alias nsum='awk "{ sum += \$1 } END { print sum }"'
+alias json2csv="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @csv'"
 
 cconv() {
 	curl "https://free.currconv.com/api/v7/convert?q=$1_$2&compact=ultra&apiKey=c1c3b44014845c2cc94d"

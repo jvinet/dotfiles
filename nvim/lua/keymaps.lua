@@ -61,9 +61,11 @@ vim.keymap.set('n', '<leader>0', '999h')
 -- UndoTree
 vim.keymap.set('n', '<leader>u', ':UndotreeToggle<CR>')
 
--- NERDTree
-vim.keymap.set('n', '<leader>e', ':NERDTreeToggle<CR>')
-vim.keymap.set('n', '<leader>f', ':NERDTreeFocus<CR>')
+-- NERDTree / nvim-tree
+vim.keymap.set('n', '<leader>e', ':NvimTreeToggle<CR>')
+vim.keymap.set('n', '<leader>f', ':NvimTreeFocus<CR>')
+--vim.keymap.set('n', '<leader>e', ':NERDTreeToggle<CR>')
+--vim.keymap.set('n', '<leader>f', ':NERDTreeFocus<CR>')
 
 -- I don't even know how to use Ex mode
 vim.keymap.set('n', 'Q', '<nop>')

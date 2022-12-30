@@ -37,6 +37,8 @@ o.foldlevel = 99
 -- Don't bother folding small blocks
 o.foldminlines=5
 
+o.cursorline = true
+
 -- Show matching brackets when cursor is over them
 o.showmatch = true
 
@@ -56,26 +58,42 @@ o.signcolumn = 'yes'
 
 -- Set colorscheme
 o.termguicolors = true
-require('tokyonight').setup({styles = {functions = 'bold', keywords = 'italic'}})
-cmd [[colorscheme tokyonight-night]]
-
-require("gruvbox").setup({
-  undercurl = true,
-  underline = true,
-  bold = true,
-  italic = true,
-  strikethrough = true,
-  invert_selection = false,
-  invert_signs = false,
-  invert_tabline = false,
-  invert_intend_guides = false,
-  inverse = true, -- invert background for search, diffs, statuslines and errors
-  contrast = "", -- can be "hard", "soft" or empty string
-  palette_overrides = {},
-  overrides = {},
-  dim_inactive = false,
-  transparent_mode = false,
+require('tokyonight').setup({
+  transparent = false, -- do not set the background color
+  dim_inactive = true,
+  lualine_bold = true,
+  hide_inactive_statusline = false,
+  styles = {
+    functions = {bold = true},
+    keywords = {italic = true},
+    comments = {italic = true}
+  },
+  on_highlights = function(hl, c)
+    hl.VertSplit = {
+      fg = c.cyan
+    }
+  end
 })
+cmd [[colorscheme tokyonight-night]]
+cmd [[highlight winseparator guibg=none, guifg=#888888]]
+
+--require("gruvbox").setup({
+--  undercurl = true,
+--  underline = true,
+--  bold = true,
+--  italic = true,
+--  strikethrough = true,
+--  invert_selection = false,
+--  invert_signs = false,
+--  invert_tabline = false,
+--  invert_intend_guides = false,
+--  inverse = true, -- invert background for search, diffs, statuslines and errors
+--  contrast = "", -- can be "hard", "soft" or empty string
+--  palette_overrides = {},
+--  overrides = {},
+--  dim_inactive = false,
+--  transparent_mode = false,
+--})
 
 -- Set completeopt to have a better completion experience
 o.completeopt = 'menuone,noselect'

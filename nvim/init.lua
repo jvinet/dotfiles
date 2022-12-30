@@ -15,9 +15,16 @@ require('packer').startup(function(use)
   -- Package manager
   use 'wbthomason/packer.nvim'
 
-  use 'preservim/nerdtree'
+  --use 'preservim/nerdtree'
+  use 'nvim-tree/nvim-tree.lua'
   use 'phaazon/hop.nvim'
   use 'sunjon/Shade.nvim'
+
+  -- Keymap assistance
+  use 'folke/which-key.nvim'
+
+  -- Buffer explorer
+  use 'jlanzarotta/bufexplorer'
 
   -- No treesitter grammar for Nim, yet
   use 'alaviss/nim.nvim'
@@ -60,6 +67,7 @@ require('packer').startup(function(use)
   use 'navarasu/onedark.nvim'
   use 'folke/tokyonight.nvim'
   use 'ellisonleao/gruvbox.nvim'
+  use 'bluz71/vim-nightfly-colors'
 
   use 'nvim-lualine/lualine.nvim' -- Fancier statusline
   use 'lukas-reineke/indent-blankline.nvim' -- Add indentation guides even on blank lines

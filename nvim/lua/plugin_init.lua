@@ -1,6 +1,3 @@
-local g = vim.g
-local o = vim.o
-local cmd = vim.cmd
 local api = vim.api
 local keymap = vim.keymap
 
@@ -21,14 +18,54 @@ api.nvim_create_autocmd('TextYankPost', {
 
 -- Set lualine as statusline
 -- See `:help lualine.txt`
+-- require('lualine').setup {
+--   options = {
+--     globalstatus = false,
+--     icons_enabled = false,
+--     theme = 'powerline',
+--     component_separators = '|',
+--     section_separators = '',
+--   },
+-- }
+
 require('lualine').setup {
   options = {
-    globalstatus = false,
     icons_enabled = false,
     theme = 'powerline',
-    component_separators = '|',
-    section_separators = '',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false
   },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {
+      {'filename', path = 1}
+    },
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {
+      {'filename', path = 1}
+    },
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
 }
 
 -- Enable hop
@@ -39,7 +76,17 @@ keymap.set('n', 'S', ':HopChar2<cr>')
 -- Enable Comment.nvim
 require('Comment').setup()
 
--- Enable shade (NB: this breaks Mason's UI window)
+-- Enable nvim-tree
+require('nvim-tree').setup({
+  sort_by = "case_sensitive"
+})
+
+-- Enable which-key
+--require('which-key').setup()
+
+-- Enable shade
+--   - breaks Mason's UI window
+--   - throws errors when using tabs
 --require('shade').setup {
 --  overlay_opacity = 70,
 --  overlay_step = 1,

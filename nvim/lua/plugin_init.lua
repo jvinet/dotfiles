@@ -104,6 +104,9 @@ require('indent_blankline').setup {
   show_trailing_blankline_indent = false,
 }
 
+-- Enable 'chentoast/marks.nvim'
+require('marks').setup()
+
 -- Gitsigns
 -- See `:help gitsigns.txt`
 require('gitsigns').setup {

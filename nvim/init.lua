@@ -62,6 +62,9 @@ require('packer').startup(function(use)
   -- will fill that gap until core Treesitter can catch up.
   use {'yioneko/nvim-yati', requires = {'nvim-treesitter/nvim-treesitter'}}
 
+  -- Show marks in the signcolumn
+  use {'chentoast/marks.nvim'}
+
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'

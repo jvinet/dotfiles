@@ -58,6 +58,10 @@ require('packer').startup(function(use)
     after = 'nvim-treesitter',
   }
 
+  -- Treesitter still has troubles with Python indentation, so this plugin
+  -- will fill that gap until core Treesitter can catch up.
+  use {'yioneko/nvim-yati', requires = {'nvim-treesitter/nvim-treesitter'}}
+
   -- Git related plugins
   use 'tpope/vim-fugitive'
   use 'tpope/vim-rhubarb'

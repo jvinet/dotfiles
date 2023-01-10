@@ -37,7 +37,7 @@ o.foldlevel = 99
 -- Don't bother folding small blocks
 o.foldminlines=5
 
-o.cursorline = true
+--o.cursorline = true
 
 -- Show matching brackets when cursor is over them
 o.showmatch = true
@@ -96,7 +96,7 @@ cmd [[highlight winseparator guibg=none, guifg=#888888]]
 --})
 
 -- Set completeopt to have a better completion experience
-o.completeopt = 'menuone,noselect'
+vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 
 -- Jump 5 lines when running out of screen
 o.scrolljump = 5

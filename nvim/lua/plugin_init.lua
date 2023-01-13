@@ -5,7 +5,7 @@ local keymap = vim.keymap
 -- [[ Plugin Setup ]]
 ----------------------------------------------------------------------------
 
--- [[ Highlight on yank ]]
+-- Highlight on yank
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = api.nvim_create_augroup('YankHighlight', { clear = true })
 api.nvim_create_autocmd('TextYankPost', {
@@ -18,16 +18,6 @@ api.nvim_create_autocmd('TextYankPost', {
 
 -- Set lualine as statusline
 -- See `:help lualine.txt`
--- require('lualine').setup {
---   options = {
---     globalstatus = false,
---     icons_enabled = false,
---     theme = 'powerline',
---     component_separators = '|',
---     section_separators = '',
---   },
--- }
-
 require('lualine').setup {
   options = {
     icons_enabled = false,
@@ -152,7 +142,7 @@ keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc =
 keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
--- [[ Configure Treesitter ]]
+-- Configure Treesitter
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
@@ -247,7 +237,7 @@ local on_attach = function(_, bufnr)
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('gT', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
@@ -273,12 +263,36 @@ local on_attach = function(_, bufnr)
   end, { desc = 'Format current buffer with LSP' })
 end
 
+-- Disable virtual/inline disagnostic messages, they're very noisy.
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  underline = false,
+  update_in_insert = false,
+  float = {
+    border = 'single'
+  }
+})
+
+-- Toggle diagnostics on/off per buffer.
+vim.g.diagnostics_visible = true
+function _G.toggle_diagnostics()
+  if vim.g.diagnostics_visible then
+    vim.g.diagnostics_visible = false
+    vim.diagnostic.disable()
+  else
+    vim.g.diagnostics_visible = true
+    vim.diagnostic.enable()
+  end
+end
+vim.api.nvim_buf_set_keymap(0, 'n', '<Leader>dt', ':call v:lua.toggle_diagnostics()<CR>', {silent=true, noremap=true})
+
 -- Setup mason so it can manage external tooling
 require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pyright', 'tsserver', 'sumneko_lua', 'gopls', 'nimls' }
+local servers = { 'clangd', 'rust_analyzer', 'pylsp', 'tsserver', 'sumneko_lua', 'gopls', 'nimls' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {

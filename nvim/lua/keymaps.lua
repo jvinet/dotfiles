@@ -47,7 +47,8 @@ vim.keymap.set('n', '<leader>cc', ":call setqflist([])<CR>")
 
 -- Close/open the location-list window
 vim.keymap.set('n', '<leader>lw', ":lclose<CR>")
-vim.keymap.set('n', '<leader>lw', ":lopen<CR>")
+vim.keymap.set('n', '<leader>lo', ":lopen<CR>")
+vim.keymap.set('n', '<leader>lc', ":call setloclist(0, [])<CR>")
 
 -- Switch 0 and ^
 vim.keymap.set('n', '0', '_')

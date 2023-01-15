@@ -95,7 +95,12 @@ require('indent_blankline').setup {
 }
 
 -- Enable 'chentoast/marks.nvim'
-require('marks').setup()
+require('marks').setup {
+  -- This is a workaround for high CPU usage
+  -- See: https://github.com/chentoast/marks.nvim/issues/40
+  refresh_interval = 0
+}
+vim.cmd [[ au CursorHold * lua require'marks'.refresh() ]]
 
 -- Gitsigns
 -- See `:help gitsigns.txt`

@@ -312,8 +312,28 @@ for _, lsp in ipairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
+    settings = {
+      pylsp = {
+        plugins = {
+          mypy = { enabled = true, dmypy = true },
+          rope_autoimport = { enabled = true },
+          flake8 = { enabled = true },
+          pyflakes = { enabled = false },
+          pycodestyle = { enabled = false },
+        }
+      }
+    }
   }
 end
+
+-- Disable LSP processing while I'm typing; it's incredibly distracting and
+-- probably killing my battery life.
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    -- delay update diagnostics
+    update_in_insert = false,
+  }
+)
 
 -- Turn on lsp status information
 require('fidget').setup()

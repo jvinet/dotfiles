@@ -54,7 +54,8 @@
     },
     "network": {
         "format": "{icon}",
-        "format-wifi": "<span color=\"#cccccc\"> {signalStrength}</span>",
+        "interval": 2,
+        "format-wifi": "<span color=\"#cccccc\"> {bandwidthUpBytes}ꜛ {bandwidthDownBytes}ꜜ</span>",
         "format-alt": "{ipaddr}/{cidr} {icon}",
         "format-alt-click": "click-right",
         "format-icons": {
@@ -63,7 +64,7 @@
             "disconnected": [""]
         },
         "on-click": "connman-gtk",
-      "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
+        "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
         "tooltip": true
     },
     "pulseaudio": {

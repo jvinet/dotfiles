@@ -151,7 +151,7 @@ keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc =
 -- See `:help nvim-treesitter`
 require('nvim-treesitter.configs').setup {
   -- Add languages to be installed here that you want installed for treesitter
-  ensure_installed = { 'comment', 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'typescript', 'help' },
+  ensure_installed = { 'comment', 'c', 'cpp', 'go', 'elixir', 'lua', 'python', 'rust', 'typescript', 'help' },
 
   highlight = { enable = true },
   indent = { enable = false },
@@ -297,7 +297,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'clangd', 'rust_analyzer', 'pylsp', 'tsserver', 'sumneko_lua', 'gopls', 'nimls' }
+local servers = { 'clangd', 'elixirls', 'rust_analyzer', 'pylsp', 'tsserver', 'sumneko_lua', 'gopls', 'nimls' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -312,17 +312,17 @@ for _, lsp in ipairs(servers) do
   require('lspconfig')[lsp].setup {
     on_attach = on_attach,
     capabilities = capabilities,
-    settings = {
-      pylsp = {
-        plugins = {
-          mypy = { enabled = true, dmypy = true },
-          rope_autoimport = { enabled = true },
-          flake8 = { enabled = true },
-          pyflakes = { enabled = false },
-          pycodestyle = { enabled = false },
-        }
-      }
-    }
+    --settings = {
+    --  pylsp = {
+    --    plugins = {
+    --      mypy = { enabled = true, dmypy = true },
+    --      rope_autoimport = { enabled = true },
+    --      flake8 = { enabled = true },
+    --      pyflakes = { enabled = false },
+    --      pycodestyle = { enabled = false },
+    --    }
+    --  }
+    --}
   }
 end
 
@@ -336,7 +336,7 @@ vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 )
 
 -- Turn on lsp status information
-require('fidget').setup()
+--require('fidget').setup()
 
 -- nvim-cmp setup
 local cmp = require 'cmp'

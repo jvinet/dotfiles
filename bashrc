@@ -58,6 +58,9 @@ ranger_cd() {
 if [ -n "$WAYLAND_DISPLAY" ]; then
 	alias xc='wl-copy'
 	alias xp='wl-paste'
+elif [ "$TERMUX_VERSION" ]; then
+	alias xc='termux-clipboard-set'
+	alias xp='termux-clipboard-get'
 else
 	alias xc='xclip -selection clipboard'
 	alias xp='xclip -selection clipboard -o'

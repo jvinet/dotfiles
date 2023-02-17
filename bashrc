@@ -33,6 +33,7 @@ alias grep='grep --color'
 alias vi='nvim'
 alias vim='nvim'
 alias ll='ls -lh'
+alias lt='ls -lhtr'
 alias tc='tabs -16 ; tcalc '
 alias op='netstat -tanl | grep LISTEN | sort'
 alias opp='lsof -P -n -i tcp -s TCP:LISTEN'
@@ -42,7 +43,7 @@ alias nsum='awk "{ sum += \$1 } END { print sum }"'
 alias json2csv="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @csv'"
 
 cconv() {
-	curl "https://free.currconv.com/api/v7/convert?q=$1_$2&compact=ultra&apiKey=c1c3b44014845c2cc94d"
+	curl "https://free.currconv.com/api/v7/convert?q=$1_$2&compact=ultra&apiKey=3cb732c0bde799db1673"
 }
 
 ranger_cd() {
@@ -58,9 +59,6 @@ ranger_cd() {
 if [ -n "$WAYLAND_DISPLAY" ]; then
 	alias xc='wl-copy'
 	alias xp='wl-paste'
-elif [ "$TERMUX_VERSION" ]; then
-	alias xc='termux-clipboard-set'
-	alias xp='termux-clipboard-get'
 else
 	alias xc='xclip -selection clipboard'
 	alias xp='xclip -selection clipboard -o'
@@ -143,6 +141,9 @@ else
 	export NODE_PATH=$NODE_PATH:/usr/lib/node_modules
 fi
 
+# Nim
+export PATH=$PATH:$HOME/.nimble/bin
+
 # Go
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
@@ -154,9 +155,12 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 export PATH=$PATH:$HOME/android/tools:$HOME/android/platform-tools
 export ANDROID_HOME=/usr/local/opt/android-sdk
 
+# Pulumi
+export PATH=$PATH:$HOME/.pulumi/bin
+
 # Preferred applications
 export EDITOR=vim
-export PAGER=less
+export PAGER='less -r'
 export BROWSER=qutebrowser
 export TERMINAL=alacritty
 # Colorized manpages with bat(1)

@@ -110,11 +110,18 @@ if [ "`uname`" = "Linux" ]; then
 		export SWAYSOCK=/run/user/`id -u`/sway-ipc.`id -u`.$pid.sock
 
 		# Yep, you guessed it - we also lose the DBus session.
-		ds=`xargs -n 1 -0 < /proc/$pid/environ | grep DBUS_SESSION_BUS_ADDRESS`
-		if [ "$ds" ]; then
-			eval export $ds
+		#
+		# We don't look at the primary 'sway' process, because someone (dbus?)
+		# is starting it in a way that's munging the perms in /proc/<pid> such
+		# thwe we can't read them, only root.
+		pid=`pgrep -x swayidle`
+		if [ -n "$pid" ]; then
+			ds=`xargs -n 1 -0 < /proc/$pid/environ | grep DBUS_SESSION_BUS_ADDRESS`
+			if [ "$ds" ]; then
+				eval export $ds
+			fi
+			unset ds
 		fi
-		unset ds
 	fi
 else
 	alias ls='ls -G'
@@ -147,6 +154,9 @@ export PATH=$PATH:$HOME/.nimble/bin
 # Go
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
+
+# Nim
+export PATH=$PATH:$HOME/.nimble/bin
 
 # Elixir
 export ERL_AFLAGS="-kernel shell_history enabled"

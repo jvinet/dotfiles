@@ -39,6 +39,7 @@ alias op='netstat -tanl | grep LISTEN | sort'
 alias opp='lsof -P -n -i tcp -s TCP:LISTEN'
 alias gst='git status -uno'
 alias r='ranger_cd'
+alias d='docker'
 alias nsum='awk "{ sum += \$1 } END { print sum }"'
 alias json2csv="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @csv'"
 
@@ -169,7 +170,7 @@ export ANDROID_HOME=/usr/local/opt/android-sdk
 export PATH=$PATH:$HOME/.pulumi/bin
 
 # Preferred applications
-export EDITOR=vim
+export EDITOR=nvim
 export PAGER='less -r'
 export BROWSER=qutebrowser
 export TERMINAL=alacritty

@@ -384,3 +384,11 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+-- Custom: highlight multiple lines
+-- Source: https://vimtricks.com/p/highlight-specific-lines/
+vim.cmd [[
+  highlight LineHighlight ctermbg=yellow guibg=sienna3
+  nnoremap <Leader>h :call matchadd('LineHighlight', '\%'.line('.').'l')<CR>
+  nnoremap <Leader>c :call clearmatches()<CR>
+]]

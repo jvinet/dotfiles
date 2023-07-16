@@ -29,6 +29,9 @@ require('packer').startup(function(use)
   -- No treesitter grammar for Nim, yet
   use 'alaviss/nim.nvim'
 
+  -- Syntax highlighting for HCL (Hashicorp) files.
+  use 'jvirtanen/vim-hcl'
+
   use { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     requires = {
@@ -65,9 +68,13 @@ require('packer').startup(function(use)
   -- Show marks in the signcolumn
   use {'chentoast/marks.nvim'}
 
+  -- Align tables and text
+  use 'godlygeek/tabular'
+
   -- Git related plugins
   use 'tpope/vim-fugitive'
-  use 'tpope/vim-rhubarb'
+  use 'tpope/vim-rhubarb' -- github integration for fugitive
+  use 'tommcdo/vim-fubitive' -- bitbucket.org integration for fugitive
   use 'lewis6991/gitsigns.nvim'
 
   -- Themes

@@ -176,6 +176,7 @@ export BROWSER=qutebrowser
 export TERMINAL=alacritty
 # Colorized manpages with bat(1)
 if [ "`type -p bat`" ]; then
+	export MANROFFOPT="-c"
 	export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
 

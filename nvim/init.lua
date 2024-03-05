@@ -126,6 +126,11 @@ vim.api.nvim_create_autocmd('BufWritePost', {
   pattern = vim.fn.expand '$MYVIMRC',
 })
 
+-- Re-open files at their last edit location.
+vim.api.nvim_create_autocmd('BufReadPost', {
+  command = 'silent! normal! g`"zv'
+})
+
 -- Make runtime files discoverable to the server
 --local runtime_path = vim.split(package.path, ';')
 --table.insert(runtime_path, 'lua/?.lua')

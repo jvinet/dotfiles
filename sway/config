@@ -5,7 +5,7 @@ set $mod Mod4
 set $bin /home/jvinet/bin/sway
 set $font Monospace 10
 set $term alacritty
-set $lock swaylock -c 000000 -e -F
+set $lock swaylock -c 000000 -F
 set $menu rofi -show run
 #set $menu bemenu-run -p "" --fn "$font"
 set $appmenu rofi -show drun
@@ -117,6 +117,9 @@ exec_always pkill kanshi; exec kanshi
 # Virtual keyboard
 #exec $bin/virtkbd start
 
+# Wifi
+exec nm-applet --indicator
+
 # Idle controls - lock screen after 5 mins, shut off displays after 10 mins.
 exec swayidle -w \
 	timeout 300 'swaylock -f -c 000000 -e -F' \
@@ -151,6 +154,7 @@ for_window [app_id="zenity"] floating enable
 for_window [app_id="zoom"] floating enable
 for_window [title="qb-cookie-mgr"] floating enable
 for_window [title="Network Settings"] floating enable
+for_window [title="Network Connections"] floating enable
 
 
 #------------------------------------------------------------------------
@@ -222,9 +226,6 @@ bindsym $mod+Shift+l move right
 bindsym $mod+bar split h
 bindsym $mod+minus split v
 
-# Toggle split of focused container.
-bindsym $mod+y layout toggle tabbed split
-
 # Enter fullscreen mode for the focused container.
 bindsym $mod+f fullscreen
 
@@ -280,6 +281,9 @@ bindsym $mod+Tab workspace back_and_forth
 
 # Show window list.
 bindsym $mod+w exec $bin/window-switch
+
+# Switch to a predefined layout.
+bindsym $mod+y exec $bin/sway_layout.py menu
 
 # Switch to next unused workspace.
 bindsym $mod+equal exec $bin/free-workspace switch next

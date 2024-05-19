@@ -99,17 +99,17 @@ def layout_center(i3, ws):
     Center container gets 50% of the width, while the containers to its left
     and right each get 25%.
     """
+    if len(ws.nodes) != 3:
+        notify("Center layout only works with 3 containers, you have %d" %
+               len(ws.nodes))
+        return 1
+
     # Workspace dimensions
     ws_width = ws.rect.width
     # We assume we have 3 windows to size. The middle one gets 50%, and the
     # others get 25%.
     widths = [ws_width * 0.25, ws_width * 0.5, ws_width * 0.25]
     widths = [int(x) for x in widths]
-
-    if len(widths) != 3:
-        notify("Center layout only works with 3 containers, you have %d" %
-               len(widths))
-        return 1
 
     # Get the top-level containers under `workspace`, in visual order from left
     # to right.

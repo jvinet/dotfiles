@@ -12,6 +12,9 @@ import subprocess
 
 from i3ipc import Connection
 
+# Seconds to pause between commands.
+WAIT = 0.1
+
 
 def dump_container(c):
     print('-' * 80)
@@ -55,13 +58,50 @@ def inspect_container(c, indent=0):
         prn(f"  rect:  {c.rect.x}, {c.rect.y} w={c.rect.width} h={c.rect.height}")
 
 
+def move_leaves_to_workspace(i3, node, dst_ws_name):
+    # Track all IDs we touch, so we can return to the caller.
+    ids = []
+    if node.nodes:
+        for c in node.nodes:
+            ids.extend(move_leaves_to_workspace(i3, c, dst_ws_name))
+    else:
+        dbg(f"Moving window {node.id} to workspace %s" % dst_ws_name)
+        i3.command(f'[con_id={node.id}] focus')
+        i3.command(f'move to workspace {dst_ws_name}')
+        ids.append(node.id)
+    time.sleep(WAIT)
+    return ids
+
+
+def flatten_tree(i3, ws):
+    """
+    Flatten a workspace tree so that all windows descend directly from the
+    workspace node. There seems to be some logic in Sway that impedes this
+    workflow, but there's a workaround that can be done by using a temporary
+    workspace.
+
+    See: https://github.com/swaywm/sway/issues/6818#issuecomment-1173037173
+    """
+    # Move everything to a temp workspace.
+    ids = move_leaves_to_workspace(i3, ws, '_temp')
+    # Now move everything back
+    for id in ids:
+        dbg(f"Moving window {id} to workspace %s" % ws.name)
+        i3.command(f'[con_id={id}] focus')
+        i3.command(f'move to workspace {ws.name}')
+        time.sleep(WAIT)
+    # Return focus to our original workspace
+    i3.command(f'workspace {ws.name}')
+
+
 def notify(msg):
     subprocess.run(['notify-send', '-t', '5000', 'Layouts', msg])
 
 
 def menu(choices):
     choices = '\n'.join(choices)
-    rv = subprocess.run(f'echo "{choices}" | rofi -dmenu', shell=True, capture_output=True)
+    rv = subprocess.run(f'echo "{choices}" | rofi -dmenu',
+                        shell=True, capture_output=True)
     return rv.stdout.decode().strip()
 
 
@@ -87,7 +127,7 @@ def layout_equal(i3, ws):
         dbg(f'{c.id}: setting to width {width}')
         i3.command(f'[con_id={c.id}] focus')
         i3.command(f'resize set width {width} px')
-        time.sleep(0.2)
+        time.sleep(WAIT)
 
     # Return focus and remove our mark.
     i3.command('[con_mark="current"] focus')
@@ -125,7 +165,7 @@ def layout_center(i3, ws):
         dbg(f'{c.id}: setting to width {w}')
         i3.command(f'[con_id={c.id}] focus')
         i3.command(f'resize set width {w} px')
-        time.sleep(0.2)
+        time.sleep(WAIT)
 
     # Return focus and remove our mark.
     i3.command('[con_mark="current"] focus')
@@ -134,7 +174,8 @@ def layout_center(i3, ws):
 
 def main():
     parser = argparse.ArgumentParser(description='Change layout of windows in active workspace')
-    parser.add_argument('action', nargs=1, choices=['tree', 'menu', 'equal', 'center'])
+    parser.add_argument('action', nargs=1, choices=['tree', 'flatten', 'menu',
+                                                    'equal', 'center'])
 
     # If a screen/tmux session persists across multiple Sway sessions, then we
     # can lose the path to the currently active socket. Look for a helper
@@ -160,8 +201,11 @@ def main():
     if cmd == 'tree':
         return inspect_container(workspace)
 
+    if cmd == 'flatten':
+        return flatten_tree(i3, workspace)
+
     if cmd == 'menu':
-        choices = ['center', 'equal']
+        choices = ['center', 'equal', 'flatten']
         rv = menu(choices)
         if rv:
             cmd = rv

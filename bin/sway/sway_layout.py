@@ -100,7 +100,7 @@ def notify(msg):
 
 def menu(choices):
     choices = '\n'.join(choices)
-    rv = subprocess.run(f'echo "{choices}" | rofi -dmenu',
+    rv = subprocess.run(f'echo "{choices}" | rofi -dmenu -p Layout',
                         shell=True, capture_output=True)
     return rv.stdout.decode().strip()
 
@@ -201,14 +201,14 @@ def main():
     if cmd == 'tree':
         return inspect_container(workspace)
 
-    if cmd == 'flatten':
-        return flatten_tree(i3, workspace)
-
     if cmd == 'menu':
         choices = ['center', 'equal', 'flatten']
         rv = menu(choices)
         if rv:
             cmd = rv
+
+    if cmd == 'flatten':
+        return flatten_tree(i3, workspace)
 
     if cmd == 'equal':
         return layout_equal(i3, workspace)

@@ -40,8 +40,10 @@ alias opp='lsof -P -n -i tcp -s TCP:LISTEN'
 alias gst='git status -uno'
 alias r='ranger_cd'
 alias d='docker'
+alias j='[ -f justfile ] && just -f ./justfile || just -f deploy/justfile'
 alias nsum='awk "{ sum += \$1 } END { print sum }"'
 alias json2csv="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @csv'"
+alias stayup="systemd-inhibit --what=sleep:handle-lid-switch sleep 1d"
 
 cconv() {
 	curl "https://free.currconv.com/api/v7/convert?q=$1_$2&compact=ultra&apiKey=3cb732c0bde799db1673"
@@ -98,7 +100,7 @@ if [ "`uname`" = "Linux" ]; then
 		pid="`pgrep ssh-agent`"
 		if [ -n "$pid" ]; then
 			export SSH_AGENT_PID=$pid
-			dir=`/bin/ls -d1 /tmp/ssh-*/agent* | head -n 1`
+			dir=`/bin/ls -d1 ${TMPDIR:-/tmp}/ssh-*/agent* | head -n 1`
 			export SSH_AUTH_SOCK=$dir
 		else
 			eval `ssh-agent`
@@ -131,9 +133,16 @@ else
 	# Colorize Mac/BSD ls output
 	export CLICOLOR=1
 	export LSCOLORS=ExGxFxdxCxDxDxBxBxacac
+
+	for sock in /tmp/launch-*/Listeners /private/tmp/com.apple.launchd*/Listeners; do
+		if [ -S "$sock" ]; then
+			export SSH_AUTH_SOCK="$sock"
+			break
+		fi
+	done
 fi
 
-export PATH=$PATH:$HOME/bin:$HOME/.local/bin:/usr/local/sbin
+export PATH=$PATH:$HOME/bin:$HOME/bin/sway:$HOME/.local/bin:/usr/local/sbin
 
 # Perl
 export PATH=$PATH:/usr/bin/vendor_perl
@@ -172,8 +181,8 @@ export PATH=$PATH:$HOME/.pulumi/bin
 # Preferred applications
 export EDITOR=nvim
 export PAGER='less -r'
-export BROWSER=qutebrowser
-export TERMINAL=alacritty
+export BROWSER=vivaldi
+export TERMINAL=ghostty
 # Colorized manpages with bat(1)
 if [ "`type -p bat`" ]; then
 	export MANROFFOPT="-c"
@@ -196,4 +205,3 @@ export TERM=xterm-256color
 #[ -n "$TMUX" ] && export TERM="screen-256color"
 
 PS1='[\u@\h \W]\$ '
-

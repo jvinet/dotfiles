@@ -42,7 +42,7 @@ if [ "${time:0:1}" = "+" ]; then
 	atcmd="at now + ${time:1} min"
 fi
 
-cmd="notify \"Reminder: $*\" ; zenity --display=:0 --info --text=\"Reminder: $*\""
+cmd="notify \"Reminder: $*\" ; zenity --info --text=\"Reminder: $*\""
 if [ "$recur" = "1" ]; then
 	cmd="$cmd ; rin -r \"$time\" \"$*\""
 fi

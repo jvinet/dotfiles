@@ -14,3 +14,9 @@ map("n", "^", "999h")
 map("n", "<localleader>0", "999h")
 
 map("n", "<localleader>q", ":nohlsearch<cr>")
+
+-- Yank to system clipboard
+map("v", "<localleader>y", '"+y')
+
+-- Muscle memory
+map("n", "<localleader>d", "<leader>cd", { desc = "Line Diagnostics", remap = true })

@@ -1,14 +1,21 @@
 {
   "extras": [
+    "lazyvim.plugins.extras.editor.aerial",
     "lazyvim.plugins.extras.editor.harpoon2",
     "lazyvim.plugins.extras.lang.docker",
     "lazyvim.plugins.extras.lang.elixir",
     "lazyvim.plugins.extras.lang.go",
+    "lazyvim.plugins.extras.lang.json",
+    "lazyvim.plugins.extras.lang.markdown",
+    "lazyvim.plugins.extras.lang.python",
     "lazyvim.plugins.extras.lang.rust",
     "lazyvim.plugins.extras.lang.sql",
     "lazyvim.plugins.extras.lang.terraform",
+    "lazyvim.plugins.extras.lang.toml",
+    "lazyvim.plugins.extras.lang.typescript",
     "lazyvim.plugins.extras.lang.yaml",
-    "lazyvim.plugins.extras.lang.zig"
+    "lazyvim.plugins.extras.lang.zig",
+    "lazyvim.plugins.extras.util.mini-hipatterns"
   ],
   "install_version": 8,
   "news": {

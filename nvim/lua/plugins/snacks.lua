@@ -8,6 +8,14 @@ return {
             -- Hide the search box until focused with '/'
             auto_hide = { "input" },
           },
+          win = {
+            list = {
+              -- <S-CR> doesn't work well from ghostty, so remap pick-a-window to O.
+              keys = {
+                ["O"] = { { "pick_win", "jump" }, mode = { "n", "i" } },
+              },
+            },
+          },
         },
       },
     },

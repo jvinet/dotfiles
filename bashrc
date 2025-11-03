@@ -109,7 +109,7 @@ if [ "$(uname)" = "Linux" ]; then
     pid="$(pgrep ssh-agent)"
     if [ -n "$pid" ]; then
       export SSH_AGENT_PID=$pid
-      export SSH_AUTH_SOCK=$(/bin/ls -1 $HOME/.ssh/agent | head -n 1)
+      export SSH_AUTH_SOCK=$(/bin/ls -1 $HOME/.ssh/agent/* | head -n 1)
     else
       eval $(ssh-agent)
     fi

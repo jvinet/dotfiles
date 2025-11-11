@@ -4,7 +4,7 @@
 set $mod Mod4
 set $bin /home/jvinet/bin/sway
 set $font Monospace 10
-set $term alacritty
+set $term ghostty
 set $lock swaylock -c 000000 -F
 set $menu rofi -show run
 #set $menu bemenu-run -p "" --fn "$font"
@@ -114,6 +114,11 @@ exec mako --default-timeout 2500 --font "$font"
 # Automatic display management.
 exec_always pkill kanshi; exec kanshi
 
+# Custom inhibitor to keep a docked laptop awake even when external displays
+# are off.
+exec_always pkill -f wakeywakey.py; exec wakeywakey.py
+
+
 # Virtual keyboard
 #exec $bin/virtkbd start
 
@@ -180,14 +185,11 @@ bindsym --locked XF86HangupPhone exec playerctl next
 # MISC KEY BINDINGS
 #------------------------------------------------------------------------
 
-#bindsym XF86PowerOff exec swaynag -t warning -m 'Are you sure you want to exit?' -b 'Yes, exit' 'swaymsg exit'
-#bindsym XF86PowerOff exec sudo systemctl hibernate
-
 # If switching from docked to undocked while asleep, I can lose my primary
 # display if kanshi isn't running for some reason.
 bindsym --locked $mod+Ctrl+Alt+backslash exec swaymsg output eDP-1 enable
 
-bindsym --locked $mod+Shift+s exec systemctl hibernate
+bindsym --locked $mod+Ctrl+Alt+s exec systemctl suspend
 bindsym --locked $mod+n exec $HOME/bin/notify -d
 
 #------------------------------------------------------------------------

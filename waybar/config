@@ -5,7 +5,8 @@
 
     "modules-left": ["sway/workspaces", "sway/mode"],
     "modules-center": ["sway/window"],
-    "modules-right": ["cpu", "memory", "backlight", "pulseaudio", "network", "battery", "tray", "idle_inhibitor", "custom/notifications", "clock", "custom/touchbar"],
+    "modules-right": ["cpu", "memory", "backlight", "pulseaudio", "network", "battery", "custom/power-profile", "idle_inhibitor", "tray", "custom/notifications", "clock", "custom/touchbar"],
+
     "sway/mode": {
         "format": "{}"
     },
@@ -18,24 +19,29 @@
         "tooltip": false
     },
     "custom/notifications": {
-      "format": "{}",
-      "exec": "$HOME/bin/notify -b",
-      "on-click": "$HOME/bin/notify -d",
-      "interval": 5
+        "format": "{}",
+        "exec": "$HOME/bin/notify -b",
+        "on-click": "$HOME/bin/notify -d",
+        "interval": 5
+    },
+    "custom/power-profile": {
+        "format": "{}",
+        "interval": 5,
+        "exec": "$HOME/bin/sway/power-profile"
     },
     "custom/touchbar": {
-      "format": "",
-      "on-click": "$HOME/bin/sway/touchbar start"
+        "format": "",
+        "on-click": "$HOME/bin/sway/touchbar start"
     },
     "clock": {
         "format": "{:%a %d %b %H:%M}",
         "tooltip": false
     },
     "cpu": {
-      "format": "<span color=\"#cccccc\"> {usage}</span>",
-      "interval": 2,
-      "max-length": 10,
-      "tooltip": false
+        "format": "<span color=\"#cccccc\"> {usage}</span>",
+        "interval": 2,
+        "max-length": 10,
+        "tooltip": false
     },
     "battery": {
         "format": "{icon}<span color=\"#cccccc\"> {capacity}</span>",
@@ -54,8 +60,7 @@
     },
     "network": {
         "format": "{icon}",
-        "interval": 2,
-        "format-wifi": "<span color=\"#cccccc\"> {bandwidthUpBytes}ꜛ {bandwidthDownBytes}ꜜ</span>",
+        "format-wifi": "<span color=\"#cccccc\"> {signalStrength}</span>",
         "format-alt": "{ipaddr}/{cidr} {icon}",
         "format-alt-click": "click-right",
         "format-icons": {
@@ -63,7 +68,7 @@
             "ethernet": [""],
             "disconnected": [""]
         },
-        "on-click": "connman-gtk",
+        "on-click": "nm-connection-editor",
         "tooltip-format-wifi": "{essid} ({signalStrength}%) ",
         "tooltip": true
     },

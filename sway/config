@@ -46,6 +46,7 @@ input type:touch {
 # Enable tap-to-click on trackpad.
 input type:touchpad {
     tap enabled
+    natural_scroll disabled
 }
 
 input 2:10:TPPS/2_Elan_TrackPoint {

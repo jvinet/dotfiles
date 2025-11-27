@@ -1,0 +1,43 @@
+#theme = "ayu_dark"
+theme = "tokyonight"
+
+# Vim comforts.
+#   h/t to https://github.com/LGUG2Z/helix-vim/blob/master/config.toml
+[keys.normal]
+0 = "goto_first_nonwhitespace"
+"$" = "goto_line_end"
+G = "goto_file_end"
+"\\" = { 0 = "goto_line_start" }
+V = ["select_mode", "extend_to_line_bounds"]
+C-h = "jump_view_left"
+C-l = "jump_view_right"
+C-k = "jump_view_up"
+C-j = "jump_view_down"
+H = "goto_previous_buffer"
+L = "goto_next_buffer"
+# Search for word under cursor
+"*" = ["move_char_right", "move_prev_word_start", "move_next_word_end", "search_selection", "search_next"]
+"#" = ["move_char_right", "move_prev_word_start", "move_next_word_end", "search_selection", "search_prev"]
+C-r = "redo"
+# Show line count for current file.
+C-g = ":echo %sh{wc -l <%{buffer_name}} lines"
+# Alt isn't a great modifier to use.
+#N = "split_selection_on_newline" 
+
+[keys.insert]
+# Useful on keyboards with missing/broken Esc.
+#k = { j = "normal_mode" }
+
+[editor]
+cursorline = true
+bufferline = "multiple"
+color-modes = true
+true-color = true
+
+[editor.soft-wrap]
+enable = true
+
+[editor.indent-guides]
+render = true
+character = "┆"
+skip-levels = 1

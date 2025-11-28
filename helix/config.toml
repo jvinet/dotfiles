@@ -8,6 +8,7 @@ theme = "tokyonight"
 "$" = "goto_line_end"
 G = "goto_file_end"
 "\\" = { 0 = "goto_line_start" }
+"z" = { "." = "align_view_center" }
 V = ["select_mode", "extend_to_line_bounds"]
 C-h = "jump_view_left"
 C-l = "jump_view_right"

@@ -7,8 +7,8 @@ set $font Monospace 10
 set $term ghostty
 set $lock swaylock -c 000000 -F
 set $menu rofi -show run
-#set $menu bemenu-run -p "" --fn "$font"
 set $appmenu rofi -show drun
+set $emojimenu rofimoji --action copy
 set $screenclip_copy slurp | grim -g - - | wl-copy
 set $screenclip_edit slurp | grim -g - - | swappy -f -
 set $screenclip_save slurp | grim -g - ~/Pictures/screenshots/$(date +"%Y-%m-%d-%H-%M-%S").png
@@ -205,6 +205,7 @@ bindsym $mod+Shift+q kill
 # Second one lets you run anything with an XDG .desktop launcher file.
 bindsym $mod+grave exec $menu
 bindsym $mod+Shift+grave exec $appmenu
+bindsym $mod+Control+Shift+grave exec $emojimenu
 
 # Clear notifications (unrelated to above).
 bindsym Control+Space exec makoctl dismiss --all

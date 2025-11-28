@@ -30,7 +30,8 @@ function mark() {
 # I type these things a lot
 alias u='cd ..'
 alias grep='grep --color'
-alias vi='nvim'
+alias vi='helix'
+alias hx='helix'
 alias vim='nvim'
 alias ll='ls -lh'
 alias lt='ls -lhtr'
@@ -187,7 +188,7 @@ export ANDROID_HOME=/usr/local/opt/android-sdk
 export PATH=$PATH:$HOME/.pulumi/bin
 
 # Preferred applications
-export EDITOR=nvim
+export EDITOR=helix
 export PAGER='less -r'
 export BROWSER=vivaldi
 export TERMINAL=ghostty
@@ -210,7 +211,7 @@ fi
 
 # tmux / color terms
 export TERM=xterm-256color
-[ -n "$TMUX" ] && export TERM="screen-256color"
+[ -n "$TMUX" ] && export TERM="tmux-256color"
 
 PS1='[\u@\h \W]\$ '
 

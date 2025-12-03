@@ -3,11 +3,12 @@ theme = "tokyonight"
 
 # Vim comforts.
 #   h/t to https://github.com/LGUG2Z/helix-vim/blob/master/config.toml
+#   h/t to https://rushter.com/blog/helix-editor/
 [keys.normal]
 0 = "goto_first_nonwhitespace"
 "$" = "goto_line_end"
 G = "goto_file_end"
-"\\" = { 0 = "goto_line_start" }
+D = ["ensure_selections_forward", "extend_to_line_end", "delete_selection"]
 "z" = { "." = "align_view_center" }
 V = ["select_mode", "extend_to_line_bounds"]
 C-h = "jump_view_left"
@@ -22,8 +23,21 @@ L = "goto_next_buffer"
 C-r = ":reflow"
 # Show line count for current file.
 C-g = ":echo %sh{wc -l <%{buffer_name}} lines"
-# Alt isn't a great modifier to use.
-#N = "split_selection_on_newline" 
+
+[keys.select]
+0 = "goto_first_nonwhitespace"
+"$" = "goto_line_end"
+"\\" = { 0 = "goto_line_start" }
+G = "extend_to_file_end"
+D = ["extend_to_line_bounds", "delete_selection", "normal_mode"]
+k = ["extend_line_up", "extend_to_line_bounds"]
+j = ["extend_line_down", "extend_to_line_bounds"]
+
+[keys.normal."\\"]
+0 = "goto_line_start"
+f = ":format"
+w = ":toggle soft-wrap.enable"
+o = ":buffer-close-others"
 
 [keys.insert]
 # Useful on keyboards with missing/broken Esc.

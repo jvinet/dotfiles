@@ -19,7 +19,7 @@ L = "goto_next_buffer"
 # Search for word under cursor
 "*" = ["move_char_right", "move_prev_word_start", "move_next_word_end", "search_selection", "search_next"]
 "#" = ["move_char_right", "move_prev_word_start", "move_next_word_end", "search_selection", "search_prev"]
-C-r = "redo"
+C-r = ":reflow"
 # Show line count for current file.
 C-g = ":echo %sh{wc -l <%{buffer_name}} lines"
 # Alt isn't a great modifier to use.
@@ -34,6 +34,8 @@ cursorline = true
 bufferline = "multiple"
 color-modes = true
 true-color = true
+trim-trailing-whitespace = true
+trim-final-newlines = true
 
 [editor.soft-wrap]
 enable = true
@@ -42,3 +44,7 @@ enable = true
 render = true
 character = "┆"
 skip-levels = 1
+
+[editor.file-picker]
+hidden = true
+git-ignore = false

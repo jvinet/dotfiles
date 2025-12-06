@@ -1,4 +1,4 @@
 
 [[language]]
 name = "markdown"
-formatter = { command = "prettier", args = ["--parser", "markdown"] }
+formatter = { command = "prettier", args = ["--parser", "markdown", "--prose-wrap", "always"] }

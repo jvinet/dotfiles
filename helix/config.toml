@@ -23,6 +23,9 @@ L = "goto_next_buffer"
 C-r = ":reflow"
 # Show line count for current file.
 C-g = ":echo %sh{wc -l <%{buffer_name}} lines"
+# Go to start/end of function
+#   Won't work if it's the first function in the file
+g = { "[" = ["goto_prev_function", "goto_next_function", "flip_selections", "collapse_selection"], "]" = ["goto_prev_function", "goto_next_function", "collapse_selection", "goto_first_nonwhitespace"] }
 
 [keys.select]
 0 = "goto_first_nonwhitespace"
@@ -39,6 +42,7 @@ C-r = ":reflow"
 f = ":format"
 w = ":toggle soft-wrap.enable"
 o = ":buffer-close-others"
+r = ":reload-all"
 
 [keys.insert]
 # Useful on keyboards with missing/broken Esc.
@@ -53,7 +57,7 @@ trim-trailing-whitespace = true
 trim-final-newlines = true
 
 [editor.soft-wrap]
-enable = true
+enable = false
 
 [editor.indent-guides]
 render = true

@@ -113,12 +113,15 @@ gaps inner 5
 exec mako --default-timeout 2500 --font "$font"
 
 # Automatic display management.
-exec_always pkill kanshi; exec kanshi
+exec kanshi
 
 # Custom inhibitor to keep a docked laptop awake even when external displays
 # are off.
-exec_always pkill -f wakeywakey.py; exec wakeywakey.py
+exec wakeywakey.py
 
+# Clipboard manager and listener.
+exec noodles start
+exec wl-paste --watch noodles store
 
 # Virtual keyboard
 #exec $bin/virtkbd start
@@ -188,7 +191,7 @@ bindsym --locked XF86HangupPhone exec playerctl next
 
 # If switching from docked to undocked while asleep, I can lose my primary
 # display if kanshi isn't running for some reason.
-bindsym --locked $mod+Ctrl+Alt+backslash exec swaymsg output eDP-1 enable
+bindsym --locked $mod+Ctrl+Alt+Shift+backslash exec swaymsg output eDP-1 enable
 
 bindsym --locked $mod+Ctrl+Alt+s exec systemctl suspend
 bindsym --locked $mod+n exec $HOME/bin/notify -d
@@ -283,10 +286,13 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # Quick toggle between two most recent workspaces.
 bindsym $mod+Tab workspace back_and_forth
 
-# Show window list.
+# Show window picker.
 bindsym $mod+w exec $bin/window-switch
 
-# Switch to a predefined layout.
+# Show clipboard picker.
+bindsym $mod+v exec noodles list | rofi -dmenu | cut -f1 | xargs -r sh -c 'noodles get \"$0\" | wl-copy'
+
+# Show layout picker..
 bindsym $mod+y exec $bin/sway_layout.py menu
 
 # Switch to next unused workspace.
@@ -347,4 +353,3 @@ mode "move" {
 	bindsym Escape mode "default"
 }
 bindsym $mod+m mode "move"
-

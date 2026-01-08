@@ -30,6 +30,7 @@ function mark() {
 # I type these things a lot
 alias u='cd ..'
 alias grep='grep --color'
+alias e='helix'
 alias vi='helix'
 alias hx='helix'
 alias vim='nvim'
@@ -46,10 +47,6 @@ alias j='[ -f justfile ] && just -f ./justfile || just -f deploy/justfile'
 alias nsum='awk "{ sum += \$1 } END { print sum }"'
 alias json2csv="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @csv'"
 alias stayup="systemd-inhibit --what=sleep:handle-lid-switch sleep 1d"
-
-cconv() {
-  curl "https://free.currconv.com/api/v7/convert?q=$1_$2&compact=ultra&apiKey=3cb732c0bde799db1673"
-}
 
 ranger_cd() {
   # https://github.com/ranger/ranger/blob/master/examples/shell_automatic_cd.sh
@@ -156,9 +153,6 @@ export PATH=$PATH:$HOME/bin:$HOME/bin/sway:$HOME/.local/bin:/usr/local/sbin
 # Perl
 export PATH=$PATH:/usr/bin/vendor_perl
 
-# Ruby
-export PATH=$PATH:$HOME/.gem/ruby/1.9.1/bin:$HOME/.gem/ruby/2.0.0/bin
-
 # Node
 export PATH=$PATH:$HOME/node_modules/.bin
 if [ "$(uname)" = "Darwin" ]; then
@@ -167,22 +161,12 @@ else
   export NODE_PATH=$NODE_PATH:/usr/lib/node_modules
 fi
 
-# Nim
-export PATH=$PATH:$HOME/.nimble/bin
-
 # Go
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
 
-# Nim
-export PATH=$PATH:$HOME/.nimble/bin
-
 # Elixir
 export ERL_AFLAGS="-kernel shell_history enabled"
-
-# Android
-export PATH=$PATH:$HOME/android/tools:$HOME/android/platform-tools
-export ANDROID_HOME=/usr/local/opt/android-sdk
 
 # Pulumi
 export PATH=$PATH:$HOME/.pulumi/bin
@@ -206,10 +190,6 @@ if [ -n "$WAYLAND_DISPLAY" ]; then
   export XDG_CURRENT_DESKTOP=sway
 fi
 
-# Some apps (eg: Electron) need this for Sway's system tray.
-#[ -n "$WAYLAND_DISPLAY" ] && export XDG_CURRENT_DESKTOP=Unity
-
-# tmux / color terms
 export TERM=xterm-256color
 [ -n "$TMUX" ] && export TERM="tmux-256color"
 

@@ -36,17 +36,18 @@ alias hx='helix'
 alias vim='nvim'
 alias ll='ls -lh'
 alias lt='ls -lhtr'
-alias tc='tabs -16 ; tcalc '
 alias op='netstat -tanl | grep LISTEN | sort'
 alias opp='lsof -P -n -i tcp -s TCP:LISTEN'
 alias gst='git status -uno'
 alias r='ranger_cd'
 alias y='yazi_cd'
 alias d='docker'
+alias p='podman'
 alias j='[ -f justfile ] && just -f ./justfile || just -f deploy/justfile'
 alias nsum='awk "{ sum += \$1 } END { print sum }"'
 alias json2csv="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @csv'"
 alias stayup="systemd-inhibit --what=sleep:handle-lid-switch sleep 1d"
+alias br='ddcutil setvcp 10'
 
 ranger_cd() {
   # https://github.com/ranger/ranger/blob/master/examples/shell_automatic_cd.sh

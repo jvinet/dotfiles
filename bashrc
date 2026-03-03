@@ -48,6 +48,7 @@ alias nsum='awk "{ sum += \$1 } END { print sum }"'
 alias json2csv="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @csv'"
 alias stayup="systemd-inhibit --what=sleep:handle-lid-switch sleep 1d"
 alias br='ddcutil setvcp 10'
+alias tc='tmux load-buffer -'
 
 ranger_cd() {
   # https://github.com/ranger/ranger/blob/master/examples/shell_automatic_cd.sh
@@ -171,6 +172,9 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Pulumi
 export PATH=$PATH:$HOME/.pulumi/bin
+
+# DotNet
+export PATH=$PATH:$HOME/.dotnet/tools
 
 # Preferred applications
 export EDITOR=helix

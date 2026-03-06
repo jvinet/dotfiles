@@ -30,8 +30,8 @@ function mark() {
 # I type these things a lot
 alias u='cd ..'
 alias grep='grep --color'
-alias e='helix'
-alias vi='helix'
+alias e='nvim'
+alias vi='nvim'
 alias hx='helix'
 alias vim='nvim'
 alias ll='ls -lh'
@@ -177,7 +177,7 @@ export PATH=$PATH:$HOME/.pulumi/bin
 export PATH=$PATH:$HOME/.dotnet/tools
 
 # Preferred applications
-export EDITOR=helix
+export EDITOR=nvim
 export PAGER='less -r'
 export BROWSER=vivaldi
 export TERMINAL=ghostty

@@ -150,9 +150,17 @@ later(function()
       -- Allow formatting from LSP server if no dedicated formatter is available
       lsp_format = 'fallback',
     },
+    formatters = {
+      prettier_md = {
+        command = 'prettier',
+        args = { '--parser', 'markdown', '--prose-wrap', 'always' }
+      }
+    },
     -- Map of filetype to formatters
     -- Make sure that necessary CLI tool is available
-    -- formatters_by_ft = { lua = { 'stylua' } },
+    formatters_by_ft = {
+      markdown = { 'prettier_md' }
+    },
   })
 end)
 

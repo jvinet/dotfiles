@@ -14,8 +14,19 @@ local nmap = function(lhs, rhs, desc)
   vim.keymap.set('n', lhs, rhs, { desc = desc })
 end
 
+-- Navigate bufferline with L/H
 nmap('L', ':bnext<CR>', 'Next Buffer')
 nmap('H', ':bprev<CR>', 'Previous Buffer')
+
+-- If I'm in Termux or some other hamstrung environment, I may not be able to
+-- remap Capslock to Esc. This is an acceptable workaround.
+vim.keymap.set('i', 'kj', '<esc>')
+
+nmap('\\p', ':setlocal paste!<CR>', 'Toggle paste mode')
+-- Switch 0 and ^
+nmap('0', '_')
+nmap('^', '999h')
+nmap('\\0', '999h')
 
 -- Paste linewise before/after current line
 -- Usage: `yiw` to yank a word and `]p` to put it on the next line.

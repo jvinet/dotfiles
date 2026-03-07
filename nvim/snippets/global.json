@@ -13,5 +13,10 @@
     "prefix": "ctime",
     "body": "$CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
     "description": "Insert current time (HH:MM:SS)"
+  },
+  "Meeting header": {
+    "prefix": "mtghdr",
+    "body": "# ${1:Meeting}\n\n$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE\n\n## Attendees\n\n- $2\n\n## Notes\n\n$3",
+    "description": "Insert front-matter for meeting notes"
   }
 }

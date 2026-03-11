@@ -28,6 +28,8 @@ nmap('0', '_')
 nmap('^', '999h')
 nmap('\\0', '999h')
 
+vim.keymap.set('v', '<leader>y', '"+y', { desc = "Copy to system clipboard" })
+
 -- Paste linewise before/after current line
 -- Usage: `yiw` to yank a word and `]p` to put it on the next line.
 nmap('[p', '<Cmd>exe "put! " . v:register<CR>', 'Paste Above')

@@ -11,6 +11,8 @@
 state_dir=~/.local/notifications
 [ -d $state_dir ] || mkdir -p $state_dir
 
+dmenu='rofi -dmenu'
+
 usage() {
 	echo "usage: notify <notification_text>"
 	echo
@@ -51,7 +53,7 @@ view_stdout() {
 
 # List notifications in a dmenu view.
 view_dmenu() {
-	sel=`view_stdout | dmenu -b -i -l 20 -p "clear message:"`
+	sel=`view_stdout | $dmenu -b -i -l 20 -p "clear message"`
 	[ "$sel" = "" ] && return
 	i=`echo "$sel" | cut -d' ' -f1`
 	remove $i

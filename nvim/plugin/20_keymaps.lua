@@ -76,6 +76,7 @@ Config.leader_group_clues = {
   { mode = 'n', keys = '<Leader>s', desc = '+Session' },
   { mode = 'n', keys = '<Leader>t', desc = '+Terminal' },
   { mode = 'n', keys = '<Leader>v', desc = '+Visits' },
+  { mode = 'n', keys = '<Leader>x', desc = '+eXtra Stuff' },
 
   { mode = 'x', keys = '<Leader>g', desc = '+Git' },
   { mode = 'x', keys = '<Leader>l', desc = '+Language' },
@@ -92,6 +93,21 @@ end
 local xmap_leader = function(suffix, rhs, desc)
   vim.keymap.set('x', '<Leader>' .. suffix, rhs, { desc = desc })
 end
+
+-- x is for 'eXtra Stuff', which is custom keymaps outside of mini.nvim.
+-- It's mostly just a collection of mini.nvim shortcuts, localized under one sub-leader key.
+nmap_leader('xd', '<Cmd>lua vim.lsp.buf.definition()<CR>', 'Definition')
+nmap_leader('xe', '<Cmd>lua MiniFiles.open(vim.api.nvim_buf_get_name(0))<CR>', 'Explore')
+nmap_leader('xf', '<Cmd>lua require("conform").format()<CR>', 'Format')
+nmap_leader('xi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', 'Implementation')
+nmap_leader('xr', '<Cmd>Pick lsp scope="references"<CR>', 'References')
+nmap_leader('x/', '<Cmd>Pick grep_live<CR>', 'Grep')
+nmap_leader('x[', function()
+  require('nvim-treesitter-textobjects.move').goto_previous_start('@function.outer', 'textobjects')
+end, 'Goto Function Top')
+nmap_leader('x]', function()
+  require('nvim-treesitter-textobjects.move').goto_next_end('@function.outer', 'textobjects')
+end, 'Goto Function Bottom')
 
 -- b is for 'Buffer'. Common usage:
 -- - `<Leader>bs` - create scratch (temporary) buffer

@@ -370,7 +370,10 @@ later(function()
   -- stylua: ignore
   miniclue.setup({
     window = {
-      delay = 300
+      delay = 300,
+      config = {
+        width = math.floor(vim.o.columns * 0.5)
+      }
     },
     -- Define which clues to show. By default shows only clues for custom mappings
     -- (uses `desc` field from the mapping; takes precedence over custom clue).

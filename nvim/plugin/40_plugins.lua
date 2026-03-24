@@ -175,6 +175,14 @@ end)
 -- See `:h MiniSnippets.gen_loader.from_lang()`.
 later(function() add('rafamadriz/friendly-snippets') end)
 
+
+-- Marks ===================================================================
+later(function()
+  add('chentoast/marks.nvim')
+  require('marks').setup()
+end)
+
+
 -- Honorable mentions =========================================================
 
 -- 'mason-org/mason.nvim' (a.k.a. "Mason") is a great tool (package manager) for

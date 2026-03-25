@@ -22,33 +22,45 @@ export HISTSIZE=10000
 export HISTCONTROL=ignoreboth
 
 # Directory bookmarks
-export CDPATH=.:~/.marks/
-function mark() {
-  ln -sr "$(pwd)" ~/.marks/"$1"
-}
+# export CDPATH=.:~/.marks/
+# function mark() {
+#   ln -sr "$(pwd)" ~/.marks/"$1"
+# }
 
 # I type these things a lot
-alias u='cd ..'
-alias grep='grep --color'
+alias d='docker'
 alias e='nvim'
-alias vi='nvim'
+alias g='livegrep'
+alias j='[ -f justfile ] && just -f ./justfile || just -f deploy/justfile'
+alias p='podman'
+alias r='ranger_cd'
+alias u='cd ..'
+alias y='yazi_cd'
+alias br='ddcutil setvcp 10'
 alias hx='helix'
-alias vim='nvim'
 alias ll='ls -lh'
 alias lt='ls -lhtr'
 alias op='netstat -tanl | grep LISTEN | sort'
-alias opp='lsof -P -n -i tcp -s TCP:LISTEN'
-alias gst='git status -uno'
-alias r='ranger_cd'
-alias y='yazi_cd'
-alias d='docker'
-alias p='podman'
-alias j='[ -f justfile ] && just -f ./justfile || just -f deploy/justfile'
-alias nsum='awk "{ sum += \$1 } END { print sum }"'
-alias json2csv="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @csv'"
-alias stayup="systemd-inhibit --what=sleep:handle-lid-switch sleep 1d"
-alias br='ddcutil setvcp 10'
 alias tc='tmux load-buffer -'
+alias vi='nvim'
+alias gst='git status -uno'
+alias opp='lsof -P -n -i tcp -s TCP:LISTEN'
+alias vim='nvim'
+alias grep='grep --color'
+alias nsum='awk "{ sum += \$1 } END { print sum }"'
+alias stayup="systemd-inhibit --what=sleep:handle-lid-switch sleep 1d"
+alias json2csv="jq -r '(map(keys) | add | unique) as \$cols | map(. as \$row | \$cols | map(\$row[.])) as \$rows | \$cols, \$rows[] | @csv'"
+
+livegrep() {
+  rg --line-number --no-heading --color=always "$@" \
+    | fzf --ansi \
+      --delimiter ':' \
+      --nth=1 \
+      --preview 'bat --style=numbers --color=always {1} --highlight-line {2}' \
+      --preview-window=top:50% \
+      --bind 'ctrl-u:page-up,ctrl-d:page-down' \
+      --bind 'enter:execute(nvim +{2} {1})'
+}
 
 ranger_cd() {
   # https://github.com/ranger/ranger/blob/master/examples/shell_automatic_cd.sh
@@ -201,3 +213,6 @@ export TERM=xterm-256color
 PS1='[\u@\h \W]\$ '
 
 export PINNACLE_USER=juddv
+
+# opencode
+export PATH=/home/jvinet/.opencode/bin:$PATH

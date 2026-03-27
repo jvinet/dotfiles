@@ -56,7 +56,21 @@ livegrep() {
     | fzf --ansi \
       --delimiter ':' \
       --nth=1 \
-      --preview 'bat --style=numbers --color=always {1} --highlight-line {2}' \
+      --preview '
+        line={2}
+        height=$FZF_PREVIEW_LINES
+        half=$((height / 2))
+
+        start=$((line - half))
+        [ $start -lt 1 ] && start=1
+
+        end=$((start + height))
+
+        bat --style=numbers --color=always \
+            --highlight-line $line \
+            --line-range ${start}:${end} \
+            {1}
+      ' \
       --preview-window=top:50% \
       --bind 'ctrl-u:page-up,ctrl-d:page-down' \
       --bind 'enter:execute(nvim +{2} {1})'

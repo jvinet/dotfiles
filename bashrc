@@ -32,6 +32,7 @@ alias d='docker'
 alias e='nvim'
 alias g='livegrep'
 alias j='[ -f justfile ] && just -f ./justfile || just -f deploy/justfile'
+alias k='kubectl'
 alias p='podman'
 alias r='ranger_cd'
 alias u='cd ..'
@@ -201,6 +202,11 @@ export PATH=$PATH:$HOME/.pulumi/bin
 
 # DotNet
 export PATH=$PATH:$HOME/.dotnet/tools
+
+# asdf
+if [ -r "${ASDF_DATA_DIR:-$HOME/.asdf}" ]; then
+  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+fi
 
 # Preferred applications
 export EDITOR=nvim

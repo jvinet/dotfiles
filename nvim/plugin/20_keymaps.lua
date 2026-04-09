@@ -23,6 +23,7 @@ nmap('H', ':bprev<CR>', 'Previous Buffer')
 vim.keymap.set('i', 'kj', '<esc>')
 
 nmap('\\p', ':setlocal paste!<CR>', 'Toggle paste mode')
+nmap('\\q', ':nohlsearch<CR>', 'No search highlight')
 -- Switch 0 and ^
 nmap('0', '_')
 nmap('^', '999h')

@@ -92,7 +92,10 @@ end)
 --
 -- See also:
 -- - `:h MiniNotify.config` for some of common configuration examples.
-now(function() require('mini.notify').setup() end)
+now(function() require('mini.notify').setup({
+  -- Silence the very noisy pyright.
+  lsp_progress = { enable = false }
+}) end)
 
 -- Session management. A thin wrapper around `:h mksession` that consistently
 -- manages session files. Example usage:

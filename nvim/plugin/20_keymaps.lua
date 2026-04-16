@@ -168,6 +168,7 @@ local pick_workspace_symbols_live = '<Cmd>Pick lsp scope="workspace_symbol_live"
 
 nmap_leader('f/', '<Cmd>Pick history scope="/"<CR>',            '"/" history')
 nmap_leader('f:', '<Cmd>Pick history scope=":"<CR>',            '":" history')
+nmap_leader('f\'', '<Cmd>Pick marks<CR>',            'Marks picker')
 nmap_leader('fa', '<Cmd>Pick git_hunks scope="staged"<CR>',     'Added hunks (all)')
 nmap_leader('fA', pick_added_hunks_buf,                         'Added hunks (buf)')
 nmap_leader('fb', '<Cmd>Pick buffers<CR>',                      'Buffers')

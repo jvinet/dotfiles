@@ -183,6 +183,13 @@ later(function()
 end)
 
 
+-- Refjump ===================================================================
+later(function()
+  add('mawkler/refjump.nvim')
+  require('refjump').setup()
+end)
+
+
 -- Honorable mentions =========================================================
 
 -- 'mason-org/mason.nvim' (a.k.a. "Mason") is a great tool (package manager) for

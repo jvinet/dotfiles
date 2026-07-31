@@ -1,6 +1,6 @@
 [user]
 	name = Judd Vinet
-	email = jvinet@gmail.com
+	email = jvinet@zeroflux.org
 
 [color]
 	branch = auto
@@ -8,21 +8,18 @@
 	interactive = auto
 	status = auto
 
+[core]
+	pager = delta
+
 [push]
 	default = simple
 
 [merge]
-	tool = nvimdiff
-
-[diff]
-	tool = nvimdiff
-
-[difftool]
-	prompt = true
-
-[difftool "nvimdiff"]
-	cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
+	conflictStyle = zdiff3
 
 [alias]
 	d = difftool
 	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n'' %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+
+[delta]
+	navigate = true

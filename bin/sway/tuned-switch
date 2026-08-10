@@ -1,0 +1,158 @@
+#!/usr/bin/env bash
+#
+# tuned-helper - a small rofi frontend to tuned-adm, for use from Sway.
+#
+#   tuned-helper list     pick a profile from a rofi menu and activate it
+#   tuned-helper active   print the name of the active profile
+#
+# Example Sway config:
+#   bindsym $mod+p exec ~/bin/tuned-helper list
+
+set -uo pipefail
+
+PROGNAME=${0##*/}
+
+usage() {
+	cat <<-EOF
+		Usage: $PROGNAME <command>
+
+		Commands:
+		  list      Show available tuned profiles in a rofi menu and switch to
+		            the selected one. The currently active profile is
+		            pre-selected and highlighted.
+		  active    Print the name of the currently active profile.
+		  help      Show this message.
+	EOF
+}
+
+# Report a problem to the user. Sway keybindings have no terminal attached, so
+# also send a desktop notification when one is available.
+err() {
+	printf '%s: %s\n' "$PROGNAME" "$1" >&2
+	if command -v notify-send >/dev/null 2>&1; then
+		notify-send -u critical "$PROGNAME" "$1"
+	fi
+}
+
+die() {
+	err "$1"
+	exit 1
+}
+
+notify() {
+	if command -v notify-send >/dev/null 2>&1; then
+		notify-send "$@"
+	fi
+}
+
+need() {
+	command -v "$1" >/dev/null 2>&1 || die "$1 not found in PATH"
+}
+
+# Name of the active profile, or the empty string if there isn't one.
+#
+#   $ tuned-adm active
+#   Current active profile: balanced
+active_profile() {
+	tuned-adm active 2>/dev/null |
+		sed -n 's/^Current active profile: *//p' |
+		head -n1
+}
+
+# One line per profile, in "name<TAB>description" form.
+#
+#   $ tuned-adm profile
+#   Available profiles:
+#   - balanced   - General non-specialized tuned profile
+#   ...
+#   Current active profile: balanced
+#
+# Only the "- " lines are profiles; the header and the trailing active-profile
+# line are skipped. Descriptions can themselves contain " - ", so the split is
+# anchored on the run of whitespace that follows the profile name.
+list_profiles() {
+	tuned-adm profile 2>/dev/null |
+		sed -n 's/^- \([^[:space:]]\+\)[[:space:]]\+- \(.*\)$/\1\t\2/p'
+}
+
+# tuned-adm needs root. Try unprivileged first, since tuned's D-Bus path may
+# already be authorized via polkit, then escalate with pkexec (which can prompt
+# graphically under Sway if a polkit agent is running).
+set_profile() {
+	local profile=$1 output
+
+	if output=$(tuned-adm profile "$profile" 2>&1); then
+		return 0
+	fi
+
+	if [[ $EUID -ne 0 ]] && command -v pkexec >/dev/null 2>&1; then
+		if output=$(pkexec tuned-adm profile "$profile" 2>&1); then
+			return 0
+		fi
+	fi
+
+	[[ -n $output ]] && err "$output"
+	return 1
+}
+
+cmd_active() {
+	need tuned-adm
+
+	local active
+	active=$(active_profile)
+	[[ -n $active ]] || die "no active profile"
+	printf '%s\n' "$active"
+}
+
+cmd_list() {
+	need tuned-adm
+	need rofi
+
+	local -a names=() rows=()
+	local name desc active selected index=0 active_index=-1
+
+	while IFS=$'\t' read -r name desc; do
+		names+=("$name")
+		rows+=("$(printf '%-28s %s' "$name" "$desc")")
+	done < <(list_profiles)
+
+	((${#names[@]})) || die "no profiles reported by tuned-adm"
+
+	active=$(active_profile)
+	for index in "${!names[@]}"; do
+		if [[ ${names[index]} == "$active" ]]; then
+			active_index=$index
+			break
+		fi
+	done
+
+	local -a rofi_args=(-dmenu -i -no-custom -p "tuned profile" -format i)
+	if ((active_index >= 0)); then
+		rofi_args+=(-selected-row "$active_index" -a "$active_index")
+	fi
+
+	# rofi exits non-zero when the menu is dismissed; that is not an error.
+	selected=$(printf '%s\n' "${rows[@]}" | rofi "${rofi_args[@]}") || exit 0
+	[[ -n $selected ]] || exit 0
+
+	name=${names[selected]}
+
+	if [[ $name == "$active" ]]; then
+		notify "tuned" "$name is already active"
+		exit 0
+	fi
+
+	if set_profile "$name"; then
+		notify "tuned" "Switched to $name"
+	else
+		die "failed to switch to $name"
+	fi
+}
+
+case ${1-} in
+	list) cmd_list ;;
+	active) cmd_active ;;
+	help | -h | --help) usage ;;
+	"") usage; exit 1 ;;
+	*) err "unknown command: $1"; usage >&2; exit 1 ;;
+esac

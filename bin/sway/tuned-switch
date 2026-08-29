@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 #
-# tuned-helper - a small rofi frontend to tuned-adm, for use from Sway.
+# tuned-switch - a small rofi frontend to tuned-adm, for use from Sway.
 #
 #   tuned-helper list     pick a profile from a rofi menu and activate it
 #   tuned-helper active   print the name of the active profile
+#   tuned-helper auto     switch to automatic profile selection
 #
 # Example Sway config:
-#   bindsym $mod+p exec ~/bin/tuned-helper list
+#   bindsym $mod+p exec ~/bin/tuned-switch list
 
 set -uo pipefail
 
@@ -21,6 +22,7 @@ usage() {
 		            the selected one. The currently active profile is
 		            pre-selected and highlighted.
 		  active    Print the name of the currently active profile.
+		  auto      Switch to automatic profile selection.
 		  help      Show this message.
 	EOF
 }
@@ -104,6 +106,13 @@ cmd_active() {
 	printf '%s\n' "$active"
 }
 
+cmd_auto() {
+	need tuned-adm
+  local name=$(tuned-adm recommend)
+  tuned-adm auto_profile
+  notify "tuned" "Auto selection enabled, switched to $name"
+}
+
 cmd_list() {
 	need tuned-adm
 	need rofi
@@ -152,6 +161,7 @@ cmd_list() {
 case ${1-} in
 	list) cmd_list ;;
 	active) cmd_active ;;
+	auto) cmd_auto ;;
 	help | -h | --help) usage ;;
 	"") usage; exit 1 ;;
 	*) err "unknown command: $1"; usage >&2; exit 1 ;;

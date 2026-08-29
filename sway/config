@@ -194,7 +194,7 @@ bindsym --locked XF86HangupPhone exec playerctl next
 # If switching from docked to undocked while asleep, I can lose my primary
 # display if kanshi isn't running for some reason.
 bindsym --locked $mod+Ctrl+Alt+Shift+backslash exec swaymsg output eDP-1 enable
-bindsym $mod+slash exec swaymsg 'input type:touchpad events toggle enabled disabled'
+bindsym $mod+slash exec "swaymsg 'input type:touchpad events toggle enabled disabled' ; notify-send 'Trackpad toggled'"
 
 bindsym --locked $mod+Ctrl+Alt+s exec systemctl suspend
 bindsym --locked $mod+n exec $HOME/bin/notify -d
@@ -305,6 +305,7 @@ bindsym $mod+plus exec $bin/free-workspace move next
 
 # Show power management profiles
 bindsym $mod+semicolon exec $bin/tuned-switch list
+bindsym $mod+shift+semicolon exec $bin/tuned-switch auto
 
 # Rename a workspace (mnemonic: 'd' for 'designate').
 bindsym $mod+d exec i3-input -F 'rename workspace to "%s"' -P 'Rename workspace: '

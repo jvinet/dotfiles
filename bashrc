@@ -27,12 +27,13 @@ export HISTCONTROL=ignoreboth
 #   ln -sr "$(pwd)" ~/.marks/"$1"
 # }
 
-# I type these things a lot
+# ------------------------------------------------------------------------
+# Aliases
+# ------------------------------------------------------------------------
 alias d='docker'
 alias e='nvim'
 alias g='livegrep'
 alias j='[ -f justfile ] && just -f ./justfile || just -f deploy/justfile'
-alias k='kubectl'
 alias p='podman'
 alias r='ranger_cd'
 alias u='cd ..'
@@ -114,6 +115,9 @@ alias json='python3 -m json.tool'
 alias dos2unix="awk '{ sub(\"\r$\", \"\"); print }'"
 alias unix2dos="awk 'sub(\"$\", \"\r\")'"
 
+# ------------------------------------------------------------------------
+# Per-OS variants
+# ------------------------------------------------------------------------
 if [ "$(uname)" = "Linux" ]; then
   alias ls='ls --color'
   if [ "$(uname -o)" = "Android" ]; then
@@ -151,7 +155,7 @@ if [ "$(uname)" = "Linux" ]; then
     #
     # We don't look at the primary 'sway' process, because someone (dbus?)
     # is starting it in a way that's munging the perms in /proc/<pid> such
-    # thwe we can't read them, only root.
+    # that we can't read them, only root.
     pid=$(pgrep -x swayidle)
     if [ -n "$pid" ]; then
       ds=$(xargs -n 1 -0 </proc/$pid/environ | grep DBUS_SESSION_BUS_ADDRESS)
@@ -177,11 +181,25 @@ else
   done
 fi
 
-export PATH=$PATH:$HOME/bin:$HOME/bin/sway:$HOME/.local/bin:/usr/local/sbin
+# ------------------------------------------------------------------------
+# Application configs
+# ------------------------------------------------------------------------
+# Elixir
+export ERL_AFLAGS="-kernel shell_history enabled"
+# Ask Firefox to enable Wayland support
+export MOZ_ENABLE_WAYLAND=1
+# XDG
+if [ -n "$WAYLAND_DISPLAY" ]; then
+  export XDG_SESSION_TYPE=wayland
+  export XDG_CURRENT_DESKTOP=sway
+fi
 
+# ------------------------------------------------------------------------
+# Path fiddling
+# ------------------------------------------------------------------------
+export PATH=$PATH:$HOME/bin:$HOME/bin/sway:$HOME/.local/bin:/usr/local/sbin
 # Perl
 export PATH=$PATH:/usr/bin/vendor_perl
-
 # Node
 export PATH=$PATH:$HOME/node_modules/.bin
 if [ "$(uname)" = "Darwin" ]; then
@@ -189,50 +207,30 @@ if [ "$(uname)" = "Darwin" ]; then
 else
   export NODE_PATH=$NODE_PATH:/usr/lib/node_modules
 fi
-
 # Go
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
-
-# Elixir
-export ERL_AFLAGS="-kernel shell_history enabled"
-
-# Pulumi
-export PATH=$PATH:$HOME/.pulumi/bin
-
 # DotNet
 export PATH=$PATH:$HOME/.dotnet/tools
+# Opencode
+export PATH=/home/jvinet/.opencode/bin:$PATH
 
-# asdf
-if [ -r "${ASDF_DATA_DIR:-$HOME/.asdf}" ]; then
-  export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
-fi
-
+# ------------------------------------------------------------------------
 # Preferred applications
+# ------------------------------------------------------------------------
 export EDITOR=nvim
 export PAGER='less -r'
-export BROWSER=vivaldi
+export BROWSER=firefox
 export TERMINAL=ghostty
 # Colorized manpages with bat(1)
 if [ "$(type -p bat)" ]; then
   export MANROFFOPT="-c"
   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 fi
-
-# Ask Firefox to enable Wayland support
-export MOZ_ENABLE_WAYLAND=1
-
-if [ -n "$WAYLAND_DISPLAY" ]; then
-  export XDG_SESSION_TYPE=wayland
-  export XDG_CURRENT_DESKTOP=sway
-fi
-
 export TERM=xterm-256color
 [ -n "$TMUX" ] && export TERM="tmux-256color"
 
 PS1='[\u@\h \W]\$ '
-
-export PINNACLE_USER=juddv
-
-# opencode
-export PATH=/home/jvinet/.opencode/bin:$PATH
+if [ -n "$JAIL" ]; then
+  PS1="($JAIL) $PS1"
+fi

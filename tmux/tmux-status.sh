@@ -5,23 +5,44 @@ set -u
 export LC_ALL=C
 
 theme=${1:-colour}
-if [[ $theme == monochrome ]]; then
-    COLOUR_TEXT='#cccccc'
-    COLOUR_CLOCK=$COLOUR_TEXT
-    COLOUR_CPU=$COLOUR_TEXT
-    COLOUR_MEMORY=$COLOUR_TEXT
-    COLOUR_DISK=$COLOUR_TEXT
-    COLOUR_VOLUME=$COLOUR_TEXT
-    COLOUR_NETWORK=$COLOUR_TEXT
-else
-    COLOUR_TEXT='#cccccc'
-    COLOUR_CLOCK='#d9d8d8'
-    COLOUR_CPU='#fa6868'
-    COLOUR_MEMORY='#00fff2'
-    COLOUR_DISK='#ffcc00'
-    COLOUR_VOLUME='#4bfa3c'
-    COLOUR_NETWORK='#268bd2'
-fi
+COLOUR_TEXT='#cccccc'
+case $theme in
+    monochrome)
+        COLOUR_CPU=$COLOUR_TEXT
+        COLOUR_MEMORY=$COLOUR_TEXT
+        COLOUR_DISK=$COLOUR_TEXT
+        COLOUR_VOLUME=$COLOUR_TEXT
+        COLOUR_NETWORK=$COLOUR_TEXT
+        COLOUR_CLOCK=$COLOUR_TEXT
+        ;;
+    tokyonight)
+        # TokyoNight Moon, matching nvim.lazyvim: warm to cool, left to right.
+        COLOUR_CPU='#ff757f'      # rose
+        COLOUR_MEMORY='#ff9e64'   # orange
+        COLOUR_DISK='#ffc777'     # gold
+        COLOUR_VOLUME='#c3e88d'   # green
+        COLOUR_NETWORK='#82aaff'  # blue
+        COLOUR_CLOCK='#c099ff'    # violet
+        ;;
+    pastel)
+        # Soft Catppuccin Mocha accents, in the same warm-to-cool order.
+        COLOUR_CPU='#f38ba8'      # rose
+        COLOUR_MEMORY='#fab387'   # peach
+        COLOUR_DISK='#f9e2af'     # pale gold
+        COLOUR_VOLUME='#a6e3a1'   # mint
+        COLOUR_NETWORK='#89b4fa'  # sky blue
+        COLOUR_CLOCK='#cba6f7'    # lavender
+        ;;
+    *)
+        # Keep the original palette as both the default and unknown-theme fallback.
+        COLOUR_CPU='#fa6868'
+        COLOUR_MEMORY='#00fff2'
+        COLOUR_DISK='#ffcc00'
+        COLOUR_VOLUME='#4bfa3c'
+        COLOUR_NETWORK='#268bd2'
+        COLOUR_CLOCK='#d9d8d8'
+        ;;
+esac
 readonly COLOUR_TEXT COLOUR_CLOCK COLOUR_CPU COLOUR_MEMORY COLOUR_DISK COLOUR_VOLUME COLOUR_NETWORK
 
 read_cpu_counters() {

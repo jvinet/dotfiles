@@ -10,6 +10,7 @@ if [[ $theme == monochrome ]]; then
     COLOUR_CLOCK=$COLOUR_TEXT
     COLOUR_CPU=$COLOUR_TEXT
     COLOUR_MEMORY=$COLOUR_TEXT
+    COLOUR_DISK=$COLOUR_TEXT
     COLOUR_VOLUME=$COLOUR_TEXT
     COLOUR_NETWORK=$COLOUR_TEXT
 else
@@ -17,10 +18,11 @@ else
     COLOUR_CLOCK='#d9d8d8'
     COLOUR_CPU='#fa6868'
     COLOUR_MEMORY='#00fff2'
+    COLOUR_DISK='#ffcc00'
     COLOUR_VOLUME='#4bfa3c'
     COLOUR_NETWORK='#268bd2'
 fi
-readonly COLOUR_TEXT COLOUR_CLOCK COLOUR_CPU COLOUR_MEMORY COLOUR_VOLUME COLOUR_NETWORK
+readonly COLOUR_TEXT COLOUR_CLOCK COLOUR_CPU COLOUR_MEMORY COLOUR_DISK COLOUR_VOLUME COLOUR_NETWORK
 
 read_cpu_counters() {
     local user=0 nice=0 system=0 idle=0 iowait=0 irq=0 softirq=0 steal=0
@@ -105,6 +107,17 @@ memory_usage() {
         printf '%s' "$percentage"
     else
         printf '0'
+    fi
+}
+
+disk_usage() {
+    local percentage
+
+    percentage=$(df -P / 2>/dev/null | awk 'NR == 2 { sub(/%$/, "", $5); print $5 }')
+    if [[ $percentage =~ ^[0-9]+$ ]]; then
+        printf '%s' "$percentage"
+    else
+        printf '--'
     fi
 }
 
@@ -219,11 +232,13 @@ volume_icon() {
 
 cpu=$(cpu_usage)
 memory=$(memory_usage)
+disk=$(disk_usage)
 read_volume
 read_network
 
 printf '#[fg=%s]#[fg=%s] %s  ' "$COLOUR_CPU" "$COLOUR_TEXT" "$cpu"
 printf '#[fg=%s]#[fg=%s] %s  ' "$COLOUR_MEMORY" "$COLOUR_TEXT" "$memory"
+printf '#[fg=%s]#[fg=%s] %s  ' "$COLOUR_DISK" "$COLOUR_TEXT" "$disk"
 printf '#[fg=%s]%s' "$COLOUR_VOLUME" "$(volume_icon)"
 if ((VOLUME_MUTED)); then
     printf '  '

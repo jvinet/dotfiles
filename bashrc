@@ -234,3 +234,13 @@ PS1='[\u@\h \W]\$ '
 if [ -n "$JAIL" ]; then
   PS1="($JAIL) $PS1"
 fi
+
+# Report foreground-command completions to tmux (prefix-! window mode).
+# The config owns the helper location, keeping this independent of installation.
+if [[ -n ${TMUX:-} && -n ${TMUX_PANE:-} ]]; then
+  _tmux_job_watch_path=$(tmux display-message -p -t "$TMUX_PANE" '#{@job-watch-script}' 2>/dev/null)
+  if [[ -n $_tmux_job_watch_path && -r ${_tmux_job_watch_path%/*}/tmux-job-watch.bash ]]; then
+    source "${_tmux_job_watch_path%/*}/tmux-job-watch.bash"
+  fi
+  unset _tmux_job_watch_path
+fi

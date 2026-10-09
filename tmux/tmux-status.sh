@@ -16,7 +16,6 @@ case $theme in
         COLOUR_CLOCK=$COLOUR_TEXT
         ;;
     tokyonight)
-        # TokyoNight Moon, matching nvim.lazyvim: warm to cool, left to right.
         COLOUR_CPU='#ff757f'      # rose
         COLOUR_MEMORY='#ff9e64'   # orange
         COLOUR_DISK='#ffc777'     # gold
@@ -25,16 +24,14 @@ case $theme in
         COLOUR_CLOCK='#c099ff'    # violet
         ;;
     pastel)
-        # Soft Catppuccin Mocha accents, in the same warm-to-cool order.
-        COLOUR_CPU='#f38ba8'      # rose
-        COLOUR_MEMORY='#fab387'   # peach
-        COLOUR_DISK='#f9e2af'     # pale gold
-        COLOUR_VOLUME='#a6e3a1'   # mint
-        COLOUR_NETWORK='#89b4fa'  # sky blue
-        COLOUR_CLOCK='#cba6f7'    # lavender
+        COLOUR_CPU='#ed9fbc'      # rose
+        COLOUR_MEMORY='#eaa58e'   # peach
+        COLOUR_DISK='#e1bd87'     # gold
+        COLOUR_VOLUME='#adce9c'   # sage
+        COLOUR_NETWORK='#9cbfce'  # muted blue
+        COLOUR_CLOCK='#b9a4ce'    # lavender
         ;;
     *)
-        # Keep the original palette as both the default and unknown-theme fallback.
         COLOUR_CPU='#fa6868'
         COLOUR_MEMORY='#00fff2'
         COLOUR_DISK='#ffcc00'
